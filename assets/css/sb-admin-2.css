@@ -5,6 +5,7 @@
  */
 body {
   background-color: #f8f8f8;
+    overflow: auto
 }
 #wrapper {
   width: 100%;
@@ -17,7 +18,7 @@ body {
 @media (min-width: 768px) {
   #page-wrapper {
     position: inherit;
-    margin: 0 0 0 250px;
+    margin: 0 0 0 0px;
     padding: 0 30px;
     border-left: 1px solid #e7e7e7;
   }
@@ -165,6 +166,11 @@ body {
 .chat-panel .panel-body {
   height: 350px;
   overflow-y: scroll;
+}
+
+.panel-body {
+    overflow-x: scroll;
+    font-size: 12px;
 }
 .login-panel {
   margin-top: 20%;
@@ -432,4 +438,46 @@ table.dataTable thead .sorting:after {
     border-right-width: 14px;
     border-left-width: 0;
   }
+}
+
+.row-finished{
+    background-color: lightblue !important;
+}
+.vcenter{
+  vertical-align: middle !important;
+}
+
+.hcenter{
+  text-align: center !important;
+}
+
+.table>tbody>tr>td .form-group {
+  margin-bottom: 0;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.cell_holder{
+}
+.cell_part {
+    height: 35px !important;
+    text-align: center;
+}
+
+.cell_part_hr{
+    border: 1px solid #ddd;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+.mt-10 {
+    margin-top: 10px !important;
+}
+
+.mbt-5 {
+    margin-bottom: 5px !important;
+    margin-top: 5px !important;
 }

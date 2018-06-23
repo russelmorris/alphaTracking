@@ -22,8 +22,12 @@ class C_login extends CI_Controller {
 	{
 	    // check if request is POST
         if ($this->input->server('REQUEST_METHOD') == 'POST'){
+            $this->session->set_userdata('authenticated', 1);
             redirect('/dashboard');
         }
+
+        $this->session->unset_userdata('authenticated');
+
         $data = [];
         $data['csrf'] = array(
             'name' => $this->security->get_csrf_token_name(),
@@ -31,4 +35,10 @@ class C_login extends CI_Controller {
         );
 		$this->load->view('v_login', $data);
 	}
+
+    public function logout()
+    {
+        $this->session->unset_userdata('authenticated');
+        redirect(base_url('login'));
+    }
 }
