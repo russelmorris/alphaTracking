@@ -18,8 +18,19 @@ class C_dashboard extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+    public function __construct()
+    {
+        parent::__construct();
+        if ($this->session->userdata('authenticated') !== 1) {
+            redirect('/login');
+        }
+    }
+
+
 	public function dashboard()
 	{
-		$this->load->view('v_dashboard');
+	    $data = [];
+        $this->load->template('v_dashboard', $data);
 	}
 }
