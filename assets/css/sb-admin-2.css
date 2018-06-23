@@ -168,7 +168,7 @@ body {
   overflow-y: scroll;
 }
 
-.panel-body {
+.dashboard .panel-body {
     overflow-x: scroll;
     font-size: 12px;
 }
