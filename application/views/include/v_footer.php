@@ -17,6 +17,8 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="<?php echo base_url() ?>assets/js/sb-admin-2.js"></script>
+<script src="<?php echo base_url() ?>assets/js/voting-form.js"></script>
+<script src="<?php echo base_url() ?>vendor/jquery/jquery.cookie.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>

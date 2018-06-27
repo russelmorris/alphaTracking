@@ -27,6 +27,7 @@
 
     <!-- Custom CSS -->
     <link href="<?php echo base_url() ?>assets/css/sb-admin-2.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>assets/css/voting-form.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<?php echo base_url() ?>vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
