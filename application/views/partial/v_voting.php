@@ -310,7 +310,7 @@
                         </div>
                     </div>
                     <span>Veto</span>
-                    <div class="col-md-12" style="padding-top: 2%">
+                    <div class="col-md-12 tarea hidden" style="padding-top: 2%">
                         <textarea placeholder="Explain why?" type="text" class="form-control"></textarea>
                     </div>
                 </div>

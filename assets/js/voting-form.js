@@ -7,10 +7,15 @@ $(".rb-tab").click(function () {
     $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
     $(this).addClass("rb-tab-active");
     if ($(this).parent()[0].id === 'rb-6') {
-        if ($(this).parent().find(".rb-tab").hasClass('rb-tab-active'))
-            $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
-        // else
-        $(this).addClass("rb-tab-active");
+        $(this).toggleClass('rb-tab-active');
+        if($(this).hasClass('rb-tab-active')){
+            $(this).removeClass("rb-tab-active");
+        }
+        else{
+            $(this).addClass("rb-tab-active");
+        }
+
+        $(".tarea").toggleClass("hidden");
     }
 });
 
@@ -37,7 +42,7 @@ $(".trigger").click(function () {
         results: JSON.stringify(results),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        alert(data);
+        console.log(data);
     })
 
 });
