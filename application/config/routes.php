@@ -55,6 +55,6 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'c_login/login';
 $route['logout'] = 'c_login/logout';
 $route['dashboard'] = 'c_dashboard/dashboard';
-$route['voting'] = 'c_voting/voting';
+$route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
 $route['submit_voting'] = 'c_voting/submit_voting';
 

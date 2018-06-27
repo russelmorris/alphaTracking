@@ -31,9 +31,11 @@ class C_voting extends CI_Controller
         }
     }
 
-    public function voting()
+    public function voting($icDate, $ticker)
     {
         $user_data = [];
+        $user_data['icdate'] = $icDate;
+        $user_data['ticker'] = $ticker;
         $this->load->template('v_voting', $user_data);
     }
 
