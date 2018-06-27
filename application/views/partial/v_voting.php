@@ -2,7 +2,14 @@
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4>IC Date: 15 June 2016</h4>
+                <h4>IC Date: <?php echo $icdate;?></h4>
+                <h4>Ticker: <?php echo $ticker;?></h4>
+                <h4>
+                    <a
+                            href="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm");?>"
+                            target="_blank">
+                        Company Information Sheet</a>
+                </h4>
             </div>
         </div>
         <div class="col-md-6">
@@ -298,8 +305,10 @@
                         </div>
                     </div>
                     <span>(I love it)</span>
-                    <div class="col-md-12" style="padding-top: 2%">
-                        <input placeholder="Comments" type="text" class="form-control">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top: 2%">
+                            <input placeholder="Comments" type="text" class="form-control">
+                        </div>
                     </div>
                 </div>
                 <p>6.  Veto (optional)</p>
@@ -310,12 +319,15 @@
                         </div>
                     </div>
                     <span>Veto</span>
-                    <div class="col-md-12 tarea hidden" style="padding-top: 2%">
-                        <textarea placeholder="Explain why?" type="text" class="form-control"></textarea>
+                    <div class="row">
+                        <div class="col-md-12 tarea hidden" style="padding-top: 2%">
+                            <textarea placeholder="Explain why?" type="text" class="form-control"></textarea>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Button -->
+
                 <div class="button-box">
                     <button class="button trigger">Submit!</button>
                 </div>

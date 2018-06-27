@@ -38,7 +38,7 @@ $(".trigger").click(function () {
             results.push(rbValue);
     }
 
-    $.post('submit_voting', {
+    $.post('/submit_voting', {
         results: JSON.stringify(results),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {

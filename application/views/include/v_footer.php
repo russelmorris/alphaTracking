@@ -25,7 +25,9 @@
     $(document).ready(function () {
         $('#dataTables-example').DataTable({
             responsive: false,
-            paging: false
+            paging: false,
+            autoWidth: false,
+            bAutoWidth: false
 
         });
     });

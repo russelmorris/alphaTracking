@@ -17,7 +17,7 @@
             </div>
         </div>
         <!-- /.col-lg-6 -->
-        <div class="col-sm-6">
+        <div class="col-sm-offset-3 col-sm-3">
             <div class="form-group">
                 <label>For IC date</label>
                 <select class="form-control">
@@ -34,7 +34,7 @@
     </div>
     <div class="row">
         <div class="col col-sm-12">
-            <button type="button" class="btn btn-primary btn-lg btn-block"> Click here to see Investment Committee Completion Summary</button>
+            <a  href="#"> Click here to see Investment Committee Completion Summary</a>
         </div>
     </div>
     <div class="row">
@@ -47,28 +47,54 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    DataTables Advanced Tables
+                    <div class="-pull-left div-inline-block">DataTables Advanced Tables</div>
+                    <div class="pull-right div-inline-block">
+                        <a data-toggle="modal" data-target="#legendModal">
+                            Legend
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="legendModalLabel">Legend</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body">
+                <p class="panel-body">
+
                     <table width="100%" class="table table-striped table-bordered table-hover " id="dataTables-example">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Finalised</th>
-                            <th>Ticker</th>
-                            <th>Name</th>
-                            <th>Sector</th>
-                            <th>Country</th>
-                            <th>Machine Rank</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Finalised">Fin <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Ticker">Ticker <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Name">Name <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Sector">Sector <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Country">Country <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Machine Rank">MR <i class="fa fa-info-circle"></i></th>
                             <th>&nbsp;</th>
-                            <th>Veto</th>
-                            <th>Business model</th>
-                            <th>Business valuation</th>
-                            <th>Digital Footprint</th>
-                            <th>Significant uplft in addressable maret</th>
-                            <th>Competitor Analysis</th>
-                            <th>Fatal Flaw</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Veto">Veto <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Business model">Business <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Business valuation">Business <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Digital Footprint">Footprint <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Significant uplft in addressable maret">Uplft <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Competitor Analysis">Analysis <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" title="Flaw">Fatal Flaw <i class="fa fa-info-circle"></i></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,11 +106,11 @@
                                     <i class="fa"></i>
                                 </button>
                             </td>
-                            <td class="vcenter">1536</td>
-                            <td class="vcenter">YUK WING GROUP</td>
-                            <td class="vcenter">Industrials</td>
-                            <td class="vcenter">AU</td>
-                            <td class="vcenter hcenter">5</td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/1536"); ?>">1536</a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/1536"); ?>">YUK WING GROUP</a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/1536"); ?>">Industrials</a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/1536"); ?>">AU</a></td>
+                            <td class="vcenter hcenter"><a href="<?php echo base_url("voting/2018-10-05/1536"); ?>">5</a></td>
                             <td class="no-padding">
                                 <div class="cell_holder">
                                     <div class="cell_part">
@@ -281,11 +307,12 @@
                                     <i class="fa <?php echo $isLocked? "fa-check" : ''?>"></i>
                                 </button>
                             </td>
-                            <td class="vcenter"><?php echo randomNumber(10); ?></td>
-                            <td class="vcenter"><?php echo strtoupper(randomString(20)); ?></td>
-                            <td class="vcenter"><?php echo randomString(10); ?></td>
-                            <td class="vcenter"><?php echo strtoupper(randomString(2)); ?></td>
-                            <td class="vcenter hcenter"><?php echo rand(1, 10); ?></td>
+                            <?php $randomTicker = randomNumber(10) ; ?>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/".$randomTicker); ?>"><?php echo $randomTicker; ?></a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/".$randomTicker); ?>"><?php echo strtoupper(randomString(20)); ?></a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/".$randomTicker); ?>"><?php echo randomString(10); ?></a></td>
+                            <td class="vcenter"><a href="<?php echo base_url("voting/2018-10-05/".$randomTicker); ?>"><?php echo strtoupper(randomString(2)); ?></a></td>
+                            <td class="vcenter hcenter"><a href="<?php echo base_url("voting/2018-10-05/".$randomTicker); ?>"><?php echo rand(1, 10); ?></a></td>
                             <td class="no-padding">
                                 <div class="cell_holder">
                                     <div class="cell_part">
