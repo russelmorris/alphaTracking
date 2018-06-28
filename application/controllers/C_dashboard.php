@@ -31,6 +31,7 @@ class C_dashboard extends CI_Controller {
 	public function dashboard()
 	{
 	    $data = [];
+
         $this->load->template('v_dashboard', $data);
 	}
 }
