@@ -49,14 +49,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'c_login/login';
-$route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
-$route['login'] = 'c_login/login';
-$route['logout'] = 'c_login/logout';
-$route['dashboard'] = 'c_dashboard/dashboard';
-$route['admin_dashboard'] = 'c_admin/dashboard';
-$route['import_prospect'] = 'c_admin/import_prospect';
-$route['voting'] = 'c_voting/voting';
-$route['submit_voting'] = 'c_voting/submit_voting';
+$route['default_controller']   = 'c_login/login';
+$route['404_override']         = '';
+$route['translate_uri_dashes'] = false;
+$route['login']                = 'c_login/login';
+$route['logout']               = 'c_login/logout';
+$route['dashboard']            = 'c_dashboard/dashboard';
+$route['admin_dashboard']      = 'c_admin/dashboard';
+$route['import_prospect']      = 'c_admin/import_prospect';
+$route['import_returns']      = 'c_admin/import_returns';
+$route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
+$route['submit_voting']        = 'c_voting/submit_voting';
 

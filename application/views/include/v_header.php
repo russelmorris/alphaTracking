@@ -41,6 +41,6 @@
 
 </head>
 
-<body>
+<body class="container-fluid">
 
 <div id="">
