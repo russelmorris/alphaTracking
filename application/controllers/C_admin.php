@@ -10,8 +10,8 @@ class C_admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('authenticated') !== 1) {
-            redirect('/login');
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('/');
         }
         $this->load->model('c_admin_model');
     }
@@ -20,6 +20,7 @@ class C_admin extends CI_Controller
     public function dashboard()
     {
         $data ['data'] = $this->c_admin_model->get_users();
+        $data ['admin'] = $this->c_admin_model->get_admin();
         $this->load->template('v_admin_dashboard', $data);
     }
 

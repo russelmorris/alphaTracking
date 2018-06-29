@@ -1,7 +1,7 @@
 <div id="page-wrapper dashboard">
     <div class="row">
         <div class="col-md-12">
-            <h1>Name: Craig Burton</h1>
+            <h1>Name: <?php echo $user['memberName'];?></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -21,12 +21,11 @@
             <div class="form-group">
                 <label>For IC date</label>
                 <select class="form-control">
-                    <option>01 Jan 2018</option>
-                    <option>01 Feb 2018</option>
-                    <option>01 Mar 2018</option>
-                    <option>01 Apr 2018</option>
-                    <option>01 Maj 2018</option>
-                    <option selected>01 Jun 2018</option>
+                    <?php for ($i = 0; $i < 10; $i++): ?>
+                        <option value="<?php $ic_date = date('Y-m-d',
+                            strtotime('+' . $i . ' days', time())) ?>"><?php echo date('Y-m-d',
+                                strtotime('+' . $i . ' days', time())) ?></option>
+                    <?php endfor; ?>
                 </select>
             </div>
         </div>

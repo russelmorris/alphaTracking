@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<?php echo base_url('dashboard');?>">Alpha Tracking v0.0.1</a>
+        <a class="navbar-brand" href="<?php echo base_url('dashboard'); ?>">Alpha Tracking v0.0.1</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -16,13 +16,15 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <i class="fa fa-user fa-fw"></i>
+                <?php echo (isset($_SESSION['admin_id'])) ? $admin['memberName'] : $user['memberName']; ?>
+                <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li class="disabled"><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li class="disabled"><a href="#"><i class="fa fa-user fa-fw"></i><?php echo (isset($_SESSION['admin_id'])) ? $admin['memberName'] : $user['memberName']; ?></a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="<?php echo base_url('logout');?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="<?php echo base_url('logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

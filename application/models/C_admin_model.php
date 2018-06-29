@@ -10,8 +10,14 @@ class C_admin_model extends CI_Model
         parent::__construct();
     }
 
-    public function get_users(){
+    public function get_users()
+    {
         return $this->db->get('ic')->result_array();
+    }
+
+    public function get_admin()
+    {
+        return $this->db->get_where('ic', ['memberNo' => $_SESSION['admin_id']])->result_array()[0];
     }
 
     public function load_prospects()
@@ -33,7 +39,6 @@ class C_admin_model extends CI_Model
     {
         return $this->db->insert('returns', $data);
     }
-
 
 
 }

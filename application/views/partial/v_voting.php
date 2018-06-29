@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4 class="text-right">Name: Craig Burton</h4>
+                <h4 class="text-right">Name: <?php echo $user['memberName'];?></h4>
                 <h4 class="text-right">Last modified: 14 June 2016</h4>
             </div>
         </div>
