@@ -2,19 +2,18 @@
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4>IC Date: <?php echo $icdate;?></h4>
-                <h4>Ticker: <?php echo $ticker;?></h4>
+                <h4>IC Date: <?php echo $icdate; ?></h4>
+                <h4>Ticker: <?php echo $ticker; ?></h4>
                 <h4>
-                    <a
-                            href="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm");?>"
-                            target="_blank">
+                    <a href="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm"); ?>"
+                       target="_blank">
                         Company Information Sheet</a>
                 </h4>
             </div>
         </div>
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4 class="text-right">Name: <?php echo $user['memberName'];?></h4>
+                <h4 class="text-right">Name: <?php echo $user['memberName']; ?></h4>
                 <h4 class="text-right">Last modified: 14 June 2016</h4>
             </div>
         </div>
@@ -311,7 +310,7 @@
                         </div>
                     </div>
                 </div>
-                <p>6.  Veto (optional)</p>
+                <p>6. Veto (optional)</p>
                 <div id="rb-6" class="rb">
                     <div class="rb-tab" data-value="1">
                         <div class="rb-spot">

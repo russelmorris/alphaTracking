@@ -46,6 +46,11 @@ class C_login extends CI_Controller
             if ($this->c_auth_model->check_credentials($credentials)) {
                 if ($this->c_auth_model->is_admin($credentials)) {
                     $this->session->set_userdata('admin_id', $this->c_auth_model->get_user_id($credentials));
+                    if ($remember_me) {
+                        $params = session_get_cookie_params();
+                        setcookie('email', $_COOKIE[$credentials['email']], time() + 60 * 60 * 24 * 2,
+                            $params["path"], $params["domain"], $params["secure"]);
+                    }
                     redirect('/admin_dashboard', 'location');
                 } else {
                     $this->session->set_userdata('user_id', $this->c_auth_model->get_user_id($credentials));
