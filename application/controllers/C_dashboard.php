@@ -36,6 +36,8 @@ class C_dashboard extends CI_Controller
     public function dashboard()
     {
         $data['user'] = $this->c_user_model->get_user();
+        $data['ic_dash'] = $this->c_user_model->ic_dashboard();
+        $data['finalised'] = $this->c_user_model->count_finalised();
 
         $this->load->template('v_dashboard', $data);
     }
