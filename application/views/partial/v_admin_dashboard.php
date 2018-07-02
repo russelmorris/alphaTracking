@@ -1,6 +1,6 @@
 <div id="page-wrapper dashboard">
     <div class="col-lg-12 col-md-12">
-        <h2>Current Admin: <?php echo $admin['memberName'];?></h2>
+        <h2>Current Admin: <?php echo $user['memberName'];?></h2>
     </div>
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
@@ -58,13 +58,14 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($data as $index => $d): ?>
-                <tr class="<?php echo ($d['isActive']) ? 'success' : '' ?>">
-                    <td class="text-center"><?php echo $index + 1; ?></td>
-                    <td class="text-center"><a href="<?php echo base_url() . $d['memberNo'] ?>"><?php echo $d['memberName']; ?></a></td><!--In href will be passed route with the user id-->
+            <?php foreach ($users as $key => $value): ?>
+                <tr class="<?php echo ($value['isActive']) ? 'success' : '' ?>">
+                    <td class="text-center"><?php echo $key + 1; ?></td>
+                    <!--In href will be passed route with the user id-->
+                    <td class="text-center"><a href="<?php echo base_url() . $value['memberNo'] ?>"><?php echo $value['memberName']; ?></a></td>
                     <td class="text-center"><?php echo rand(0, 100);?>%</td>
                     <td class="text-center">02-Jun-2018</td>
-                    <td class="text-center"><?php echo $d['bWeight'] *100;?>%</td>
+                    <td class="text-center"><?php echo $value['bWeight'] *100;?>%</td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -2,25 +2,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
+ * @property  CI_Session session
  * @property  Ci_input input
  * @property  C_admin_model c_admin_model
  */
-class C_admin extends CI_Controller
+class C_admin extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('/');
-        }
+        $this->load->model('c_user_model');
         $this->load->model('c_admin_model');
     }
 
 
     public function dashboard()
     {
-        $data ['data'] = $this->c_admin_model->get_users();
-        $data ['admin'] = $this->c_admin_model->get_admin();
+        $data['user'] = $this->session->userdata('user');
+        $data['users'] = $this->c_admin_model->get_users();
         $this->load->template('v_admin_dashboard', $data);
     }
 

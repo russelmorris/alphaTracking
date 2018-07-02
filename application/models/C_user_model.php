@@ -10,9 +10,23 @@ class C_user_model extends CI_Model
         parent::__construct();
     }
 
-    public function get_user()
+    public function getUserByID($id = 0)
     {
-        return $this->db->get_where('ic', ['memberNo' => $_SESSION['user_id']])->result_array()[0];
+        $return = false;
+        $user = $this->db
+            ->select('memberNo, bWeight, email')
+            ->select('isAdmin, isComittee, memberName')
+            ->where('memberNo', $id)
+            ->where('isActive', 1)
+            ->from('ic')
+            ->get()
+            ->result_array();
+
+        if (count($user) > 0) {
+            $return = $user[0];
+        }
+
+        return $return;
     }
 
 

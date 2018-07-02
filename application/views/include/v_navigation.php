@@ -13,6 +13,20 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
+        <?php if ($user['isComittee'] == 1 && uri_string() != 'dashboard') {?>
+            <a href="<?php echo base_url('dashboard')?>">
+                <i class="fa fa-tasks fa-fw"></i> IC Dashboard</i>
+            </a>
+        <?php } ?>
+
+        <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') {?>
+
+            <a  href="<?php echo base_url('admin_dashboard')?>">
+            <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard </i>
+        </a>
+
+        <?php } ?>
+
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
