@@ -19,51 +19,41 @@ class C_login extends CI_Controller
 
     public function index()
     {
-        if (isset($_SESSION['admin_id']) && is_numeric($_SESSION['admin_id'])) {
-            redirect('/admin_dashboard', 'location');
-        } elseif (isset($_SESSION['user_id']) && is_numeric($_SESSION['user_id'])) {
-            redirect('/dashboard', 'location');
-        } else {
-            $data         = [];
-            $data['csrf'] = array(
-                'name' => $this->security->get_csrf_token_name(),
-                'hash' => $this->security->get_csrf_hash()
-            );
-
-            $this->load->view('v_login', $data);
-        }
-
+        redirect(base_url('/login'));
     }
 
     public function login()
     {
+        $redirect = '';
         if ($this->input->server('REQUEST_METHOD') == 'POST') {
-            $remember_me = (isset($_POST['remember'])) ? true : false;
-            $credentials = [
-                'email'    => $_POST['email'],
-                'password' => $_POST['password']
-            ];
-            if ($this->c_auth_model->check_credentials($credentials)) {
-                if ($this->c_auth_model->is_admin($credentials)) {
-                    $this->session->set_userdata('admin_id', $this->c_auth_model->get_user_id($credentials));
-                    redirect('/admin_dashboard', 'location');
+            $user = $this->c_auth_model->check_credentials(
+                $this->input->post('email'),
+                $this->input->post('password')
+            );
+            if ($user) {
+                $this->session->set_userdata('user', $user);
+
+                if ($user['isAdmin'] == 1) {
+                    $redirect = 'admin_dashboard';
                 } else {
-                    $this->session->set_userdata('user_id', $this->c_auth_model->get_user_id($credentials));
-                    redirect('/dashboard', 'location');
+                    $redirect = 'dashboard';
                 }
-            } else {
-                redirect('/', 'location');
             }
+            return redirect (base_url($redirect));
         }
+        $data = [];
+        $data['csrf'] = array(
+            'name' => $this->security->get_csrf_token_name(),
+            'hash' => $this->security->get_csrf_hash()
+        );
+
+        $this->load->view('v_login', $data);
     }
 
     public function logout()
     {
-        if ($this->session->has_userdata('admin_id')) {
-            $this->session->unset_userdata('admin_id');
-        }
-        if ($this->session->has_userdata('user_id')) {
-            $this->session->unset_userdata('user_id');
+        if ($this->session->has_userdata('user')) {
+            $this->session->unset_userdata('user');
         }
         redirect('/');
     }

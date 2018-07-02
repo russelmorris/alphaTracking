@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) {
+<?php if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -15,29 +15,29 @@ class C_auth_model extends CI_Model
         parent::__construct();
     }
 
-    public function is_admin($credentials)
+    public function check_credentials($email, $password)
     {
-        $flag = $this->db->select('isAdmin')->get_where('ic', $credentials)->result_array()[0];
+        $return = false;
+        $credentials = [
+            'email' => $email,
+            'password' => $password,
+            'isActive' => 1
+        ];
 
-        return (bool)$flag['isAdmin'];
-    }
 
-    public function check_credentials($credentials)
-    {
-        $user = $this->db->get_where('ic', $credentials)->result_array();
+        $user = $this->db
+            ->select('memberNo, bWeight, email')
+            ->select('isAdmin, isComittee, memberName')
+            ->get_where('ic', $credentials)
+            ->result_array();
 
-        if (is_array($user) && ! empty($user)) {
-            return true;
-        } else {
-            return false;
+        if (count($user) > 0) {
+            $return = $user[0];
         }
+
+        return $return;
     }
 
-    public function get_user_id($credentials)
-    {
-        $user = $this->db->select('memberNo')->get_where('ic', $credentials)->result_array()[0];
 
-        return (int)$user['memberNo'];
-    }
 
 }
