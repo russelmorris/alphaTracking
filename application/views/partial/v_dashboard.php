@@ -7,12 +7,13 @@
     </div>
 
     <div class="row">
+        <?php $finalised = 40; ?>
         <div class="col-sm-6">
-            <label><?php echo $finalised . ('% Finalised')?></label>
+            <label><?php echo $finalised . ('% Finalised') ?></label>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $finalised?>"
-                     aria-valuemin="0" aria-valuemax="100" style="<?php echo ('width:'). $finalised;?>">
-                    <span class="sr-only"><?php echo $finalised . ('% Complete')?></span>
+                <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $finalised ?>"
+                     aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $finalised; ?>%;">
+                    <span class="sr-only"><?php echo $finalised . ('% Complete') ?></span>
                 </div>
             </div>
         </div>
@@ -20,12 +21,11 @@
         <div class="col-sm-offset-3 col-sm-3">
             <div class="form-group">
                 <label>For IC date</label>
-                <select class="form-control">
-                    <?php for ($i = 0; $i < 15; $i++): ?>
-                        <option value="<?php $ic_date = date('Y-m-d',
-                            strtotime('+' . $i . ' days', time())) ?>"><?php echo date('Y-m-d',
-                                strtotime('+' . $i . ' days', time())) ?></option>
-                    <?php endfor; ?>
+                <select class="form-control ic_dates">
+                    <?php foreach ($ic_dates as $value): ?>
+                        <option value="<?php echo $ic_date = $value; ?>">
+                            <?php echo $value; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -87,156 +87,296 @@
                     </div>
                 </div>
                 <!-- /.panel-heading -->
-                <p class="panel-body">
+                <div class="panel-body">
 
                     <table width="100%" class="table table-striped table-bordered table-hover " id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th data-toggle="tooltip" data-placement="top" title="Finalised">Fin
+                            <th class="text-center">#</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Finalised" class="text-center">Fin
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Ticker">Ticker
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Ticker">Ticker
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Name">Name
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Name">Name
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Sector">Sector
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Sector">Sector
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Country">Country
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Country">Country
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Machine Rank">MR
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Machine Rank">MR
                                 <i class="fa fa-info-circle"></i></th>
                             <th>&nbsp;</th>
-                            <th data-toggle="tooltip" data-placement="top" title="Veto">Veto
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Business model">Business
-                                <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Business valuation">Business
-                                <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Digital Footprint">Footprint
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business model">
+                                Business
                                 <i class="fa fa-info-circle"></i></th>
                             <th data-toggle="tooltip"
                                 data-placement="top"
+                                class="text-center"
+                                title="Business valuation">Business
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Digital Footprint">Footprint
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top" class="text-center"
                                 title="Significant uplft in addressable maret">Uplft <i class="fa fa-info-circle"></i>
                             </th>
-                            <th data-toggle="tooltip" data-placement="top" title="Competitor Analysis">Analysis
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Competitor Analysis">Analysis
                                 <i class="fa fa-info-circle"></i></th>
-                            <th data-toggle="tooltip" data-placement="top" title="Risks">Risks
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
                                 <i class="fa fa-info-circle"></i></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($ic_dash as $index => $ic): ?>
-                        <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>">
-                            <td class="vcenter"><?php echo $index + 1; ?></td>
-                            <td class="vcenter hcenter">
-                                <button type="button" class="btn btn-default btn-circle" onclick="submitData(<?php echo ($index + 1);?>)">
-                                    <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>
-                                </button>
-                            </td>
-                            <td class="vcenter">
-                                <?php if ($ic['isFinalised']): ?>
-                                    <?php echo $ic['ticker']; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
-                                <?php endif; ?>
-                            </td>
-                            <td class="vcenter">
-                                <?php if ($ic['isFinalised']): ?>
-                                    <?php echo $ic['name']; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
-                                <?php endif; ?>
-                            </td>
-                            <td class="vcenter">
-                                <?php if ($ic['isFinalised']): ?>
-                                    <?php echo $ic['sector']; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
-                                <?php endif; ?>
-                            </td>
-                            <td class="vcenter">
-                                <?php if ($ic['isFinalised']): ?>
-                                    <?php echo $ic['country']; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
-                                <?php endif; ?>
-                            </td>
-                            <td class="vcenter">
-                                <?php if ($ic['isFinalised']): ?>
-                                    <?php echo $ic['machineRank']; ?>
-                                <?php else: ?>
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
-                                <?php endif; ?>
-                            </td>
-                            <td class="no-padding">
-                                <div class="cell_holder">
-                                    <div class="cell_part">
-                                        <p class="mt-10">This</p>
-                                    </div>
-                                    <div class="cell_part_hr"></div>
-                                    <div class="cell_part">
-                                        <p class="mt-10">Prev</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="vcenter hcenter no-padding">
-                                <div class="cell_holder">
-                                    <div class="cell_part">
-                                        <div class="round">
-                                            <input type="checkbox" id="<?php echo 'checkbox'. ($index + 1)?>" />
-                                            <label for="<?php echo 'checkbox'. ($index + 1)?>"></label>
-                                        </div>
-                                        <!--<button type="button" class="btn btn-default btn-circle">
-                                            <i class="fa <?php /*echo $ic['vetoFlag'] ? "fa-check" : '' */?>"></i>
-                                        </button>-->
-                                    </div>
-                                    <div class="cell_part_hr"></div>
-                                    <div class="cell_part"><?php echo $ic['vetoFlag'] ? "Yes" : "No" ?></div>
-                                </div>
-                            </td>
-                            <?php for ($i = 0; $i < 6; $i++): ?>
+                        <?php foreach ($ic_dashboard as $index => $ic): ?>
+                            <tr class="row_odd <?php echo $ic['isfinalised'] ? "row-finished" : '' ?>">
+                                <td class="vcenter"><?php echo $index + 1; ?></td>
+                                <td class="vcenter hcenter final">
+                                    <button
+                                            class="btn btn-default btn-circle finalised">
+                                        <i class="fa <?php echo $ic['isfinalised'] ? "fa-check" : '' ?>"></i>
+                                    </button>
+                                </td>
+                                <td class="vcenter ticker">
+                                    <?php if ($ic['isfinalised']): ?>
+                                        <?php echo $ic['ticker']; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="vcenter">
+                                    <?php if ($ic['isfinalised']): ?>
+                                        <?php echo $ic['name']; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="vcenter">
+                                    <?php if ($ic['isfinalised']): ?>
+                                        <?php echo $ic['sector']; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="vcenter">
+                                    <?php if ($ic['isfinalised']): ?>
+                                        <?php echo $ic['country']; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="vcenter">
+                                    <?php if ($ic['isfinalised']): ?>
+                                        <?php echo $ic['machineRank']; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="no-padding">
                                     <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0', STR_PAD_LEFT); ?></span>
-                                        <div class="cell_part <?php echo $ic['isFinalised'] ? "" : 'mbt-5' ?>">
-                                            <?php if ($ic['isFinalised']): ?>
-                                                <p class="mt-10<?php echo $ic['isFinalised'] ? "" : 'hidden' ?>"><?php echo rand(1,
-                                                        10); ?></p>
-                                            <?php else: ?>
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option value="<?php echo rand(1, 10)?>" <?php echo rand(1, 10) == 1 ? "selected" : '' ?> >1(hate it)</option>
-                                                        <option <?php echo rand(1, 10) == 2 ? "selected" : '' ?>>2</option>
-                                                        <option <?php echo rand(1, 10) == 3 ? "selected" : '' ?>>3</option>
-                                                        <option <?php echo rand(1, 10) == 4 ? "selected" : '' ?>>4</option>
-                                                        <option <?php echo rand(1, 10) == 5 ? "selected" : '' ?>>5</option>
-                                                        <option <?php echo rand(1, 10) == 6 ? "selected" : '' ?>>6</option>
-                                                        <option <?php echo rand(1, 10) == 7 ? "selected" : '' ?>>7</option>
-                                                        <option <?php echo rand(1, 10) == 8 ? "selected" : '' ?>>8</option>
-                                                        <option <?php echo rand(1, 10) == 9 ? "selected" : '' ?>>9</option>
-                                                        <option <?php echo rand(1, 10) == 10 ? "selected" : '' ?>>10(love it)</option>
-                                                    </select>
-                                                </div>
-                                            <?php endif; ?>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10">This</p>
                                         </div>
                                         <div class="cell_part_hr"></div>
                                         <div class="cell_part">
-                                            <p class="mt-10">NA</p>
+                                            <p class="mb-10 mt-10">Prev</p>
                                         </div>
                                     </div>
                                 </td>
-                            <?php endfor; ?>
+                                <td class="vcenter hcenter no-padding">
+                                    <div class="cell_holder">
+                                        <div class="cell_part">
+                                            <div class="round">
+                                                <input <?php echo $ic['veto'] ? "checked" : "" ?>
+                                                        type="checkbox" class="veto"
+                                                        id="<?php echo 'checkbox' . ($index + 1) ?>"/>
+                                                <label for="<?php echo 'checkbox' . ($index + 1) ?>"></label>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part"><?php echo $ic['veto'] ? "Yes" : "No" ?></div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control business-model">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc1'] ? $ic['fc1'] : 'NA'; ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control business-valuation">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc2'] ? $ic['fc2'] : 'NA'; ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control digital-footprint">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc3'] ? $ic['fc3'] : 'NA'; ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control uplift">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc4'] ? $ic['fc4'] : 'NA' ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control competitor-analysis">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc5'] ? $ic['fc5'] : 'NA' ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="no-padding">
+                                    <div class="cell_holder">
+                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
+                                                STR_PAD_LEFT); ?></span>
+                                        <div class="cell_part mbt-5">
+                                            <div class="form-group">
+                                                <select class="form-control risk">
+                                                    <?php for ($i = 1; $i < 11; $i++): ?>
+                                                        <?php if ($i == 1): ?>
+                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                        <?php elseif ($i == 10): ?>
+                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                        <?php elseif ($i == 5): ?>
+                                                            <option value="<?php echo $i; ?>" selected>5</option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endfor; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cell_part_hr"></div>
+                                        <div class="cell_part">
+                                            <p class="mb-10 mt-10"><?php echo $ic['fc6'] ? $ic['fc6'] : 'NA' ?></p>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                            </table>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.panel-body -->
-</div>
-<!-- /.panel -->
-</div>
-<!-- /.col-lg-12 -->
-</div>
 </div>
 <!-- /#page-wrapper -->
 

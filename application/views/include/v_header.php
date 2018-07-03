@@ -11,7 +11,7 @@
 
     <link rel="icon" href="<?php echo base_url() ?>assets/images/favicon.png">
 
-    <title>Alpha Tracker - Sign in</title>
+    <title>Alpha Tracker - <?php echo ($user['memberName']) ? $user['memberName'] : 'Sign in'?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url() ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

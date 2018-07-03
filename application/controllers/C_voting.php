@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * @property  Ci_input input
- * @property  C_user_model c_user_model
+ * @property  M_user m_user
  */
-class C_voting extends CI_Controller
+class C_voting extends MY_Controller
 {
 
     /**
@@ -27,10 +27,7 @@ class C_voting extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ( ! isset($_SESSION['user_id'])) {
-            redirect('/');
-        }
-        $this->load->model('c_user_model');
+        $this->load->model('m_user');
     }
 
     public function voting($icDate, $ticker)
@@ -38,7 +35,7 @@ class C_voting extends CI_Controller
         $data = [];
         $data['icdate'] = $icDate;
         $data['ticker'] = $ticker;
-        $data['user'] = $this->c_user_model->get_user();
+        $data['user'] = $this->session->userdata('user');
         $this->load->template('v_voting', $data);
     }
 

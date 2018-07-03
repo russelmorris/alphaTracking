@@ -2,25 +2,23 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
+ * @property  CI_Session session
  * @property  Ci_input input
- * @property  C_admin_model c_admin_model
+ * @property  M_admin m_admin
  */
-class C_admin extends CI_Controller
+class C_admin extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('/');
-        }
-        $this->load->model('c_admin_model');
+        $this->load->model(['m_user', 'm_admin']);
     }
 
 
     public function dashboard()
     {
-        $data ['data'] = $this->c_admin_model->get_users();
-        $data ['admin'] = $this->c_admin_model->get_admin();
+        $data['user'] = $this->session->userdata('user');
+        $data['users'] = $this->m_admin->get_users();
         $this->load->template('v_admin_dashboard', $data);
     }
 
@@ -44,7 +42,7 @@ class C_admin extends CI_Controller
                 'machineRank'  => (int)$row[8],
             ];
 
-            $this->c_admin_model->insert_prospects_from_csv($info);
+            $this->m_admin->insert_prospects_from_csv($info);
         }
     }
 
@@ -67,7 +65,7 @@ class C_admin extends CI_Controller
                 'return'   => (float)$row[7],
             ];
 
-            $this->c_admin_model->insert_returns_from_csv($info);
+            $this->m_admin->insert_returns_from_csv($info);
         }
     }
 }

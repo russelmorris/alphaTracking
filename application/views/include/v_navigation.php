@@ -13,15 +13,31 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
+        <li>
+            <?php if ($user['isComittee'] == 1 && uri_string() != 'dashboard') {?>
+                <a href="<?php echo base_url('dashboard')?>">
+                    <i class="fa fa-tasks fa-fw"></i> IC Dashboard</i>
+                </a>
+            <?php } ?>
+
+            <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') {?>
+
+                <a  href="<?php echo base_url('admin_dashboard')?>">
+                    <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard </i>
+                </a>
+
+            <?php } ?>
+        </li>
+
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i>
-                <?php echo (isset($_SESSION['admin_id'])) ? $admin['memberName'] : $user['memberName']; ?>
+                <?php echo $user['memberName']; ?>
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li class="disabled"><a href="#"><i class="fa fa-user fa-fw"></i><?php echo (isset($_SESSION['admin_id'])) ? $admin['memberName'] : $user['memberName']; ?></a>
+                <li class="disabled"><a href="#"><i class="fa fa-user fa-fw"></i><?php echo $user['memberName']; ?></a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="<?php echo base_url('logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
