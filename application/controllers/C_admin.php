@@ -19,6 +19,7 @@ class C_admin extends MY_Controller
     {
         $data['user'] = $this->session->userdata('user');
         $data['users'] = $this->m_admin->get_users();
+        $data['ic_dates']     = $this->m_user->getICDates();
         $this->load->template('v_admin_dashboard', $data);
     }
 

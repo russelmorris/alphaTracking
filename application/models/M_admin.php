@@ -3,8 +3,6 @@
 
 class M_admin extends CI_Model
 {
-    public $table = 'prospects';
-
     public function __construct()
     {
         parent::__construct();

@@ -14,21 +14,23 @@
 
     <ul class="nav navbar-top-links navbar-right">
         <li>
-            <?php if ($user['isComittee'] == 1 && uri_string() != 'dashboard') {?>
-                <a href="<?php echo base_url('dashboard')?>">
-                    <i class="fa fa-tasks fa-fw"></i> IC Dashboard</i>
+            <?php if ($user['isComittee'] == 1 && uri_string() != 'dashboard') { ?>
+                <a href="<?php echo base_url('dashboard') ?>">
+                    <i class="fa fa-tasks fa-fw"></i> IC Dashboard
                 </a>
             <?php } ?>
 
-            <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') {?>
 
-                <a  href="<?php echo base_url('admin_dashboard')?>">
-                    <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard </i>
+        </li>
+        <li>
+            <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') { ?>
+
+                <a href="<?php echo base_url('admin_dashboard') ?>">
+                    <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard
                 </a>
 
             <?php } ?>
         </li>
-
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">

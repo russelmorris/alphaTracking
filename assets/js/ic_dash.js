@@ -14,17 +14,19 @@ $(document).ready(function () {
                 return "";
             }
         });
-
     });
 });
 let ticker = null;
+let masterID = null;
 $('#dataTables-example').find('tr').mouseover(function () {
     ticker = $(this).find('.ticker').text().trim();
+    masterID = $('.master_id').val();
 });
 
 $('.business-model').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc1: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -36,6 +38,7 @@ $('.business-model').change(function () {
 $('.business-valuation').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc2: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -48,6 +51,7 @@ $('.business-valuation').change(function () {
 $('.digital-footprint').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc3: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -60,6 +64,7 @@ $('.digital-footprint').change(function () {
 $('.uplift').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc4: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -72,6 +77,7 @@ $('.uplift').change(function () {
 $('.competitor-analysis').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc5: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -84,6 +90,7 @@ $('.competitor-analysis').change(function () {
 $('.risk').change(function () {
     $.post('populate_master', {
         ticker: ticker,
+        master: masterID,
         fc6: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -94,9 +101,16 @@ $('.risk').change(function () {
 });
 
 $('.veto').click(function () {
+    $(this).find('i').toggleClass(function () {
+        if ($(this).hasClass(".fa-check")) {
+            return "";
+        } else {
+            return "fa-check";
+        }
+    });
     $.post('populate_master', {
-        ticker: ticker,
-        veto: $(this).is(":checked"),
+        master: masterID,
+        veto: $(this).find('i').hasClass('fa-check'),
         flag: 'veto',
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -117,7 +131,7 @@ $('.finalised').click(function () {
 
 
     $.post('populate_master', {
-        ticker: ticker,
+        master: masterID,
         finalised: $(this).find('i').hasClass('fa-check'),
         flag: 'finalised',
         csnamerf: $.cookie('csrfcookiename')
@@ -147,6 +161,25 @@ $('.finalised').click(function () {
 
 });
 $('.ic_dates').change(function () {
+    let fd = new FormData();
+    fd.append('date', $(this).val()); // since this is your file input
+    fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
 
+    $.ajax({
+        url: 'dashboard_ajax',
+        async: false,
+        type: "POST",
+        data: fd,
+        dataType: "html",
+        processData: false, // important
+        contentType: false, // important
+        success: function (data) {
+            $('.dashboard').html(data);
+        }
+    })
 });
+
+$('.admin_users').change(function () {
+    console.log($(this).val());
+})
 

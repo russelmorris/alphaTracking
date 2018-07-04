@@ -11,19 +11,36 @@ class C_dashboard extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('m_user');
+        $this->load->model(['m_user', 'm_admin']);
     }
 
 
     public function dashboard()
     {
-        $user                 = $this->session->userdata('user');
-        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'], '');
-        $data['user']         = $user;
-        $data['ic_dates']     = array_unique(array_column($data['ic_dashboard'], 'icDate'));
+        $data['user'] = $this->session->userdata('user');
+        if ($data['user']['isAdmin']) {
+            $data['admin_users'] = $this->m_admin->get_users();
+        }
+        $data['ic_dates']     = $this->m_user->getICDates();
+        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($data['user']['memberNo'],
+            $data['ic_dates'][0]['icDate'], end($data['ic_dates'])['icDate']);
 //        $data['finalised'] = $this->m_user->count_finalised($user['memberNo']);
-
         $this->load->template('v_dashboard', $data);
+    }
+
+    function dashboard_ajax()
+    {
+        if ( ! $this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+        $date                 = $this->input->post('ic_date');
+        $user                 = $this->session->userdata('user');
+        $data['user']         = $user;
+        $data['ic_dates']     = $this->m_user->getICDates();
+        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'],
+            $data['ic_dates'][0]['icDate'], $date);
+        $this->load->view('partial/v_dashboard', $data);
     }
 
     public function addDataToMaster()
@@ -35,6 +52,7 @@ class C_dashboard extends MY_Controller
         $user                 = $this->session->userdata('user');
         $populate_master_data = [
             'ticker'    => $this->input->post('ticker'),
+            'master'    => $this->input->post('master'),
             'fc1'       => $this->input->post('fc1'),
             'fc2'       => $this->input->post('fc2'),
             'fc3'       => $this->input->post('fc3'),
@@ -45,37 +63,38 @@ class C_dashboard extends MY_Controller
             'finalised' => json_decode($this->input->post('finalised')),
             'flag'      => $this->input->post('flag')
         ];
-        if ( ! is_null($populate_master_data['ticker'])) {
+        if ( ! is_null($populate_master_data['ticker']) && ! is_null($populate_master_data['master'])) {
             if ( ! is_null($populate_master_data['fc1'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 1,
-                    $populate_master_data['fc1']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 1, $populate_master_data['fc1']);
             }
             if ( ! is_null($populate_master_data['fc2'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 2,
-                    $populate_master_data['fc2']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 2, $populate_master_data['fc2']);
             }
             if ( ! is_null($populate_master_data['fc3'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 3,
-                    $populate_master_data['fc3']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 3, $populate_master_data['fc3']);
             }
             if ( ! is_null($populate_master_data['fc4'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 4,
-                    $populate_master_data['fc4']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 4, $populate_master_data['fc4']);
             }
             if ( ! is_null($populate_master_data['fc5'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 5,
-                    $populate_master_data['fc5']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 5, $populate_master_data['fc5']);
             }
             if ( ! is_null($populate_master_data['fc6'])) {
-                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'], 6,
-                    $populate_master_data['fc6']);
+                $this->m_user->updateFactorsMasterData($user['memberNo'], $populate_master_data['ticker'],
+                    $populate_master_data['master'], 6, $populate_master_data['fc6']);
             }
-            if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto') {
-                $this->m_user->setVetoFlag($user['memberNo'], $populate_master_data['ticker'],
+        } else {
+            if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto' && ! is_null($populate_master_data['master'])) {
+                $this->m_user->setVetoFlag($user['memberNo'], $populate_master_data['master'],
                     $populate_master_data['veto']);
             }
-            if ( ! is_null($populate_master_data['finalised']) && $populate_master_data['flag'] == 'finalised') {
-                $this->m_user->setFinaliseFlag($user['memberNo'], $populate_master_data['ticker'],
+            if ( ! is_null($populate_master_data['finalised']) && $populate_master_data['flag'] == 'finalised' && ! is_null($populate_master_data['master'])) {
+                $this->m_user->setFinaliseFlag($user['memberNo'], $populate_master_data['master'],
                     $populate_master_data['finalised']);
             }
         }

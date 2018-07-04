@@ -28,15 +28,14 @@
     </div>
 
     <!-- /.col-lg-6 -->
-    <div class="col-md-6 pull-right">
+    <div class="col-md-offset-3 col-md-3 pull-right">
         <div class="form-group">
             <label>For IC date</label>
             <select class="form-control">
-                <?php for ($i = 0; $i <= 10; $i++): ?>
-                    <option value="<?php echo date('Y-m-d',
-                        strtotime('+' . $i . ' days', time())) ?>"><?php echo date('Y-m-d',
-                            strtotime('+' . $i . ' days', time())) ?></option>
-                <?php endfor; ?>
+                <?php foreach ($ic_dates as $value): ?>
+                    <option value="<?php echo $value['icDate']; ?>">
+                        <?php echo $value['icDate']; ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>

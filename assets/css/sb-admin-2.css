@@ -546,6 +546,7 @@ table.dataTable thead > tr > th {
 
 .vcenter {
     vertical-align: middle !important;
+    text-align: center;
 }
 
 .hcenter {
