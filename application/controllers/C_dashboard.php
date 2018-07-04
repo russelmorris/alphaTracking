@@ -18,7 +18,7 @@ class C_dashboard extends MY_Controller
     public function dashboard()
     {
         $user                 = $this->session->userdata('user');
-        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'], '');
+        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'], '2018-08-01');
         $data['user']         = $user;
         $data['ic_dates']     = array_unique(array_column($data['ic_dashboard'], 'icDate'));
 //        $data['finalised'] = $this->m_user->count_finalised($user['memberNo']);

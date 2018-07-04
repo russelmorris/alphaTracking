@@ -32,75 +32,36 @@ class M_user extends CI_Model
 
     public function getProspectsByDateAndId($id = 0, $date = '')
     {
-        $result = [];
-        if ($id != 0 && strlen($date)) {
-            $result = $this->db
-                ->select('p.*')
-                ->select('m1.factorComments as fc1, m2.factorComments as fc2')
-                ->select('m3.factorComments as fc3, m4.factorComments as fc4')
-                ->select('m5.factorComments as fc5, m6.factorComments as fc6')
-                ->select('m7.factorComments as fc7, m7.veto as veto')
-                ->select('m7.isFinalised as isfinalised')
-                ->from('prospects p')
-                ->join("master m1",
-                    "m1.icDate = p.icDate and m1.ticker = p.ticker and m1.factorNo = 1 and m1.memberNo = $id",
-                    "inner")
-                ->join("master m2",
-                    "m2.icDate = p.icDate and m2.ticker = p.ticker and m2.factorNo = 2 and m2.memberNo =  $id",
-                    "inner")
-                ->join("master m3",
-                    "m3.icDate = p.icDate and m3.ticker = p.ticker and m3.factorNo = 3 and m3.memberNo = $id",
-                    "inner")
-                ->join("master m4",
-                    "m4.icDate = p.icDate and m4.ticker = p.ticker and m4.factorNo = 4 and m4.memberNo = $id",
-                    "inner")
-                ->join("master m5",
-                    "m5.icDate = p.icDate and m5.ticker = p.ticker and m5.factorNo = 5 and m5.memberNo = $id",
-                    "inner")
-                ->join("master m6",
-                    "m6.icDate = p.icDate and m6.ticker = p.ticker and m6.factorNo = 6 and m6.memberNo = $id",
-                    "inner")
-                ->join("master m7",
-                    "m7.icDate = p.icDate and m7.ticker = p.ticker and m7.factorNo = 7 and m7.memberNo = $id",
-                    "inner")
-                ->where('p.icDate', $date)
-                ->get()->result_array();
-        } elseif ($id != 0) {
-            $result = $this->db
-                ->select('p.*')
-                ->select('m1.factorComments as fc1, m2.factorComments as fc2')
-                ->select('m3.factorComments as fc3, m4.factorComments as fc4')
-                ->select('m5.factorComments as fc5, m6.factorComments as fc6')
-                ->select('m7.factorComments as fc7, m7.veto as veto')
-                ->select('m7.isFinalised as isfinalised')
-                ->from('prospects p')
-                ->join("master m1",
-                    "m1.icDate = p.icDate and m1.ticker = p.ticker and m1.factorNo = 1 and m1.memberNo = $id",
-                    "inner")
-                ->join("master m2",
-                    "m2.icDate = p.icDate and m2.ticker = p.ticker and m2.factorNo = 2 and m2.memberNo =  $id",
-                    "inner")
-                ->join("master m3",
-                    "m3.icDate = p.icDate and m3.ticker = p.ticker and m3.factorNo = 3 and m3.memberNo = $id",
-                    "inner")
-                ->join("master m4",
-                    "m4.icDate = p.icDate and m4.ticker = p.ticker and m4.factorNo = 4 and m4.memberNo = $id",
-                    "inner")
-                ->join("master m5",
-                    "m5.icDate = p.icDate and m5.ticker = p.ticker and m5.factorNo = 5 and m5.memberNo = $id",
-                    "inner")
-                ->join("master m6",
-                    "m6.icDate = p.icDate and m6.ticker = p.ticker and m6.factorNo = 6 and m6.memberNo = $id",
-                    "inner")
-                ->join("master m7",
-                    "m7.icDate = p.icDate and m7.ticker = p.ticker and m7.factorNo = 7 and m7.memberNo = $id",
-                    "inner")
-                ->limit(10)
-                ->get()->result_array();
-        } else {
-            $result = [];
-        }
 
+        #toso
+        /*
+         * Chenck if is addmin and allow to use ID passeed  in function
+         * If not is admin get user from session and owerwrite  passed admin
+         */
+        $result = [];
+        $result = $this->db
+            ->select('m.*')
+            ->select('v1.factorScore as fc1')
+            ->select('v2.factorScore as fc2')
+            ->select('v3.factorScore as fc3')
+            ->select('v4.factorScore as fc4')
+            ->select('v5.factorScore as fc5')
+            ->select('v6.factorScore as fc6')
+            ->select('v7.factorScore as fc7')
+            ->from('master m')
+            ->join("voting v1", "v1.masterID = m.masterID and v1.factorNo = 1", "inner")
+            ->join("voting v2", "v2.masterID = m.masterID and v2.factorNo = 2", "inner")
+            ->join("voting v3", "v3.masterID = m.masterID and v3.factorNo = 3", "inner")
+            ->join("voting v4", "v4.masterID = m.masterID and v4.factorNo = 4", "inner")
+            ->join("voting v5", "v5.masterID = m.masterID and v5.factorNo = 5", "inner")
+            ->join("voting v6", "v6.masterID = m.masterID and v6.factorNo = 6", "inner")
+            ->join("voting v7", "v7.masterID = m.masterID and v7.factorNo = 7", "inner")
+            ->where('m.strategyNo', 1)
+            ->where('m.isActive', 1)
+            ->where('m.memberNo', $id)
+           ->where('m.icDate', $date)
+            ->get()
+            ->result_array();
         return $result;
     }
 

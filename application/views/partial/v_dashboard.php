@@ -136,44 +136,44 @@
                         </thead>
                         <tbody>
                         <?php foreach ($ic_dashboard as $index => $ic): ?>
-                            <tr class="row_odd <?php echo $ic['isfinalised'] ? "row-finished" : '' ?>">
+                            <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>">
                                 <td class="vcenter"><?php echo $index + 1; ?></td>
                                 <td class="vcenter hcenter final">
                                     <button
                                             class="btn btn-default btn-circle finalised">
-                                        <i class="fa <?php echo $ic['isfinalised'] ? "fa-check" : '' ?>"></i>
+                                        <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>
                                     </button>
                                 </td>
                                 <td class="vcenter ticker">
-                                    <?php if ($ic['isfinalised']): ?>
+                                    <?php if ($ic['isFinalised']): ?>
                                         <?php echo $ic['ticker']; ?>
                                     <?php else: ?>
                                         <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="vcenter">
-                                    <?php if ($ic['isfinalised']): ?>
+                                    <?php if ($ic['isFinalised']): ?>
                                         <?php echo $ic['name']; ?>
                                     <?php else: ?>
                                         <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="vcenter">
-                                    <?php if ($ic['isfinalised']): ?>
+                                    <?php if ($ic['isFinalised']): ?>
                                         <?php echo $ic['sector']; ?>
                                     <?php else: ?>
                                         <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="vcenter">
-                                    <?php if ($ic['isfinalised']): ?>
+                                    <?php if ($ic['isFinalised']): ?>
                                         <?php echo $ic['country']; ?>
                                     <?php else: ?>
                                         <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
                                     <?php endif; ?>
                                 </td>
                                 <td class="vcenter">
-                                    <?php if ($ic['isfinalised']): ?>
+                                    <?php if ($ic['isFinalised']): ?>
                                         <?php echo $ic['machineRank']; ?>
                                     <?php else: ?>
                                         <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
@@ -194,14 +194,14 @@
                                     <div class="cell_holder">
                                         <div class="cell_part">
                                             <div class="round">
-                                                <input <?php echo $ic['veto'] ? "checked" : "" ?>
+                                                <input <?php echo $ic['vetoFlag'] ? "checked" : "" ?>
                                                         type="checkbox" class="veto"
                                                         id="<?php echo 'checkbox' . ($index + 1) ?>"/>
                                                 <label for="<?php echo 'checkbox' . ($index + 1) ?>"></label>
                                             </div>
                                         </div>
                                         <div class="cell_part_hr"></div>
-                                        <div class="cell_part"><?php echo $ic['veto'] ? "Yes" : "No" ?></div>
+                                        <div class="cell_part"><?php echo $ic['vetoFlag'] ? "Yes" : "No" ?></div>
                                     </div>
                                 </td>
                                 <td class="no-padding">
@@ -240,9 +240,9 @@
                                                 <select class="form-control business-valuation">
                                                     <?php for ($i = 1; $i < 11; $i++): ?>
                                                         <?php if ($i == 1): ?>
-                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                            <option value="<?php echo $i; ?>">1</option>
                                                         <?php elseif ($i == 10): ?>
-                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                            <option value="<?php echo $i; ?>">10</option>
                                                         <?php elseif ($i == 5): ?>
                                                             <option value="<?php echo $i; ?>" selected>5</option>
                                                         <?php else: ?>
@@ -267,9 +267,9 @@
                                                 <select class="form-control digital-footprint">
                                                     <?php for ($i = 1; $i < 11; $i++): ?>
                                                         <?php if ($i == 1): ?>
-                                                            <option value="<?php echo $i; ?>">1(hate it)</option>
+                                                            <option value="<?php echo $i; ?>">1</option>
                                                         <?php elseif ($i == 10): ?>
-                                                            <option value="<?php echo $i; ?>">10(love it)</option>
+                                                            <option value="<?php echo $i; ?>">10</option>
                                                         <?php elseif ($i == 5): ?>
                                                             <option value="<?php echo $i; ?>" selected>5</option>
                                                         <?php else: ?>
