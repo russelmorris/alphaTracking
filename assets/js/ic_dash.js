@@ -174,7 +174,7 @@ $('.ic_dates').change(function () {
         processData: false, // important
         contentType: false, // important
         success: function (data) {
-            $('.dashboard').html(data);
+            $('#dataTables-example').find('tbody').html($(data).find('tbody').html());
         }
     })
 });

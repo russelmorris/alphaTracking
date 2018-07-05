@@ -4,9 +4,10 @@
     </div>
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
-            <label class="btn btn-primary btn-block" style="margin-bottom: 1%">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Import prospect list</button>
+            <!--<label class="btn btn-primary btn-block" style="margin-bottom: 1%">
                 Import prospect list <i class="glyphicon glyphicon-import"></i><input id="prospect" type="file" name="prospect" style="display: none;">
-            </label>
+            </label>-->
         </div>
     </div>
     <div class="col-md-6">
@@ -28,17 +29,7 @@
     </div>
 
     <!-- /.col-lg-6 -->
-    <div class="col-md-offset-3 col-md-3 pull-right">
-        <div class="form-group">
-            <label>For IC date</label>
-            <select class="form-control">
-                <?php foreach ($ic_dates as $value): ?>
-                    <option value="<?php echo $value['icDate']; ?>">
-                        <?php echo $value['icDate']; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
+
     <!-- /.col-lg-6 -->
 
     <!-- /.row -->
@@ -70,6 +61,37 @@
             </tbody>
         </table>
         <!-- /.panel -->
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Import Prospects</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>For IC date</label>
+                    <select class="form-control import_date">
+                        <?php foreach ($ic_dates as $value): ?>
+                            <option value="<?php echo $value['icDate']; ?>">
+                                <?php echo $value['icDate']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <label class="btn btn-primary btn-block" style="margin-bottom: 1%">
+                    Choose File <i class="glyphicon glyphicon-import"></i><input id="prospect" type="file" name="prospect" style="display: none;">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
 <!-- /#page-wrapper -->
