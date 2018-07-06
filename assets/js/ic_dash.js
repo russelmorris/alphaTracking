@@ -18,6 +18,8 @@ $(document).ready(function () {
 });
 let ticker = null;
 let masterID = null;
+let icDate = $('.ic_dates').val();
+let user_id = $('.admin_users').val();
 $('#dataTables-example').find('tr').mouseover(function () {
     ticker = $(this).find('.ticker').text().trim();
     masterID = $('.master_id').val();
@@ -119,7 +121,6 @@ $('.veto').click(function () {
 
     });
 });
-
 $('.finalised').click(function () {
     let final = $(this).find('i').toggleClass(function () {
         if ($(this).hasClass(".fa-check")) {
@@ -128,7 +129,6 @@ $('.finalised').click(function () {
             return "fa-check";
         }
     });
-
 
     $.post('populate_master', {
         master: masterID,
@@ -160,26 +160,27 @@ $('.finalised').click(function () {
     });
 
 });
-$('.ic_dates').change(function () {
-    let fd = new FormData();
-    fd.append('date', $(this).val()); // since this is your file input
-    fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
 
-    $.ajax({
-        url: 'dashboard_ajax',
-        async: false,
-        type: "POST",
-        data: fd,
-        dataType: "html",
-        processData: false, // important
-        contentType: false, // important
-        success: function (data) {
-            $('#dataTables-example').find('tbody').html($(data).find('tbody').html());
-        }
+$('.ic_dates').change(function () {
+    $.post('/dashboard_ajax', {
+        ic_date: $(this).val(),
+        user_id: user_id,
+        csnamerf: $.cookie('csrfcookiename')
+    }).done(function (data) {
+        $('#dataTables-example').html($(data).find('#dataTables-example'));
+    }).fail(function () {
+
     })
 });
 
 $('.admin_users').change(function () {
-    console.log($(this).val());
-})
+    $.post('/dashboard_ajax', {
+        ic_date: icDate,
+        user_id: $(this).val(),
+        csnamerf: $.cookie('csrfcookiename')
+    }).done(function (data) {
+        $('#dataTables-example').html($(data).find('#dataTables-example'));
+    }).fail(function () {
 
+    });
+});

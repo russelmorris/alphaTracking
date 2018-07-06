@@ -42,8 +42,13 @@
                     <label>Users</label>
                     <select class="form-control admin_users">
                         <?php foreach ($admin_users as $value): ?>
-                            <option value="<?php echo $value['memberNo']; ?>">
-                                <?php echo $value['memberName']; ?></option>
+                            <?php if ($value['isAdmin']): ?>
+                                <option selected value="<?php echo $value['memberNo']; ?>">
+                                    <?php echo $value['memberName']; ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo $value['memberNo']; ?>">
+                                    <?php echo $value['memberName']; ?></option>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>

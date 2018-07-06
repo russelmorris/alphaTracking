@@ -42,7 +42,6 @@ class M_user extends CI_Model
          * Chenck if is addmin and allow to use ID passeed  in function
          * If not is admin get user from session and owerwrite  passed admin
          */
-        $user = $this->session->userdata('user');
         $result = [];
         $result = $this->db
             ->select('m.masterID')
@@ -54,14 +53,7 @@ class M_user extends CI_Model
             ->select('m.isActive')
             ->select('m.isFinalised')
             ->select('m.vetoFlag')
-            ->select('v1.votingID as votingID')
-            ->select('IFNULL(v1.factorScore, 0) as factorScore1')
-            ->select('IFNULL(v2.factorScore, 0) as factorScore2')
-            ->select('IFNULL(v3.factorScore, 0) as factorScore3')
-            ->select('IFNULL(v4.factorScore, 0) as factorScore4')
-            ->select('IFNULL(v5.factorScore, 0) as factorScore5')
-            ->select('IFNULL(v6.factorScore, 0) as factorScore6')
-            ->select('IFNULL(v7.factorScore, 0) as factorScore7')
+            ->select('vo1.votingID as votingID')
             ->select("IFNULL(vo1.factorScore, 'N/A') as factorScoreOld1")
             ->select("IFNULL(vo2.factorScore, 'N/A') as factorScoreOld2")
             ->select("IFNULL(vo3.factorScore, 'N/A') as factorScoreOld3")
@@ -70,24 +62,17 @@ class M_user extends CI_Model
             ->select("IFNULL(vo6.factorScore, 'N/A') as factorScoreOld6")
             ->select("IFNULL(vo7.factorScore, 'N/A') as factorScoreOld7")
             ->from('master m')
-            ->join('voting v1', "v1.factorNo = 1 and v1.memberNo=$id and v1.icDate='$dateTo'", "left")
-            ->join('voting v2', "v2.factorNo = 2 and v2.memberNo=$id and v2.icDate='$dateTo'", "left")
-            ->join('voting v3', "v3.factorNo = 3 and v3.memberNo=$id and v3.icDate='$dateTo'", "left")
-            ->join('voting v4', "v4.factorNo = 4 and v4.memberNo=$id and v4.icDate='$dateTo'", "left")
-            ->join('voting v5', "v5.factorNo = 5 and v5.memberNo=$id and v5.icDate='$dateTo'", "left")
-            ->join('voting v6', "v6.factorNo = 6 and v6.memberNo=$id and v6.icDate='$dateTo'", "left")
-            ->join('voting v7', "v7.factorNo = 7 and v7.memberNo=$id and v7.icDate='$dateTo'", "left")
-            ->join('voting vo1', "vo1.factorNo = 1 and vo1.memberNo=$id and vo1.icDate='$dateTo'", "left")
-            ->join('voting vo2', "vo2.factorNo = 2 and vo2.memberNo=$id and vo2.icDate='$dateTo'", "left")
-            ->join('voting vo3', "vo3.factorNo = 3 and vo3.memberNo=$id and vo3.icDate='$dateTo'", "left")
-            ->join('voting vo4', "vo4.factorNo = 4 and vo4.memberNo=$id and vo4.icDate='$dateTo'", "left")
-            ->join('voting vo5', "vo5.factorNo = 5 and vo5.memberNo=$id and vo5.icDate='$dateTo'", "left")
-            ->join('voting vo6', "vo6.factorNo = 6 and vo6.memberNo=$id and vo6.icDate='$dateTo'", "left")
-            ->join('voting vo7', "vo7.factorNo = 7 and vo7.memberNo=$id and vo7.icDate='$dateTo'", "left")
+            ->join('voting vo1', "vo1.factorNo = 1 and vo1.memberNo=$id and vo1.icDate='$dateFrom'", "left")
+            ->join('voting vo2', "vo2.factorNo = 2 and vo2.memberNo=$id and vo2.icDate='$dateFrom'", "left")
+            ->join('voting vo3', "vo3.factorNo = 3 and vo3.memberNo=$id and vo3.icDate='$dateFrom'", "left")
+            ->join('voting vo4', "vo4.factorNo = 4 and vo4.memberNo=$id and vo4.icDate='$dateFrom'", "left")
+            ->join('voting vo5', "vo5.factorNo = 5 and vo5.memberNo=$id and vo5.icDate='$dateFrom'", "left")
+            ->join('voting vo6', "vo6.factorNo = 6 and vo6.memberNo=$id and vo6.icDate='$dateFrom'", "left")
+            ->join('voting vo7', "vo7.factorNo = 7 and vo7.memberNo=$id and vo7.icDate='$dateFrom'", "left")
             ->where('m.strategyNo', 1)
             ->where('m.isActive', 1)
             ->where('m.memberNo', $id)
-            ->where('m.icDate', $dateFrom)
+            ->where('m.icDate', $dateTo)
             ->get()
             ->result_array();
 

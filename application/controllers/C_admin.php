@@ -18,6 +18,7 @@ class C_admin extends MY_Controller
     public function dashboard()
     {
         $data['user']     = $this->session->userdata('user');
+        $data['admin']    = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['users']    = $this->m_admin->get_users();
         $data['ic_dates'] = $this->m_user->getICDates();
         $this->load->template('v_admin_dashboard', $data);
@@ -33,48 +34,50 @@ class C_admin extends MY_Controller
 
         $ic_date = $this->input->post('ic_date');
         $data    = fopen($_FILES['file']['tmp_name'], 'r');
-        while ($row = fgetcsv($data)) {
-            if ($row[1] !== 'ticker') {
-                $info = [
-                    'strategyNo'   => 1,
-                    'icDate'       => date($ic_date),
-                    'ticker'       => $row[1],
-                    'RIC'          => $row[5],
-                    'name'         => $row[6],
-                    'country'      => $row[7],
-                    'sector'       => $row[8],
-                    'machineScore' => (float)$row[9],
-                    'SWSurl'       => 'https://url.com'
-                ];
-                $this->m_admin->insert_prospects_from_csv($info);
-                /*
-                 *  I'm going with this option for checking (I'm pulling certain data from master table)
-                 *  so I don't make a lot of requests to the server but
-                 *  some of the logic is not working in the if else statements (need help)
-                 */
-                foreach ($master as $value) {
-                    if ($value['icDate'] == $ic_date && $info['ticker'] == $value['ticker']) { // Old Data
-                        echo 'old' . "\n";
-                        // $this->m_admin->isActiveUpdate(0, $ic_date);
-                    } elseif ($value['icDate'] != $ic_date && $info['ticker'] == $value['ticker']) { // New icDate but existing data
-                        //   $this->m_admin->isActiveUpdate(1, $ic_date);
-                        echo 'new old' . "\n";
-                    } elseif ($value['icDate'] != $ic_date && $info['ticker'] != $value['ticker']) { // New Data
-                        echo 'new' . "\n";
-                        // the code below works only for the current signed in user
-                        /*$user = $this->session->userdata('user');
-
-                        unset($info['SWSurl']);
-                        $info['memberNo']   = $user['memberNo'];
-                        $info['memberName'] = $user['memberName'];
-                        $info['bWeight']    = $user['bWeight'];
-                        $info['isActive']   = 1;
-                        $this->m_admin->populateMaster($info);*/
+        $row     = fgetcsv($data);
+        if ( ! isset($row[9]) || ! isset($ic_date)) {
+            http_response_code(400);
+            die();
+        } else {
+            while ($row = fgetcsv($data)) {
+                if ($row[1] !== 'ticker') {
+                    $info = [
+                        'strategyNo'   => 1,
+                        'icDate'       => date($ic_date),
+                        'ticker'       => $row[1],
+                        'RIC'          => $row[5],
+                        'name'         => $row[6],
+                        'country'      => $row[7],
+                        'sector'       => $row[8],
+                        'machineScore' => (float)$row[9],
+                        'SWSurl'       => 'https://url.com'
+                    ];
+                    $this->m_admin->insert_prospects_from_csv($info);
+                    /*
+                     *  I'm going with this option for checking (I'm pulling certain data from master table)
+                     *  so I don't make a lot of requests to the server but
+                     *  some of the logic is not working in the if else statements (need help)
+                     */
+                    foreach ($master as $value) {
+                        if ($value['icDate'] == $ic_date && $info['ticker'] == $value['ticker']) { // Old Data
+                            $this->m_admin->isActiveUpdate(0, $ic_date);
+                        } elseif ($value['icDate'] != $ic_date && $info['ticker'] == $value['ticker']) { // New icDate but existing data
+                            $this->m_admin->isActiveUpdate(1, $ic_date);
+                        } elseif ($value['icDate'] != $ic_date && $info['ticker'] != $value['ticker']) { // New Data
+                            // the code below works only for the current signed in user
+                            $user = $this->session->userdata('user');
+                            unset($info['SWSurl']);
+                            $info['memberNo']   = $user['memberNo'];
+                            $info['memberName'] = $user['memberName'];
+                            $info['bWeight']    = $user['bWeight'];
+                            $info['isActive']   = 1;
+                            $this->m_admin->populateMaster($info);
+                        }
                     }
                 }
             }
+            echo true; // for closing modal on frontend
         }
-        echo true; // for closing modal on frontend
     }
 
     public function import_returns()

@@ -36,6 +36,7 @@ class C_voting extends MY_Controller
         $data['icdate'] = $icDate;
         $data['ticker'] = $ticker;
         $data['user'] = $this->session->userdata('user');
+        $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
         $this->load->template('v_voting', $data);
     }
 

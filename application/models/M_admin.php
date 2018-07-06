@@ -10,7 +10,7 @@ class M_admin extends CI_Model
 
     public function get_users()
     {
-        return $this->db->get('ic')->result_array();
+        return $this->db->from('ic')->get()->result_array();
     }
 
     public function insert_prospects_from_csv($data)

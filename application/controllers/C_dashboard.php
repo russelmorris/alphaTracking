@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @property  CI_Session session
  * @property  M_user m_user
+ * @property  CI_URI uri
  */
 class C_dashboard extends MY_Controller
 {
@@ -17,7 +18,8 @@ class C_dashboard extends MY_Controller
 
     public function dashboard()
     {
-        $data['user'] = $this->session->userdata('user');
+        $data['user']  = $this->session->userdata('user');
+        $data['admin'] = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         if ($data['user']['isAdmin']) {
             $data['admin_users'] = $this->m_admin->get_users();
         }
@@ -28,19 +30,30 @@ class C_dashboard extends MY_Controller
         $this->load->template('v_dashboard', $data);
     }
 
-    function dashboard_ajax()
+    public function dashboard_ajax()
     {
         if ( ! $this->input->is_ajax_request()) {
             show_404();
             die();
         }
-        $date                 = $this->input->post('ic_date');
-        $user                 = $this->session->userdata('user');
-        $data['user']         = $user;
-        $data['ic_dates']     = $this->m_user->getICDates();
-        $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'],
-            $data['ic_dates'][0]['icDate'], $date);
-        $this->load->view('partial/v_dashboard', $data);
+        $date        = $this->input->post('ic_date');
+        $id          = $this->input->post('user_id');
+        $sessionUser = $this->session->userdata('user');
+        if ($id == $sessionUser['memberNo']) {
+
+            $data['user']         = $sessionUser;
+            $data['ic_dates']     = $this->m_user->getICDates();
+            $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($sessionUser['memberNo'],
+                $data['ic_dates'][0]['icDate'], $date);
+            $this->load->view('partial/v_dashboard', $data);
+        } else {
+            $user                 = $this->m_user->getUserByID($id);
+            $data['user']         = $user;
+            $data['ic_dates']     = $this->m_user->getICDates();
+            $data['ic_dashboard'] = $this->m_user->getProspectsByDateAndId($user['memberNo'],
+                $data['ic_dates'][0]['icDate'], $date);
+            $this->load->view('partial/v_dashboard', $data);
+        }
     }
 
     public function addDataToMaster()
