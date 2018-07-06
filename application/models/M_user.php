@@ -32,7 +32,11 @@ class M_user extends CI_Model
 
     public function getICDates()
     {
-        return $this->db->select('icDate')->from('icdate')->get()->result_array();
+        return $this->db
+            ->select('icDate')
+            ->from('icDate')
+            ->get()
+            ->result_array();
     }
 
     public function getProspectsByDateAndId($id = 0, $dateFrom = '', $dateTo = '')
