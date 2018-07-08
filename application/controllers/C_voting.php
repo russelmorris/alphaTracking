@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * @property  Ci_input input
- * @property  M_user m_user
  */
 class C_voting extends MY_Controller
 {
@@ -27,7 +26,6 @@ class C_voting extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('m_user');
     }
 
     public function voting($icDate, $ticker)

@@ -67,44 +67,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="-pull-left div-inline-block">DataTables Advanced Tables</div>
-                    <div class="pull-right div-inline-block">
-                        <a data-toggle="modal" data-target="#legendModal">
-                            Legend
-                        </a>
-                        <!-- Modal -->
-                        <div class="modal fade"
-                             id="legendModal"
-                             tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="legendModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                            &times;
-                                        </button>
-                                        <h4 class="modal-title" id="legendModalLabel">Legend</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                        culpa qui officia deserunt mollit anim id est laborum.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
-                    </div>
+                    <div class="pull-right div-inline-block">1 = (I hate it),  10 = (I love it)</div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

@@ -15,6 +15,16 @@ $(document).ready(function () {
             }
         });
     });
+
+    $.post('/dashboard_ajax', {
+        ic_date:  $('.ic_dates').val(),
+        user_id: $('.admin_users').val(),
+        csnamerf: $.cookie('csrfcookiename')
+    }).done(function (data) {
+        $('#dataTables-example').html($(data).find('#dataTables-example'));
+    }).fail(function () {
+
+     });
 });
 let ticker = null;
 let masterID = null;

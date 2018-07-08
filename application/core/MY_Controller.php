@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  CI_Session session
  * @property  Ci_input input
  * @property  M_admin m_admin
- * @property  M_user m_user
+ * @property  M_ic m_ic
  */
 class MY_Controller extends CI_Controller
 {
@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model('m_user');
+        $this->load->model('m_ic');
         $user = $this->session->userdata('user');
 
         if (!$user) {
@@ -21,7 +21,7 @@ class MY_Controller extends CI_Controller
             redirect(base_url('login'));
         } else {
 
-            $user = $this->m_user->getUserByID($user['memberNo']);
+            $user = $this->m_ic->getUserByID($user['memberNo']);
             if ($user) {
                 $this->session->set_userdata('user', $user);
             } else {

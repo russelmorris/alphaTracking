@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @property  CI_Model model
+ * @property  CI_db db
+ */
 class M_admin extends CI_Model
 {
     public function __construct()
@@ -8,15 +11,6 @@ class M_admin extends CI_Model
         parent::__construct();
     }
 
-    public function get_users()
-    {
-        return $this->db->from('ic')->get()->result_array();
-    }
-
-    public function insert_prospects_from_csv($data)
-    {
-        $this->db->insert('prospects', $data);
-    }
 
     public function insert_returns_from_csv($data)
     {

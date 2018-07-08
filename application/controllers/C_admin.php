@@ -5,13 +5,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  CI_Session session
  * @property  Ci_input input
  * @property  M_admin m_admin
+ * @property  M_prospects m_prospects
+ * @property  M_voting m_voting
+ * @property  M_ic m_ic
+ * @property  M_factors m_factors
+ * @property  M_master m_master
+ * @property  M_icDate m_icdate
  */
 class C_admin extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['m_user', 'm_admin']);
+        $this->load->model([
+            'm_admin',
+            'm_prospects',
+            'm_master',
+            'm_voting',
+            'm_ic',
+            'm_factors',
+            'm_icdate',
+        ]);
     }
 
 
@@ -19,8 +33,8 @@ class C_admin extends MY_Controller
     {
         $data['user']     = $this->session->userdata('user');
         $data['admin']    = ( ! $data['user']['isAdmin']) ? false : $data['user'];
-        $data['users']    = $this->m_admin->get_users();
-        $data['ic_dates'] = $this->m_user->getICDates();
+        $data['users']    = $this->m_ic->getMembers();
+        $data['ic_dates'] = $this->m_icdate->getIcDates();
         $this->load->template('v_admin_dashboard', $data);
     }
 
@@ -30,7 +44,9 @@ class C_admin extends MY_Controller
             show_404();
             die();
         }
-        $master = $this->m_admin->getMasterTable();
+        //$master = $this->m_admin->getMasterTable();
+        $members = $this->m_ic->getMembers();
+        $factors = $this->m_factors->getAllFactors();
 
         $ic_date = $this->input->post('ic_date');
         $data    = fopen($_FILES['file']['tmp_name'], 'r');
@@ -39,6 +55,10 @@ class C_admin extends MY_Controller
             http_response_code(400);
             die();
         } else {
+
+            // mark all record as unprocessed. we need at the end unprocessed to mark ad not active in voting table
+            $this->m_prospects->updateProcessedStatus($ic_date);
+
             while ($row = fgetcsv($data)) {
                 if ($row[1] !== 'ticker') {
                     $info = [
@@ -52,27 +72,17 @@ class C_admin extends MY_Controller
                         'machineScore' => (float)$row[9],
                         'SWSurl'       => 'https://url.com'
                     ];
-                    $this->m_admin->insert_prospects_from_csv($info);
-                    /*
-                     *  I'm going with this option for checking (I'm pulling certain data from master table)
-                     *  so I don't make a lot of requests to the server but
-                     *  some of the logic is not working in the if else statements (need help)
-                     */
-                    foreach ($master as $value) {
-                        if ($value['icDate'] == $ic_date && $info['ticker'] == $value['ticker']) { // Old Data
-                            $this->m_admin->isActiveUpdate(0, $ic_date);
-                        } elseif ($value['icDate'] != $ic_date && $info['ticker'] == $value['ticker']) { // New icDate but existing data
-                            $this->m_admin->isActiveUpdate(1, $ic_date);
-                        } elseif ($value['icDate'] != $ic_date && $info['ticker'] != $value['ticker']) { // New Data
-                            // the code below works only for the current signed in user
-                            $user = $this->session->userdata('user');
-                            unset($info['SWSurl']);
-                            $info['memberNo']   = $user['memberNo'];
-                            $info['memberName'] = $user['memberName'];
-                            $info['bWeight']    = $user['bWeight'];
-                            $info['isActive']   = 1;
-                            $this->m_admin->populateMaster($info);
+                    $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
+
+                    if ($prospectCreated){
+                        foreach($members as $member){
+                            $masterId = $this->m_master->insertProspect($info, $member);
+                            foreach($factors as $factor){
+                                $this->m_voting->insertProspect($info, $masterId, $member, $factor);
+                            }
                         }
+                    } else {
+                        #TODO  we can;t insert in prospect table, need to implement admin notification
                     }
                 }
             }
