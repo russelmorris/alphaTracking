@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_ic m_ic
  * @property  M_factors m_factors
  * @property  M_master m_master
- * @property  M_icDate m_icdate
+ * @property  M_icdate m_icdate
  */
 class C_admin extends MY_Controller
 {

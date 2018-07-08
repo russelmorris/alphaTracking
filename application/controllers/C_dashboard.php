@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  CI_Session session
  * @property  CI_URI uri
  * @property  M_ic m_ic
- * @property  M_icDate m_icdate
+ * @property  M_icdate m_icdate
  * @property  M_master m_master
  * @property  M_voting m_voting
  * @property  M_prospects m_prospects
