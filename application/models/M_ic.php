@@ -15,11 +15,12 @@ class M_ic extends CI_Model
     {
         $query = $this->db
             ->select("*")
-            ->where ('strategyNo', 1)
-            ->where ('isActive', 1)
-            ->where ('isComittee', 1)
+            ->where('strategyNo', 1)
+            ->where('isActive', 1)
+            ->where('isComittee', 1)
             ->from('ic')
             ->get();
+
         return $query->result_array();
     }
 

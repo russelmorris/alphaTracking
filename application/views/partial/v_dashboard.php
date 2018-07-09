@@ -2,6 +2,10 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Name: <?php echo $user['memberName']; ?></h1>
+            <input id="dash_ajax"
+                   type="text"
+                   hidden
+                   value="<?php echo uri_string() == 'admin_dashboard' ? false : true; ?>">
         </div>
     </div>
 
@@ -22,8 +26,13 @@
                 <label>For IC date</label>
                 <select class="form-control ic_dates">
                     <?php foreach ($ic_dates as $value): ?>
-                        <option value="<?php echo $ic_date = $value['icDate']; ?>">
-                            <?php echo $value['icDate']; ?></option>
+                        <?php if (new DateTime($value['icDate']) <= new DateTime()): ?>
+                            <option selected value="<?php echo $value['icDate']; ?>">
+                                <?php echo $value['icDate']; ?></option>
+                        <?php else: ?>
+                            <option value="<?php echo $value['icDate']; ?>">
+                                <?php echo $value['icDate']; ?></option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -67,7 +76,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="-pull-left div-inline-block">DataTables Advanced Tables</div>
-                    <div class="pull-right div-inline-block">1 = (I hate it),  10 = (I love it)</div>
+                    <div class="pull-right div-inline-block">1 = (I hate it), 10 = (I love it)</div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -119,9 +128,11 @@
                         </thead>
                         <tbody>
                         <?php foreach ($ic_dashboard as $index => $ic): ?>
-                            <input class="hidden master_id" value="<?php echo $ic['masterID']; ?>">
                             <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>">
-                                <td class="vcenter"><?php echo $index + 1; ?></td>
+
+                                <td class="vcenter"><?php echo $index + 1; ?>
+                                    <input class="hidden master_id" value="<?php echo $ic['masterID']; ?>">
+                                </td>
                                 <td class="vcenter hcenter final">
                                     <button class="btn btn-default btn-circle finalised">
                                         <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>

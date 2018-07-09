@@ -14,7 +14,7 @@ class M_prospects extends CI_Model
     public function insert_prospects_from_csv($data)
     {
         $return = true;
-        $total = $this->db
+        $total  = $this->db
             ->select("COUNT(prospectID) as total")
             ->where('strategyNo', 1)
             ->where('ticker', $data['ticker'])
@@ -23,23 +23,24 @@ class M_prospects extends CI_Model
             ->from('prospects')
             ->count_all_results();
 
-        if($total == 0) {
+        if ($total == 0) {
             $insertData = [
-                'strategyNo' => 1,
-                'prospectTextID' =>$data['ticker'].'-'.$data['country'].'-'.$data['icDate'],
-                'icDate' => $data['icDate'],
-                'ticker' => $data['ticker'],
-                'RIC' => $data['RIC'],
-                'name' => $data['name'],
-                'country' => $data['country'],
-                'sector' => $data['sector'],
-                'machineScore' => $data['machineScore'],
-                'SWSurl' => $data['SWSurl'],
+                'strategyNo'     => 1,
+                'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
+                'icDate'         => $data['icDate'],
+                'ticker'         => $data['ticker'],
+                'RIC'            => $data['RIC'],
+                'name'           => $data['name'],
+                'country'        => $data['country'],
+                'sector'         => $data['sector'],
+                'machineScore'   => $data['machineScore'],
+                'SWSurl'         => $data['SWSurl'],
             ];
-            if ( !$this->db->insert('prospects', $insertData) ){
+            if ( ! $this->db->insert('prospects', $insertData)) {
                 $return = false;
             }
         }
+
         return $return;
     }
 
@@ -48,12 +49,13 @@ class M_prospects extends CI_Model
         $this->db
             ->set("processed", 0)
             ->where('strategyNo', 1)
-            ->where('icDate',$icDate)
+            ->where('icDate', $icDate)
             ->update('prospects');
+
         return true;
     }
 
-    public function getProspectsByDateAndId($id = 0, $icDate = '')
+    public function getProspectsByDateAndId($id = 0, $icDate = '', $limit = 100)
     {
         //todo
         /*
@@ -85,7 +87,6 @@ class M_prospects extends CI_Model
             ->select("'N/A' as factorScoreOld5")
             ->select("'N/A' as factorScoreOld6")
             ->select("'N/A' as factorScoreOld7")
-
             ->from('master m')
             ->join('voting vo1', "vo1.masterID = m.masterID and vo1.factorNo = 1", "inner")
             ->join('voting vo2', "vo2.masterID = m.masterID and vo2.factorNo = 2", "inner")
@@ -98,8 +99,11 @@ class M_prospects extends CI_Model
             ->where('m.isActive', 1)
             ->where('m.memberNo', $id)
             ->where('m.icDate', $icDate)
+            ->order_by('m.masterID','ASC')
+            ->limit($limit)
             ->get()
             ->result_array();
+
         return $result;
     }
 }

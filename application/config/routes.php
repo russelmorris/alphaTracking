@@ -58,7 +58,7 @@ $route['logout'] = 'c_login/logout';
 
 $route['dashboard']       = 'c_dashboard/dashboard';
 $route['populate_master'] = 'c_dashboard/addDataToMaster';
-$route['dashboard_ajax'] = 'c_dashboard/dashboard_ajax';
+$route['dashboard_ajax']  = 'c_dashboard/dashboard_ajax';
 $route['admin_dashboard'] = 'c_admin/dashboard';
 
 $route['import_prospect']      = 'c_admin/import_prospect';

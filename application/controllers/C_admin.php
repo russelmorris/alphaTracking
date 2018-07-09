@@ -61,7 +61,7 @@ class C_admin extends MY_Controller
 
             while ($row = fgetcsv($data)) {
                 if ($row[1] !== 'ticker') {
-                    $info = [
+                    $info            = [
                         'strategyNo'   => 1,
                         'icDate'       => date($ic_date),
                         'ticker'       => $row[1],
@@ -74,10 +74,10 @@ class C_admin extends MY_Controller
                     ];
                     $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 
-                    if ($prospectCreated){
-                        foreach($members as $member){
+                    if ($prospectCreated) {
+                        foreach ($members as $member) {
                             $masterId = $this->m_master->insertProspect($info, $member);
-                            foreach($factors as $factor){
+                            foreach ($factors as $factor) {
                                 $this->m_voting->insertProspect($info, $masterId, $member, $factor);
                             }
                         }
