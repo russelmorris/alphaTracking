@@ -80,7 +80,68 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-
+                    <?php /*if (count($ic_dashboard) < 1): */?>
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="empty">
+                            <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th data-toggle="tooltip" data-placement="top" title="Finalised" class="text-center">Fin
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Ticker">Ticker
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Name">Name
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Sector">Sector
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Country">
+                                    Country
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Machine Rank">
+                                    MR
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th>&nbsp;</th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip"
+                                    data-placement="top"
+                                    class="text-center"
+                                    title="Business model">
+                                    Business
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip"
+                                    data-placement="top"
+                                    class="text-center"
+                                    title="Business valuation">Business
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip"
+                                    data-placement="top"
+                                    class="text-center"
+                                    title="Digital Footprint">Footprint
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip"
+                                    data-placement="top" class="text-center"
+                                    title="Significant uplft in addressable maret">Uplft
+                                    <i class="fa fa-info-circle"></i>
+                                </th>
+                                <th data-toggle="tooltip"
+                                    data-placement="top"
+                                    class="text-center"
+                                    title="Competitor Analysis">Analysis
+                                    <i class="fa fa-info-circle"></i></th>
+                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
+                                    <i class="fa fa-info-circle"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="15" class="text-center">
+                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    <?php /*else: */?>
                     <table width="100%" class="table table-striped table-bordered table-hover " id="dataTables-example">
                         <thead>
                         <tr>
@@ -341,6 +402,7 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php /*endif; */?>
                 </div>
                 <!-- /.panel-body -->
             </div>

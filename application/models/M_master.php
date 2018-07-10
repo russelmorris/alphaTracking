@@ -13,42 +13,43 @@ class M_master extends CI_Model
 
     public function insertProspect($data, $member)
     {
-        $masterID = 0;
+        $masterID   = 0;
         $insertData = [
-            'strategyNo' => 1,
-            "icDate" => $data['icDate'],
-            "DateModified" => date("Y-m-d"),
-            'prospectTextID' =>$data['ticker'].'-'.$data['country'].'-'.$data['icDate'],
-            "ticker"  => $data['ticker'],
-            "RIC"  => $data['RIC'],
-            "name"  => $data['name'],
-            "country"  => $data['country'],
-            "sector"  => $data['sector'],
-            "machineScore"  => $data['machineScore'],
-            "memberNo"  => $member['memberNo'],
-            "memberName"  => $member['memberName'],
-            "bWeight"  => $member['bWeight'],
-            "isActive"  => 1
-            ];
-        if ( $this->db->insert('master', $insertData ) ){
+            'strategyNo'     => 1,
+            "icDate"         => $data['icDate'],
+            "DateModified"   => date("Y-m-d"),
+            'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
+            "ticker"         => $data['ticker'],
+            "RIC"            => $data['RIC'],
+            "name"           => $data['name'],
+            "country"        => $data['country'],
+            "sector"         => $data['sector'],
+            "machineScore"   => $data['machineScore'],
+            "memberNo"       => $member['memberNo'],
+            "memberName"     => $member['memberName'],
+            "bWeight"        => $member['bWeight'],
+            "isActive"       => 1
+        ];
+        if ($this->db->insert('master', $insertData)) {
             $masterID = $this->db->insert_id();
         }
+
         return $masterID;
     }
 
-    public function setVetoFlag($user_id, $masterID, $veto)
+    public function setVetoFlag($user_id, $ticker, $veto)
     {
         $this->db->set('vetoFlag', $veto)
-            ->where(['memberNo' => $user_id, 'masterID' => $masterID])
-            ->update('master');
+                 ->where(['memberNo' => $user_id, 'ticker' => $ticker])
+                 ->update('master');
 
     }
 
-    public function setFinaliseFlag($user_id, $masterID, $finalised)
+    public function setFinaliseFlag($user_id, $ticker, $finalised)
     {
         $this->db->set('isFinalised', $finalised)
-            ->where(['memberNo' => $user_id, 'masterID' => $masterID])
-            ->update('master');
+                 ->where(['memberNo' => $user_id, 'ticker' => $ticker])
+                 ->update('master');
 
     }
 

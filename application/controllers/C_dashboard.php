@@ -54,7 +54,7 @@ class C_dashboard extends MY_Controller
         $data['selectedDate'] = $this->input->post('ic_date');
         $data['selectedUser'] = $this->input->post('user_id');
 //        $limit = json_decode($this->input->post('limit'));
-        $sessionUser          = $this->session->userdata('user');
+        $sessionUser = $this->session->userdata('user');
         if ($data['selectedUser'] == $sessionUser['memberNo']) {
             $data['user']         = $sessionUser;
             $data['ic_dates']     = $this->m_icdate->getICDates();
@@ -81,7 +81,6 @@ class C_dashboard extends MY_Controller
         $user                 = $this->session->userdata('user');
         $populate_master_data = [
             'ticker'    => $this->input->post('ticker'),
-            'master'    => $this->input->post('master'),
             'fc1'       => $this->input->post('fc1'),
             'fc2'       => $this->input->post('fc2'),
             'fc3'       => $this->input->post('fc3'),
@@ -96,35 +95,35 @@ class C_dashboard extends MY_Controller
         if ( ! is_null($populate_master_data['ticker']) && ! is_null($populate_master_data['master'])) {
             if ( ! is_null($populate_master_data['fc1'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 1, $populate_master_data['fc1']);
+                    1, $populate_master_data['fc1']);
             }
             if ( ! is_null($populate_master_data['fc2'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 2, $populate_master_data['fc2']);
+                    2, $populate_master_data['fc2']);
             }
             if ( ! is_null($populate_master_data['fc3'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 3, $populate_master_data['fc3']);
+                    3, $populate_master_data['fc3']);
             }
             if ( ! is_null($populate_master_data['fc4'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 4, $populate_master_data['fc4']);
+                    4, $populate_master_data['fc4']);
             }
             if ( ! is_null($populate_master_data['fc5'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 5, $populate_master_data['fc5']);
+                    5, $populate_master_data['fc5']);
             }
             if ( ! is_null($populate_master_data['fc6'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['master'], 6, $populate_master_data['fc6']);
+                    6, $populate_master_data['fc6']);
             }
         } else {
-            if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto' && ! is_null($populate_master_data['master'])) {
-                $this->m_master->setVetoFlag($user['memberNo'], $populate_master_data['master'],
+            if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto') {
+                $this->m_master->setVetoFlag($user['memberNo'], $populate_master_data['ticker'],
                     $populate_master_data['veto']);
             }
-            if ( ! is_null($populate_master_data['finalised']) && $populate_master_data['flag'] == 'finalised' && ! is_null($populate_master_data['master'])) {
-                $this->m_master->setFinaliseFlag($user['memberNo'], $populate_master_data['master'],
+            if ( ! is_null($populate_master_data['finalised']) && $populate_master_data['flag'] == 'finalised') {
+                $this->m_master->setFinaliseFlag($user['memberNo'], $populate_master_data['ticker'],
                     $populate_master_data['finalised']);
             }
         }

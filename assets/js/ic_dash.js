@@ -1,12 +1,15 @@
 let ticker = null;
-let masterID = null;
 let last_master = null;
 let icDate = $('.ic_dates').val();
 let user_id = $('.admin_users').val();
+
+$('#dataTables-example').hide();
+
+
 let ticker_master = function () {
     $('#dataTables-example').find('tr').mouseover(function () {
         ticker = $(this).find('.ticker').text().trim();
-        masterID = $('.master_id').val();
+        // masterID = $('.master_id').val();
     });
 };
 let businessModel = function () {
@@ -107,8 +110,9 @@ let veto = function () {
             }
         });
         $.post('populate_master', {
-            master: masterID,
+            // master: masterID,
             veto: $(this).find('i').hasClass('fa-check'),
+            ticker: ticker,
             flag: 'veto',
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -129,7 +133,7 @@ let finalised = function () {
         });
 
         $.post('populate_master', {
-            master: masterID,
+            ticker: ticker,
             finalised: $(this).find('i').hasClass('fa-check'),
             flag: 'finalised',
             csnamerf: $.cookie('csrfcookiename')
@@ -169,6 +173,10 @@ $(document).ready(function () {
             user_id: $('.admin_users').val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
+            if (data) {
+                $('#empty').hide();
+                $('#dataTables-example').show();
+            }
             el.find('tbody').html($(data).find('#dataTables-example > tbody > *'));
             el.find('tr').each(function () {
                 if ($(this).hasClass("row-finished")) {
@@ -247,11 +255,18 @@ $(document).ready(function () {
 
 
 $('.ic_dates').change(function () {
+    $('#empty').show();
+    $('#dataTables-example').hide();
     $.post('/dashboard_ajax', {
         ic_date: $(this).val(),
         user_id: user_id,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
+        if (data) {
+            $('#empty').hide();
+            $('#dataTables-example').show();
+        }
+
         let table = $('#dataTables-example');
         table.find('tbody').html($(data).find('#dataTables-example > tbody > *'));
         table.find('tr').each(function () {
@@ -286,11 +301,17 @@ $('.ic_dates').change(function () {
 });
 
 $('.admin_users').change(function () {
+    $('#empty').show();
+    $('#dataTables-example').hide();
     $.post('/dashboard_ajax', {
         ic_date: icDate,
         user_id: $(this).val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
+        if (data) {
+            $('#empty').hide();
+            $('#dataTables-example').show();
+        }
         let table = $('#dataTables-example');
         table.find('tbody').html($(data).find('#dataTables-example > tbody > *'));
         table.find('tr').each(function () {
@@ -323,3 +344,8 @@ $('.admin_users').change(function () {
 
     });
 });
+
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+}
+

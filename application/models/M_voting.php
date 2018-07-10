@@ -16,35 +16,54 @@ class M_voting extends CI_Model
         $return = false;
 
         $insertData = [
-            'strategyNo' => 1,
-            "masterID" => $masterID,
-            'prospectTextID' =>$data['ticker'].'-'.$data['country'].'-'.$data['icDate'],
-            "icDate" => $data['icDate'],
-            "ticker"  => $data['ticker'],
-            "memberNo"  => $member['memberNo'],
-            "memberName"  => $member['memberName'],
-            "factorNo"  => $factor['factorNo'],
-            "factorDesc"  => $factor['factorDesc'],
-            "factorScore"  => 5,
-            "zScore"  => 0,
-            "dateModified" => date("Y-m-d H:i:s"),
+            'strategyNo'     => 1,
+            "masterID"       => $masterID,
+            'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
+            "icDate"         => $data['icDate'],
+            "ticker"         => $data['ticker'],
+            "memberNo"       => $member['memberNo'],
+            "memberName"     => $member['memberName'],
+            "factorNo"       => $factor['factorNo'],
+            "factorDesc"     => $factor['factorDesc'],
+            "factorScore"    => 5,
+            "zScore"         => 0,
+            "dateModified"   => date("Y-m-d H:i:s"),
         ];
-        if ( $this->db->insert('voting', $insertData ) ){
-            $return =  true;
+        if ($this->db->insert('voting', $insertData)) {
+            $return = true;
         }
+
         return $return;
     }
 
-    public function updateFactor($user_id, $ticker, $masterID, $factorNo, $factorVal)
+    public function updateFactor($user_id, $ticker, $factorNo, $factorVal)
     {
         $this->db->set('factorScore', $factorVal)
-            ->where([
-                'memberNo' => $user_id,
-                'ticker'   => $ticker,
-                'masterID' => $masterID,
-                'factorNo' => $factorNo
-            ])
-            ->update('voting');
+                 ->where([
+                     'memberNo' => $user_id,
+                     'ticker'   => $ticker,
+                     'factorNo' => $factorNo
+                 ])
+                 ->update('voting');
     }
 
+    public function getSWSurl($user_id, $ticker)
+    {
+        $return = false;
+
+        $url = $this->db->select('p.SWSurl')
+                           ->distinct('p.SWSurl')
+                           ->from('prospects p')
+                           ->join('voting v', 'v.prospectTextID = p.prospectTextID and v.ticker = p.ticker', 'inner')
+                           ->where('v.memberNo', $user_id)
+                           ->where('p.ticker', $ticker)
+                           ->get()
+                           ->result_array();
+
+        if (count($url) > 0) {
+            $return = $url[0];
+        }
+
+        return $return;
+    }
 }

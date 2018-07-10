@@ -4,14 +4,16 @@
     background: #333f58;
     border-radius: 0.75em;
 }
+
 .rb-box > p {
     color: #FFFFFF;
     margin: 1%;
 }
+
 .rb > span {
     color: #FFFFFF;
-    text-align: left;
 }
+
 .rb {
     padding: 1%;
     background: rgba(255, 255, 255, 0.03);
@@ -21,7 +23,8 @@
 .rb-tab {
     display: inline-block;
     position: relative;
-    width: 8%;
+    width: 9%;
+    margin-left: 0.5%;
 }
 
 .rb-txt {
@@ -39,7 +42,7 @@
     height: 25px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -70%);
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 100%;
@@ -50,6 +53,7 @@
 .rb-tab-active .rb-spot {
     background: rgba(0, 0, 0, 0.35);
     border: 2px solid rgba(243, 49, 128, 0.6);
+
 }
 
 /* Submit Button */
@@ -81,4 +85,19 @@
 .rb-box > .button-box > button:hover {
     box-shadow: 0 3px 5px -5px rgba(0, 0, 0, 0.3);
     color: #6f6f6f;
+}
+
+#rb-8 > div > div > span, #rb-7 > div > div > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70%;
+    color: #ffffff;
+}
+
+iframe {
+    width: 100%;
+    overflow: hidden;
+    border: none;
 }
