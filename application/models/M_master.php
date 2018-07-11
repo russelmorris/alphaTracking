@@ -53,4 +53,27 @@ class M_master extends CI_Model
 
     }
 
+    public function finalised($user_id)
+    {
+        $return  = false;
+        $final   = $this->db->select('isFinalised')
+                            ->where('isFinalised', 1)
+                            ->where('memberNo', $user_id)
+                            ->from('master')
+                            ->get()
+                            ->num_rows();
+
+        $overall = $this->db->select('isFinalised')
+                            ->where('memberNo', $user_id)
+                            ->from('master')
+                            ->get()
+                            ->num_rows();
+        if ($final > 0 && $overall > 0) {
+            $return = ($final / $overall) * 100;
+        }
+
+        return $return;
+    }
+
+
 }

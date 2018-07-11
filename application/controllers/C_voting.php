@@ -34,12 +34,15 @@ class C_voting extends MY_Controller
     public function voting($icDate, $ticker)
     {
 
-        $data           = [];
-        $data['icdate'] = $icDate;
-        $data['ticker'] = $ticker;
-        $data['user']   = $this->session->userdata('user');
-        $data['url']    = $this->m_voting->getSWSurl($data['user']['memberNo'], $ticker);
-        $data['admin']  = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+
+        $data                  = [];
+        $data['icdate']        = $icDate;
+        $data['ticker']        = $ticker;
+        $data['user']          = $this->session->userdata('admin_subuser') ?
+            $this->session->userdata('admin_subuser') : $this->session->userdata('user');
+        $data['voting_values'] = $this->m_voting->getLatestVotingValues($data['user']['memberNo'], $ticker);
+        $data['url']           = $this->m_voting->getSWSurl($data['user']['memberNo'], $ticker);
+        $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $this->load->template('v_voting', $data);
     }
 
@@ -49,20 +52,56 @@ class C_voting extends MY_Controller
             show_404();
             die();
         }
-        $results  = json_decode($this->input->post('results'));
-        $user_id  = $this->input->post('user_id');
-        $ticker   = $this->input->post('ticker');
-        $veto     = json_decode($this->input->post('veto'), true);
-        $finalise = json_decode($this->input->post('finalise'));
-        foreach ($results as $index => $value) {
-            if ( ! is_null($value) && $index != 5) {
-                $this->m_voting->updateFactor($user_id, $ticker, $index + 1, $value);
-            } else {
-                $risk = json_decode($value, true);
-                $this->m_voting->updateFactor($user_id, $ticker, 6, $risk['risk']['answer']);
+
+        $populate_voting_data            = [
+            'ticker'    => $this->input->post('ticker'),
+            'user_id'   => $this->input->post('user_id'),
+            'fc1'       => $this->input->post('fc1'),
+            'fc2'       => $this->input->post('fc2'),
+            'fc3'       => $this->input->post('fc3'),
+            'fc4'       => $this->input->post('fc4'),
+            'fc5'       => $this->input->post('fc5'),
+            'fc6'       => $this->input->post('fc6'),
+            'veto'      => json_decode($this->input->post('veto')),
+            'finalised' => json_decode($this->input->post('finalised')),
+        ];
+        $admin                           = $this->session->userdata('user');
+        $admin_subuser                   = $this->session->userdata('admin_subuser');
+        $populate_voting_data['user_id'] = ($populate_voting_data['user_id'] == $admin['memberNo']) ?
+            $admin['memberNo'] : $admin_subuser['memberNo'];
+        if ( ! is_null($populate_voting_data['ticker']) && ! is_null($populate_voting_data['user_id'])) {
+            if ( ! is_null($populate_voting_data['fc1'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    1, $populate_voting_data['fc1']);
+            }
+            if ( ! is_null($populate_voting_data['fc2'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    2, $populate_voting_data['fc2']);
+            }
+            if ( ! is_null($populate_voting_data['fc3'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    3, $populate_voting_data['fc3']);
+            }
+            if ( ! is_null($populate_voting_data['fc4'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    4, $populate_voting_data['fc4']);
+            }
+            if ( ! is_null($populate_voting_data['fc5'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    5, $populate_voting_data['fc5']);
+            }
+            if ( ! is_null($populate_voting_data['fc6'])) {
+                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    6, $populate_voting_data['fc6']);
+            }
+            if ( ! is_null($populate_voting_data['veto'])) {
+                $this->m_master->setVetoFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    $populate_voting_data['veto']);
+            }
+            if ( ! is_null($populate_voting_data['finalised'])) {
+                $this->m_master->setFinaliseFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    $populate_voting_data['finalised']);
             }
         }
-        $this->m_master->setVetoFlag($user_id, $ticker, $veto['answer']);
-        $this->m_master->setFinaliseFlag($user_id, $ticker, $finalise);
     }
 }

@@ -52,16 +52,38 @@ class M_voting extends CI_Model
         $return = false;
 
         $url = $this->db->select('p.SWSurl')
-                           ->distinct('p.SWSurl')
-                           ->from('prospects p')
-                           ->join('voting v', 'v.prospectTextID = p.prospectTextID and v.ticker = p.ticker', 'inner')
-                           ->where('v.memberNo', $user_id)
-                           ->where('p.ticker', $ticker)
-                           ->get()
-                           ->result_array();
+                        ->distinct('p.SWSurl')
+                        ->from('prospects p')
+                        ->join('voting v', 'v.prospectTextID = p.prospectTextID and v.ticker = p.ticker', 'inner')
+                        ->where('v.memberNo', $user_id)
+                        ->where('p.ticker', $ticker)
+                        ->get()
+                        ->result_array();
 
         if (count($url) > 0) {
             $return = $url[0];
+        }
+
+        return $return;
+    }
+
+    public function getLatestVotingValues($user_id, $ticker)
+    {
+        $return = false;
+        $values = $this->db->select('v.factorNo')
+                           ->select('v.factorScore')
+                           ->select('m.vetoFlag')
+                           ->select('m.isFinalised')
+                           ->from('voting v')
+                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker', 'inner')
+                           ->where('v.memberNo', $user_id)
+                           ->where('v.ticker', $ticker)
+                           ->order_by('factorNo', 'ASC')
+                           ->get()
+                           ->result_array();
+
+        if (count($values) > 0) {
+            $return = $values;
         }
 
         return $return;

@@ -34,13 +34,12 @@ class C_dashboard extends MY_Controller
         if ($data['user']['isAdmin']) {
             $data['admin_users'] = $this->m_ic->getMembers();
         }
-        $data['ic_dates']     = $this->m_icdate->getICDates();
-        $data['ic_dashboard'] = $this->m_prospects->getProspectsByDateAndId(
-            $data['user']['memberNo'],
-            end($data['ic_dates'])['icDate']
-        );
-        $data['ic_dashboard'] = [];
-//        print_r($data['ic_dashboard']);
+        $data['ic_dates']                  = $this->m_icdate->getICDates();
+        $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
+            time());
+        $data['ic_dashboard']              = [];
+        $data['finalised']                 = $this->m_master->finalised($data['user']['memberNo']);
+
         $this->load->template('v_dashboard', $data);
     }
 
@@ -52,24 +51,42 @@ class C_dashboard extends MY_Controller
         }
         $data                 = [];
         $data['selectedDate'] = $this->input->post('ic_date');
-        $data['selectedUser'] = $this->input->post('user_id');
-//        $limit = json_decode($this->input->post('limit'));
-        $sessionUser = $this->session->userdata('user');
-        if ($data['selectedUser'] == $sessionUser['memberNo']) {
-            $data['user']         = $sessionUser;
-            $data['ic_dates']     = $this->m_icdate->getICDates();
-            $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate']);
-            $this->load->view('partial/v_dashboard', $data);
-        } else {
-            $data['user']         = $this->m_ic->getUserByID($data['selectedUser']);
-            $data['ic_dates']     = $this->m_icdate->getICDates();
-            $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate']);
-            $this->load->view('partial/v_dashboard', $data);
+        $data['selectedUser'] = json_decode($this->input->post('user_id'));
+        $sessionUser          = [];
+        if ( ! $data['selectedUser']) {
+            $sessionUser = $this->session->userdata('user');
         }
+//        $limit = json_decode($this->input->post('limit'));
+
+        if ( ! $data['selectedUser']) {
+            $data['user']  = $sessionUser;
+            $data['admin'] = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+            if ($data['user']['isAdmin']) {
+                $data['admin_users'] = $this->m_ic->getMembers();
+            }
+            $data['ic_dates']                  = $this->m_icdate->getICDates();
+            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
+                time());
+            $data['ic_dashboard']              = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
+                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
+                $data['selectedDate']);
+            $data['finalised']                 = $this->m_master->finalised($data['user']['memberNo']);
+        } else {
+            $data['user'] = $this->m_ic->getUserByID($data['selectedUser']);
+            $this->session->set_userdata('admin_subuser', $data['user']);
+            $data['admin'] = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+            if ($data['user']['isAdmin']) {
+                $data['admin_users'] = $this->m_ic->getMembers();
+            }
+            $data['ic_dates']                  = $this->m_icdate->getICDates();
+            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
+                time());
+            $data['ic_dashboard']              = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($data['user']['memberNo'],
+                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($data['user']['memberNo'],
+                $data['selectedDate']);
+            $data['finalised']                 = $this->m_master->finalised($data['user']['memberNo']);
+        }
+        $this->load->view('partial/v_dashboard', $data);
     }
 
     public function addDataToMaster()
@@ -78,9 +95,10 @@ class C_dashboard extends MY_Controller
             show_404();
             die();
         }
-        $user                 = $this->session->userdata('user');
+//        $user                 = $this->session->userdata('user');
         $populate_master_data = [
             'ticker'    => $this->input->post('ticker'),
+            'user_id'   => json_decode($this->input->post('user_id')),
             'fc1'       => $this->input->post('fc1'),
             'fc2'       => $this->input->post('fc2'),
             'fc3'       => $this->input->post('fc3'),
@@ -91,8 +109,12 @@ class C_dashboard extends MY_Controller
             'finalised' => json_decode($this->input->post('finalised')),
             'flag'      => $this->input->post('flag')
         ];
-        var_dump($populate_master_data);
-        if ( ! is_null($populate_master_data['ticker']) && ! is_null($populate_master_data['master'])) {
+        if ( ! $populate_master_data['user_id']) {
+            $user = $this->session->userdata('user');
+        } else {
+            $user = $this->m_ic->getUserByID($populate_master_data['user_id']);
+        }
+        if ( ! is_null($populate_master_data['ticker'])) {
             if ( ! is_null($populate_master_data['fc1'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
                     1, $populate_master_data['fc1']);
@@ -117,7 +139,6 @@ class C_dashboard extends MY_Controller
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
                     6, $populate_master_data['fc6']);
             }
-        } else {
             if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto') {
                 $this->m_master->setVetoFlag($user['memberNo'], $populate_master_data['ticker'],
                     $populate_master_data['veto']);
@@ -127,6 +148,17 @@ class C_dashboard extends MY_Controller
                     $populate_master_data['finalised']);
             }
         }
+    }
 
+
+    private function find_closest_date($array, $date)
+    {
+        foreach ($array as $day) {
+            $interval[] = abs(strtotime($date) - strtotime($day));
+        }
+        asort($interval);
+        $closest = key($interval);
+
+        return $array[$closest + 1];
     }
 }

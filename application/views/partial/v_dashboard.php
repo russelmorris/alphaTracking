@@ -6,11 +6,13 @@
                    type="text"
                    hidden
                    value="<?php echo uri_string() == 'admin_dashboard' ? false : true; ?>">
+            <input id="allow_edit_as_admin"
+                   hidden
+                   value="<?php echo $user['isAdmin'] ? true : false; ?>">
         </div>
     </div>
 
     <div class="row">
-        <?php $finalised = 40; ?>
         <div class="col-sm-6">
             <label><?php echo $finalised . ('% Finalised') ?></label>
             <div class="progress">
@@ -26,13 +28,14 @@
                 <label>For IC date</label>
                 <select class="form-control ic_dates">
                     <?php foreach ($ic_dates as $value): ?>
-                        <?php if (new DateTime($value['icDate']) <= new DateTime()): ?>
+                        <?php if (new DateTime($closest_icDate_from_today) == new DateTime($value['icDate'])): ?>
                             <option selected value="<?php echo $value['icDate']; ?>">
                                 <?php echo $value['icDate']; ?></option>
                         <?php else: ?>
                             <option value="<?php echo $value['icDate']; ?>">
                                 <?php echo $value['icDate']; ?></option>
                         <?php endif; ?>
+
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -75,74 +78,72 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="-pull-left div-inline-block">DataTables Advanced Tables</div>
+                    <div class="div-inline-block">DataTables Advanced Tables</div>
                     <div class="pull-right div-inline-block">1 = (I hate it), 10 = (I love it)</div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <?php /*if (count($ic_dashboard) < 1): */?>
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="empty">
-                            <thead>
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th data-toggle="tooltip" data-placement="top" title="Finalised" class="text-center">Fin
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Ticker">Ticker
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Name">Name
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Sector">Sector
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Country">
-                                    Country
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Machine Rank">
-                                    MR
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th>&nbsp;</th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip"
-                                    data-placement="top"
-                                    class="text-center"
-                                    title="Business model">
-                                    Business
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip"
-                                    data-placement="top"
-                                    class="text-center"
-                                    title="Business valuation">Business
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip"
-                                    data-placement="top"
-                                    class="text-center"
-                                    title="Digital Footprint">Footprint
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip"
-                                    data-placement="top" class="text-center"
-                                    title="Significant uplft in addressable maret">Uplft
-                                    <i class="fa fa-info-circle"></i>
-                                </th>
-                                <th data-toggle="tooltip"
-                                    data-placement="top"
-                                    class="text-center"
-                                    title="Competitor Analysis">Analysis
-                                    <i class="fa fa-info-circle"></i></th>
-                                <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
-                                    <i class="fa fa-info-circle"></i></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td colspan="15" class="text-center">
-                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-                                    <span class="sr-only">Loading...</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    <?php /*else: */?>
-                    <table width="100%" class="table table-striped table-bordered table-hover " id="dataTables-example">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="empty">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Finalised" class="text-center">Fin
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Ticker">Ticker
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Name">Name
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Sector">Sector
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Country">
+                                Country
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Machine Rank">
+                                MR
+                                <i class="fa fa-info-circle"></i></th>
+                            <th>&nbsp;</th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Business model">
+                                Business
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Business valuation">Business
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Digital Footprint">Footprint
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip"
+                                data-placement="top" class="text-center"
+                                title="Significant uplft in addressable maret">Uplft
+                                <i class="fa fa-info-circle"></i>
+                            </th>
+                            <th data-toggle="tooltip"
+                                data-placement="top"
+                                class="text-center"
+                                title="Competitor Analysis">Analysis
+                                <i class="fa fa-info-circle"></i></th>
+                            <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
+                                <i class="fa fa-info-circle"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="15" class="text-center">
+                                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                                <span class="sr-only">Loading...</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -189,32 +190,33 @@
                         </thead>
                         <tbody>
                         <?php foreach ($ic_dashboard as $index => $ic): ?>
+
                             <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>">
 
-                                <td class="vcenter"><?php echo $index + 1; ?>
+                                <td class="vcenter final"><?php echo $index + 1; ?>
                                     <input class="hidden master_id" value="<?php echo $ic['masterID']; ?>">
                                 </td>
-                                <td class="vcenter hcenter final">
+                                <td class="vcenter hcenter final final-dis">
                                     <button class="btn btn-default btn-circle finalised">
                                         <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>
                                     </button>
                                 </td>
-                                <td class="vcenter ticker">
+                                <td class="vcenter ticker final click">
                                     <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
                                 </td>
-                                <td class="vcenter">
+                                <td class="vcenter final click">
                                     <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
                                 </td>
-                                <td class="vcenter">
+                                <td class="vcenter final click">
                                     <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
                                 </td>
-                                <td class="vcenter">
+                                <td class="vcenter final click">
                                     <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
                                 </td>
-                                <td class="vcenter">
+                                <td class="vcenter final click">
                                     <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
                                 </td>
-                                <td class="no-padding">
+                                <td class="no-padding final click">
                                     <div class="cell_holder">
                                         <div class="cell_part">
                                             <p class="mb-10 mt-10">This</p>
@@ -402,7 +404,7 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <?php /*endif; */?>
+                    <?php /*endif; */ ?>
                 </div>
                 <!-- /.panel-body -->
             </div>
