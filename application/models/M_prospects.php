@@ -73,6 +73,7 @@ class M_prospects extends CI_Model
             ->select('m.isActive')
             ->select('m.isFinalised')
             ->select('m.vetoFlag')
+            ->select('m.icDate')
             ->select("vo1.factorScore as factorScore1")
             ->select("vo2.factorScore as factorScore2")
             ->select("vo3.factorScore as factorScore3")

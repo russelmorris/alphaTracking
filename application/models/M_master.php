@@ -37,31 +37,30 @@ class M_master extends CI_Model
         return $masterID;
     }
 
-    public function setVetoFlag($user_id, $ticker, $veto)
+    public function setVetoFlag($user_id, $ticker, $ic_date, $veto)
     {
         $this->db->set('vetoFlag', $veto)
-                 ->where(['memberNo' => $user_id, 'ticker' => $ticker])
+                 ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
                  ->update('master');
 
     }
 
-    public function setFinaliseFlag($user_id, $ticker, $finalised)
+    public function setFinaliseFlag($user_id, $ticker, $ic_date, $finalised)
     {
         $this->db->set('isFinalised', $finalised)
-                 ->where(['memberNo' => $user_id, 'ticker' => $ticker])
+                 ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
                  ->update('master');
-
     }
 
     public function finalised($user_id)
     {
-        $return  = false;
-        $final   = $this->db->select('isFinalised')
-                            ->where('isFinalised', 1)
-                            ->where('memberNo', $user_id)
-                            ->from('master')
-                            ->get()
-                            ->num_rows();
+        $return = false;
+        $final  = $this->db->select('isFinalised')
+                           ->where('isFinalised', 1)
+                           ->where('memberNo', $user_id)
+                           ->from('master')
+                           ->get()
+                           ->num_rows();
 
         $overall = $this->db->select('isFinalised')
                             ->where('memberNo', $user_id)

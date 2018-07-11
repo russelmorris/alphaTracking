@@ -15,8 +15,10 @@ $(".rb-tab").click(function () {
                 fc1: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
+
             })
         }
         if ($(this).parent()[0].id === 'rb-2') {
@@ -24,6 +26,7 @@ $(".rb-tab").click(function () {
                 fc2: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             })
@@ -34,6 +37,7 @@ $(".rb-tab").click(function () {
                 fc3: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             })
@@ -44,6 +48,7 @@ $(".rb-tab").click(function () {
                 fc4: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             })
@@ -54,6 +59,7 @@ $(".rb-tab").click(function () {
                 fc5: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             })
@@ -63,6 +69,7 @@ $(".rb-tab").click(function () {
                 fc6: $(this).attr('data-value'),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             })
@@ -77,6 +84,7 @@ $(".rb-tab").click(function () {
                 veto: $(this).find(".rb-tab").attr("data-value"),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             });
@@ -108,6 +116,7 @@ $(".rb-tab").click(function () {
                 finalised: $(this).find(".rb-tab").attr("data-value"),
                 user_id: $('#user_id').val(),
                 ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
             });

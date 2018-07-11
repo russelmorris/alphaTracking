@@ -36,12 +36,13 @@ class M_voting extends CI_Model
         return $return;
     }
 
-    public function updateFactor($user_id, $ticker, $factorNo, $factorVal)
+    public function updateFactor($user_id, $ticker, $ic_date, $factorNo, $factorVal)
     {
         $this->db->set('factorScore', $factorVal)
                  ->where([
                      'memberNo' => $user_id,
                      'ticker'   => $ticker,
+                     'icDate'   => $ic_date,
                      'factorNo' => $factorNo
                  ])
                  ->update('voting');
@@ -67,7 +68,7 @@ class M_voting extends CI_Model
         return $return;
     }
 
-    public function getLatestVotingValues($user_id, $ticker)
+    public function getLatestVotingValues($user_id, $ticker, $ic_date)
     {
         $return = false;
         $values = $this->db->select('v.factorNo')
@@ -75,9 +76,10 @@ class M_voting extends CI_Model
                            ->select('m.vetoFlag')
                            ->select('m.isFinalised')
                            ->from('voting v')
-                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker', 'inner')
+                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate', 'inner')
                            ->where('v.memberNo', $user_id)
                            ->where('v.ticker', $ticker)
+                           ->where('v.icDate', $ic_date)
                            ->order_by('factorNo', 'ASC')
                            ->get()
                            ->result_array();

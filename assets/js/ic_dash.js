@@ -13,6 +13,7 @@ let businessModel = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc1: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -27,6 +28,7 @@ let businessValuation = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc2: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -41,6 +43,7 @@ let digitalFootprint = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc3: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -56,6 +59,7 @@ let uplift = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc4: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -71,6 +75,7 @@ let competitorAnalysis = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc5: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -87,6 +92,7 @@ let risk = function () {
         $.post('populate_master', {
             ticker: ticker,
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             fc6: $(this).val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -107,6 +113,7 @@ let veto = function () {
         });
         $.post('populate_master', {
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             veto: $(this).find('i').hasClass('fa-check'),
             ticker: ticker,
             flag: 'veto',
@@ -130,6 +137,7 @@ let finalised = function () {
 
         $.post('populate_master', {
             user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
+            ic_date: $('.ic_dates').val(),
             ticker: ticker,
             finalised: $(this).find('i').hasClass('fa-check'),
             flag: 'finalised',

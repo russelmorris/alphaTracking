@@ -98,6 +98,7 @@ class C_dashboard extends MY_Controller
 //        $user                 = $this->session->userdata('user');
         $populate_master_data = [
             'ticker'    => $this->input->post('ticker'),
+            'ic_date'   => $this->input->post('ic_date'),
             'user_id'   => json_decode($this->input->post('user_id')),
             'fc1'       => $this->input->post('fc1'),
             'fc2'       => $this->input->post('fc2'),
@@ -117,35 +118,35 @@ class C_dashboard extends MY_Controller
         if ( ! is_null($populate_master_data['ticker'])) {
             if ( ! is_null($populate_master_data['fc1'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    1, $populate_master_data['fc1']);
+                    $populate_master_data['ic_date'], 1, $populate_master_data['fc1']);
             }
             if ( ! is_null($populate_master_data['fc2'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    2, $populate_master_data['fc2']);
+                    $populate_master_data['ic_date'], 2, $populate_master_data['fc2']);
             }
             if ( ! is_null($populate_master_data['fc3'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    3, $populate_master_data['fc3']);
+                    $populate_master_data['ic_date'], 3, $populate_master_data['fc3']);
             }
             if ( ! is_null($populate_master_data['fc4'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    4, $populate_master_data['fc4']);
+                    $populate_master_data['ic_date'], 4, $populate_master_data['fc4']);
             }
             if ( ! is_null($populate_master_data['fc5'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    5, $populate_master_data['fc5']);
+                    $populate_master_data['ic_date'], 5, $populate_master_data['fc5']);
             }
             if ( ! is_null($populate_master_data['fc6'])) {
                 $this->m_voting->updateFactor($user['memberNo'], $populate_master_data['ticker'],
-                    6, $populate_master_data['fc6']);
+                    $populate_master_data['ic_date'], 6, $populate_master_data['fc6']);
             }
             if ( ! is_null($populate_master_data['veto']) && $populate_master_data['flag'] == 'veto') {
                 $this->m_master->setVetoFlag($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['veto']);
+                    $populate_master_data['ic_date'], $populate_master_data['veto']);
             }
             if ( ! is_null($populate_master_data['finalised']) && $populate_master_data['flag'] == 'finalised') {
                 $this->m_master->setFinaliseFlag($user['memberNo'], $populate_master_data['ticker'],
-                    $populate_master_data['finalised']);
+                    $populate_master_data['ic_date'], $populate_master_data['finalised']);
             }
         }
     }

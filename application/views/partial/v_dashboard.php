@@ -202,19 +202,19 @@
                                     </button>
                                 </td>
                                 <td class="vcenter ticker final click">
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
+                                    <a href="<?php echo base_url("voting/".$ic['icDate']. "/" . $ic['ticker']); ?>"><?php echo $ic['ticker']; ?></a>
                                 </td>
                                 <td class="vcenter final click">
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
+                                    <a href="<?php echo base_url("voting/".$ic['icDate']. "/" . $ic['ticker']); ?>"><?php echo $ic['name']; ?></a>
                                 </td>
                                 <td class="vcenter final click">
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
+                                    <a href="<?php echo base_url("voting/".$ic['icDate']. "/" . $ic['ticker']); ?>"><?php echo $ic['sector']; ?></a>
                                 </td>
                                 <td class="vcenter final click">
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
+                                    <a href="<?php echo base_url("voting/".$ic['icDate']. "/" . $ic['ticker']); ?>"><?php echo $ic['country']; ?></a>
                                 </td>
                                 <td class="vcenter final click">
-                                    <a href="<?php echo base_url("voting/2018-10-05/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
+                                    <a href="<?php echo base_url("voting/".$ic['icDate']. "/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
                                 </td>
                                 <td class="no-padding final click">
                                     <div class="cell_holder">

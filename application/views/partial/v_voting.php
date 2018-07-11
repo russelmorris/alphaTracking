@@ -11,6 +11,7 @@
                 </h4>
                 <input id="user_id" hidden value="<?php echo $user['memberNo']; ?>">
                 <input id="ticker" hidden value="<?php echo $ticker; ?>">
+                <input id="voting_ic_date" hidden value="<?php echo $icdate; ?>">
             </div>
         </div>
         <div class="col-md-6">

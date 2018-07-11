@@ -40,7 +40,7 @@ class C_voting extends MY_Controller
         $data['ticker']        = $ticker;
         $data['user']          = $this->session->userdata('admin_subuser') ?
             $this->session->userdata('admin_subuser') : $this->session->userdata('user');
-        $data['voting_values'] = $this->m_voting->getLatestVotingValues($data['user']['memberNo'], $ticker);
+        $data['voting_values'] = $this->m_voting->getLatestVotingValues($data['user']['memberNo'], $ticker, $icDate);
         $data['url']           = $this->m_voting->getSWSurl($data['user']['memberNo'], $ticker);
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $this->load->template('v_voting', $data);
@@ -55,6 +55,7 @@ class C_voting extends MY_Controller
 
         $populate_voting_data            = [
             'ticker'    => $this->input->post('ticker'),
+            'ic_date'   => $this->input->post('ic_date'),
             'user_id'   => $this->input->post('user_id'),
             'fc1'       => $this->input->post('fc1'),
             'fc2'       => $this->input->post('fc2'),
@@ -72,35 +73,35 @@ class C_voting extends MY_Controller
         if ( ! is_null($populate_voting_data['ticker']) && ! is_null($populate_voting_data['user_id'])) {
             if ( ! is_null($populate_voting_data['fc1'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    1, $populate_voting_data['fc1']);
+                    $populate_voting_data['ic_date'], 1, $populate_voting_data['fc1']);
             }
             if ( ! is_null($populate_voting_data['fc2'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    2, $populate_voting_data['fc2']);
+                    $populate_voting_data['ic_date'], 2, $populate_voting_data['fc2']);
             }
             if ( ! is_null($populate_voting_data['fc3'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    3, $populate_voting_data['fc3']);
+                    $populate_voting_data['ic_date'], 3, $populate_voting_data['fc3']);
             }
             if ( ! is_null($populate_voting_data['fc4'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    4, $populate_voting_data['fc4']);
+                    $populate_voting_data['ic_date'], 4, $populate_voting_data['fc4']);
             }
             if ( ! is_null($populate_voting_data['fc5'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    5, $populate_voting_data['fc5']);
+                    $populate_voting_data['ic_date'], 5, $populate_voting_data['fc5']);
             }
             if ( ! is_null($populate_voting_data['fc6'])) {
                 $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    6, $populate_voting_data['fc6']);
+                    $populate_voting_data['ic_date'], 6, $populate_voting_data['fc6']);
             }
             if ( ! is_null($populate_voting_data['veto'])) {
                 $this->m_master->setVetoFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['veto']);
+                    $populate_voting_data['ic_date'], $populate_voting_data['veto']);
             }
             if ( ! is_null($populate_voting_data['finalised'])) {
                 $this->m_master->setFinaliseFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['finalised']);
+                    $populate_voting_data['ic_date'], $populate_voting_data['finalised']);
             }
         }
     }
