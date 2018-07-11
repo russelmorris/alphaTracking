@@ -37,20 +37,44 @@ class M_master extends CI_Model
         return $masterID;
     }
 
-    public function setVetoFlag($user_id, $ticker, $ic_date, $veto)
+    public function setVetoFlag($user_id, $ticker, $ic_date)
     {
-        $this->db->set('vetoFlag', $veto)
-                 ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
-                 ->update('master');
-
+        $setVetoFlagValue = 0;
+        $oldVetoFlag = $this->db->select('vetoFlag')
+            ->where('memberNo', $user_id)
+            ->where('ticker', $ticker)
+            ->where('icDate', $ic_date)
+            ->where('strategyNo', 1)
+            ->from('master')
+            ->get()->result_array();
+        if (count($oldVetoFlag) > 0){
+            $setVetoFlagValue = ($oldVetoFlag[0]['vetoFlag'] == 1) ? 0: 1;
+            $this->db->set('vetoFlag', $setVetoFlagValue)
+                ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+                ->update('master');
+        }
+        return $setVetoFlagValue;
     }
 
-    public function setFinaliseFlag($user_id, $ticker, $ic_date, $finalised)
+    public function setFinaliseFlag($user_id, $ticker, $ic_date)
     {
-        $this->db->set('isFinalised', $finalised)
-                 ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
-                 ->update('master');
+        $setFinaliseValue = 0;
+        $oldVetoFlag = $this->db->select('isFinalised')
+            ->where('memberNo', $user_id)
+            ->where('ticker', $ticker)
+            ->where('icDate', $ic_date)
+            ->where('strategyNo', 1)
+            ->from('master')
+            ->get()->result_array();
+        if (count($oldVetoFlag) > 0){
+            $setFinaliseValue = ($oldVetoFlag[0]['isFinalised'] == 1) ? 0: 1;
+            $this->db->set('isFinalised', $setFinaliseValue)
+                ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+                ->update('master');
+        }
+        return $setFinaliseValue;
     }
+
 
     public function finalised($user_id)
     {

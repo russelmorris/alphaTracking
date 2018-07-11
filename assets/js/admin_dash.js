@@ -1,4 +1,4 @@
-let prospects = null;
+var prospects = null;
 $('#alert-success').hide();
 $('#alert-danger').hide();
 $('#alert-success-return').hide();
@@ -11,7 +11,7 @@ $('#prospect').change(function () {
 });
 
 $('#upload-prospects').click(function () {
-    let fd = new FormData();
+    var fd = new FormData();
     fd.append('file', prospects); // since this is your file input
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
@@ -44,7 +44,7 @@ $('#upload-prospects').click(function () {
 });
 /*
 $('.upload-prospects').click(function () {
-    let fd = new FormData();
+    var fd = new FormData();
     fd.append('file', prospects); // since this is your file input
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
@@ -69,7 +69,7 @@ $('.upload-prospects').click(function () {
 */
 
 $('#returns').change(function () {
-    let fd = new FormData();
+    var fd = new FormData();
     fd.append('file', $(this)[0].files[0]); // since this is your file input
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
 

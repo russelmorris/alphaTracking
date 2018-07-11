@@ -45,7 +45,8 @@ class M_voting extends CI_Model
                      'icDate'   => $ic_date,
                      'factorNo' => $factorNo
                  ])
-                 ->update('voting');
+                ->limit(1)
+                ->update('voting');
     }
 
     public function getSWSurl($user_id, $ticker)

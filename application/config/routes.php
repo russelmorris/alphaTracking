@@ -57,7 +57,11 @@ $route['login']  = 'c_login/login';
 $route['logout'] = 'c_login/logout';
 
 $route['dashboard']       = 'c_dashboard/dashboard';
-$route['populate_master'] = 'c_dashboard/addDataToMaster';
+
+$route['update-factor'] = 'c_dashboard/updateFactor';
+$route['update-veto'] = 'c_dashboard/updateVeto';
+$route['update-finalise'] = 'c_dashboard/updateFinalise';
+
 $route['dashboard_ajax']  = 'c_dashboard/dashboard_ajax';
 $route['admin_dashboard'] = 'c_admin/dashboard';
 
