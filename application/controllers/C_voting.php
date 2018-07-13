@@ -33,15 +33,18 @@ class C_voting extends MY_Controller
 
     public function voting($icDate, $ticker)
     {
-
-
         $data                  = [];
         $data['icdate']        = $icDate;
         $data['ticker']        = $ticker;
-        $data['user']          = $this->session->userdata('admin_subuser') ?
-            $this->session->userdata('admin_subuser') : $this->session->userdata('user');
-        $data['voting_values'] = $this->m_voting->getLatestVotingValues($data['user']['memberNo'], $ticker, $icDate);
-        $data['url']           = $this->m_voting->getSWSurl($data['user']['memberNo'], $ticker);
+        $data['user']          = $this->session->userdata('user');
+        $data['sub_user']      = $this->session->userdata('admin_subuser') ?
+            $this->session->userdata('admin_subuser') : false;
+        $data['voting_values'] = $this->m_voting->getLatestVotingValues(
+            $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
+            $ticker, $icDate);
+        $data['url']           = $this->m_voting->getSWSurl(
+            $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
+            $ticker);
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $this->load->template('v_voting', $data);
     }

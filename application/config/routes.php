@@ -63,6 +63,7 @@ $route['update-veto'] = 'c_dashboard/updateVeto';
 $route['update-finalise'] = 'c_dashboard/updateFinalise';
 
 $route['dashboard_ajax']  = 'c_dashboard/dashboard_ajax';
+$route['finalised_value']  = 'c_dashboard/finalised_value';
 $route['admin_dashboard'] = 'c_admin/dashboard';
 
 $route['import_prospect']      = 'c_admin/import_prospect';

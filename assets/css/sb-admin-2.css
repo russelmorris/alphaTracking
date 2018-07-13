@@ -634,5 +634,6 @@ table.dataTable thead > tr > th {
 }
 
 .disable-row {
+    cursor: not-allowed;
     pointer-events: none;
 }

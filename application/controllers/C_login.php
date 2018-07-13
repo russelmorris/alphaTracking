@@ -39,9 +39,10 @@ class C_login extends CI_Controller
                     $redirect = 'dashboard';
                 }
             }
-            return redirect (base_url($redirect));
+
+            return redirect(base_url($redirect));
         }
-        $data = [];
+        $data         = [];
         $data['csrf'] = array(
             'name' => $this->security->get_csrf_token_name(),
             'hash' => $this->security->get_csrf_hash()
@@ -54,6 +55,9 @@ class C_login extends CI_Controller
     {
         if ($this->session->has_userdata('user')) {
             $this->session->unset_userdata('user');
+        }
+        if ($this->session->has_userdata('admin_subuser')) {
+            $this->session->unset_userdata('admin_subuser');
         }
         redirect('/');
     }

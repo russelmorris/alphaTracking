@@ -1,7 +1,7 @@
 <div id="page-wrapper" class="dashboard">
     <div class="row">
         <div class="col-md-12">
-            <h1>Name: <?php echo $user['memberName']; ?></h1>
+            <h1 id="user_name">Name: <?php echo $user['memberName']; ?></h1>
             <input id="dash_ajax"
                    type="text"
                    hidden
@@ -14,10 +14,15 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label><?php echo $finalised . ('% Finalised') ?></label>
+            <label id="finalised-label"><?php echo $finalised . ('% Finalised') ?></label>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $finalised ?>"
-                     aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $finalised; ?>%;">
+                <div id="finalised-value"
+                     class="progress-bar"
+                     role="progressbar"
+                     aria-valuenow="<?php echo $finalised ?>"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     style="width: <?php echo $finalised; ?>%;">
                     <span class="sr-only"><?php echo $finalised . ('% Complete') ?></span>
                 </div>
             </div>

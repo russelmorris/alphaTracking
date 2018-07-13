@@ -9,14 +9,17 @@
                        target="_blank">
                         Company Information</a>
                 </h4>
-                <input id="user_id" hidden value="<?php echo $user['memberNo']; ?>">
+                <input id="user_id" hidden value="<?php echo $sub_user ? $sub_user['memberNo'] : $user['memberNo']; ?>">
                 <input id="ticker" hidden value="<?php echo $ticker; ?>">
                 <input id="voting_ic_date" hidden value="<?php echo $icdate; ?>">
+                <input id="allow_edit_as_admin"
+                       hidden
+                       value="<?php echo $user['isAdmin'] ? true : false; ?>">
             </div>
         </div>
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4 class="text-right">Name: <?php echo $user['memberName']; ?></h4>
+                <h4 class="text-right">Name: <?php echo $sub_user ? $sub_user['memberName'] : $user['memberName']; ?></h4>
                 <h4 class="text-right">Last modified: 14 June 2016</h4>
             </div>
         </div>
@@ -28,66 +31,14 @@
                 <p>1. Business Model (sustainable, high margin, well executed) </p>
                 <?php if ($voting_values[0]['factorNo'] == 1): ?>
                     <div id="rb-1" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
 
@@ -95,335 +46,70 @@
                 <p>2. Value vs current price</p>
                 <?php if ($voting_values[1]['factorNo'] == 2): ?>
                     <div id="rb-2" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
                 <!-- Radio Button Module -->
                 <p>3. Digital Footprint (growing in web traffic/ app downloads/ trends</p>
                 <?php if ($voting_values[2]['factorNo'] == 3): ?>
                     <div id="rb-3" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
                 <!-- Radio Button Module -->
                 <p>4. Upside in capturing unexploited markets (geography or x-selling extra products)</p>
                 <?php if ($voting_values[3]['factorNo'] == 4): ?>
                     <div id="rb-4" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
                 <!-- Radio Button Module -->
                 <p>5. Competitor Analysis</p>
                 <?php if ($voting_values[4]['factorNo'] == 5): ?>
                     <div id="rb-5" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
                 <!-- Radio Button Module -->
                 <p>6. Risks</p>
                 <?php if ($voting_values[5]['factorNo'] == 6): ?>
                     <div id="rb-6" class="rb">
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 1 ? 'rb-tab-active' : ''; ?>"
-                             data-value="1">
-                            <div class="rb-spot">
-                                <span class="rb-txt">1</span>
+                        <?php for($i = 1; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                                 data-value="<?php echo $i; ?>">
+                                <div class="rb-spot">
+                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 2 ? 'rb-tab-active' : ''; ?>"
-                             data-value="2">
-                            <div class="rb-spot">
-                                <span class="rb-txt">2</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 3 ? 'rb-tab-active' : ''; ?>"
-                             data-value="3">
-                            <div class="rb-spot">
-                                <span class="rb-txt">3</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 4 ? 'rb-tab-active' : ''; ?>"
-                             data-value="4">
-                            <div class="rb-spot">
-                                <span class="rb-txt">4</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 5 ? 'rb-tab-active' : ''; ?>"
-                             data-value="5">
-                            <div class="rb-spot">
-                                <span class="rb-txt">5</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 6 ? 'rb-tab-active' : ''; ?>"
-                             data-value="6">
-                            <div class="rb-spot">
-                                <span class="rb-txt">6</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 7 ? 'rb-tab-active' : ''; ?>"
-                             data-value="7">
-                            <div class="rb-spot">
-                                <span class="rb-txt">7</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 8 ? 'rb-tab-active' : ''; ?>"
-                             data-value="8">
-                            <div class="rb-spot">
-                                <span class="rb-txt">8</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 9 ? 'rb-tab-active' : ''; ?>"
-                             data-value="9">
-                            <div class="rb-spot">
-                                <span class="rb-txt">9</span>
-                            </div>
-                        </div>
-                        <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == 10 ? 'rb-tab-active' : ''; ?>"
-                             data-value="10">
-                            <div class="rb-spot">
-                                <span class="rb-txt">10</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="padding-top: 2%">
-                                <input placeholder="Comments" type="text" class="form-control">
-                            </div>
-                        </div>
+                        <?php endfor;?>
                     </div>
                 <?php endif; ?>
                 <p>7. Veto (optional)</p>

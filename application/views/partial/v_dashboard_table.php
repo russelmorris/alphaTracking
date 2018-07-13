@@ -46,13 +46,13 @@
     <tbody>
     <?php foreach ($ic_dashboard as $index => $ic): ?>
 
-        <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>" id="tr_<?php echo $ic['ticker'];?>">
+        <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>" id="tr_<?php echo $ic['ticker']; ?>">
 
             <td class="vcenter final"><?php echo $index + 1; ?>
-                <input class="hidden master_id" value="<?php echo $ic['masterID'];  ?>">
             </td>
             <td class="vcenter hcenter final final-dis">
-                <button class="btn btn-default btn-circle finalised" onclick="updateFinalise('<?php echo $ic['ticker'];?>', this)">
+                <button class="btn btn-default btn-circle finalised"
+                        onclick="updateFinalise('<?php echo $ic['ticker']; ?>', this)">
                     <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>
                 </button>
             </td>
@@ -85,9 +85,11 @@
             <td class="vcenter hcenter no-padding">
                 <div class="cell_holder">
                     <div class="cell_part">
-                        <button class="btn btn-default btn-circle veto ticker_<?php echo $ic['ticker'];?>"
-                                onclick="updateVeto('<?php echo $ic['ticker'];?>', this)"
-                            <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>  >
+                        <button class="btn btn-default btn-circle veto ticker_<?php echo $ic['ticker']; ?>"
+                                onclick="updateVeto('<?php echo $ic['ticker']; ?>', this)"
+                            <?php if ($ic['isFinalised'] == 1) {
+                                echo ' disabled ';
+                            } ?> >
                             <i class="fa <?php echo $ic['vetoFlag'] ? "fa-check" : '' ?>"></i>
                         </button>
                     </div>
@@ -101,12 +103,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control business-model ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 1, this.value)"
-                                    <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control business-model ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 1, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                      <option value="<?php echo $i; ?>" <?php if($ic['factorScore1'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore1'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -123,12 +129,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control business-valuation ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 2, this.value)"
-                                <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control business-valuation ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 2, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if($ic['factorScore2'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore2'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -145,12 +155,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control digital-footprint ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 3, this.value)"
-                                <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control digital-footprint ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 3, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if($ic['factorScore3'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore3'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -167,12 +181,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control uplift ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 4, this.value)"
-                                <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control uplift ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 4, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if($ic['factorScore4'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore4'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -189,12 +207,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control competitor-analysis ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 5, this.value)"
-                                <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control competitor-analysis ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if($ic['factorScore5'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore5'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -211,12 +233,16 @@
                                                 STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <select class="form-control risk ticker_<?php echo $ic['ticker'];?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker'];?>', 6, this.value)"
-                                <?php if($ic['isFinalised'] == 1) {echo ' disabled ' ;}?>
+                            <select class="form-control risk ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 6, this.value)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
                             >
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if($ic['factorScore6'] == $i){ echo ' selected '; }?>><?php echo $i; ?></option>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore6'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>

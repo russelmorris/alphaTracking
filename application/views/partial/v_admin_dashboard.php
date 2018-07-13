@@ -62,7 +62,7 @@
                     <td class="text-center"><?php echo $key + 1; ?></td>
                     <!--In href will be passed route with the user id-->
                     <td class="text-center">
-                        <a href="<?php echo base_url('dashboard/') . $value['memberNo'] ?>"><?php echo $value['memberName']; ?></a>
+                        <a href="<?php echo base_url('dashboard') ?>"><?php echo $value['memberName']; ?></a>
                     </td>
                     <td class="text-center"><?php echo rand(0, 100); ?>%</td>
                     <td class="text-center">02-Jun-2018</td>

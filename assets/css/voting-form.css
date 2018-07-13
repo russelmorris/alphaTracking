@@ -56,37 +56,6 @@
 
 }
 
-/* Submit Button */
-.button-box {
-    padding: 10px 0;
-    text-align: center;
-}
-
-.rb-box > .button-box > button {
-    display: inline-block;
-    width: 80%;
-    margin-top: 1.2em;
-    padding: 1em;
-    max-width: 220px;
-    font-size: 0.9em;
-    color: #d42d78;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.15em;
-    background: white;
-    border: none;
-    outline: none;
-    border-radius: 5em;
-    box-shadow: 0 15px 20px -10px rgba(0, 0, 0, 0.3);
-    transition: color 0.6s, box-shadow 0.3s, transform 0.3s;
-    cursor: pointer;
-}
-
-.rb-box > .button-box > button:hover {
-    box-shadow: 0 3px 5px -5px rgba(0, 0, 0, 0.3);
-    color: #6f6f6f;
-}
-
 #rb-8 > div > div > span, #rb-7 > div > div > span {
     position: absolute;
     top: 50%;
@@ -100,4 +69,8 @@ iframe {
     width: 100%;
     overflow: hidden;
     border: none;
+}
+
+.add-disabled-cursor {
+    cursor: not-allowed;
 }

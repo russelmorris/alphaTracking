@@ -28,6 +28,10 @@ $('#upload-prospects').click(function () {
                 setTimeout(function () {
                     $('#alert-success').hide();
                 }, 1500);
+                setTimeout(function () {
+                    $('#prospectModal').modal('hide');
+                }, 1500);
+
             }
         },
         error: function (data) {
