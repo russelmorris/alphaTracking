@@ -29,16 +29,14 @@ class C_dashboard extends MY_Controller
 
     public function dashboard()
     {
-        $data['user']  = $this->session->userdata('user');
-        $data['admin'] = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+        $data['user'] = $this->session->userdata('user');
+        $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
         if ($data['user']['isAdmin']) {
             $data['admin_users'] = $this->m_ic->getMembers();
         }
-        $data['ic_dates']                  = $this->m_icdate->getICDates();
-        $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
-            time());
-        $data['ic_dashboard']              = [];
-        $data['finalised']                 = $this->m_master->finalised($data['user']['memberNo'],
+        $data['ic_dates'] = $this->m_icdate->getICDates();
+        $data['ic_dashboard'] = [];
+        $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
             $data['closest_icDate_from_today']);
 
         $this->load->template('v_dashboard', $data);
@@ -46,7 +44,7 @@ class C_dashboard extends MY_Controller
 
     public function dashboard_ajax()
     {
-        if ( ! $this->input->is_ajax_request()) {
+        if (!$this->input->is_ajax_request()) {
             show_404();
             die();
         }
@@ -54,18 +52,18 @@ class C_dashboard extends MY_Controller
 
         $data['selectedDate'] = $this->input->post('ic_date');
         $data['selectedUser'] = json_decode($this->input->post('user_id'));
-        $sessionUser          = [];
-        if ( ! $data['selectedUser']) {
-            $sessionUser   = $this->session->userdata('user');
-            $data['user']  = $sessionUser;
-            $data['admin'] = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+        $sessionUser = [];
+        if (!$data['selectedUser']) {
+            $sessionUser = $this->session->userdata('user');
+            $data['user'] = $sessionUser;
+            $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
             if ($data['user']['isAdmin']) {
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
-            $data['ic_dates']                  = $this->m_icdate->getICDates();
+            $data['ic_dates'] = $this->m_icdate->getICDates();
             $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
                 time());
-            $data['ic_dashboard']              = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
+            $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate']);
         } else {
@@ -80,19 +78,19 @@ class C_dashboard extends MY_Controller
 
     public function finalised_value()
     {
-        if ( ! $this->input->is_ajax_request()) {
+        if (!$this->input->is_ajax_request()) {
             show_404();
             die();
         }
         $selectedDate = $this->input->post('ic_date');
         $selectedUser = json_decode($this->input->post('user_id'));
-        $sessionUser  = [];
-        if ( ! $selectedUser) {
+        $sessionUser = [];
+        if (!$selectedUser) {
             $sessionUser = $this->session->userdata('user');
         }
 //        $limit = json_decode($this->input->post('limit'));
 
-        if ( ! $selectedUser) {
+        if (!$selectedUser) {
             echo $this->m_master->finalised($sessionUser['memberNo'],
                 $selectedDate);
         } else {
@@ -103,7 +101,7 @@ class C_dashboard extends MY_Controller
 
     public function updateFactor()
     {
-        if ( ! $this->input->is_ajax_request()) {
+        if (!$this->input->is_ajax_request()) {
             show_404();
             die();
         }
@@ -131,7 +129,7 @@ class C_dashboard extends MY_Controller
 
     public function updateVeto()
     {
-        if ( ! $this->input->is_ajax_request()) {
+        if (!$this->input->is_ajax_request()) {
             show_404();
             die();
         }
@@ -156,7 +154,7 @@ class C_dashboard extends MY_Controller
 
     public function updateFinalise()
     {
-        if ( ! $this->input->is_ajax_request()) {
+        if (!$this->input->is_ajax_request()) {
             show_404();
             die();
         }
@@ -176,17 +174,5 @@ class C_dashboard extends MY_Controller
         echo $newFinalisedValue;
 
         return;
-    }
-
-
-    private function find_closest_date($array, $date)
-    {
-        foreach ($array as $day) {
-            $interval[] = abs(strtotime($date) - strtotime($day));
-        }
-        asort($interval);
-        $closest = key($interval);
-
-        return $array[$closest + 1];
     }
 }

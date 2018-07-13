@@ -17,6 +17,7 @@ class M_icdate extends CI_Model
             ->select("*")
             ->where ('strategyNo', 1)
             ->from('icdate')
+            ->order_by('icDate', 'ASC')
             ->get();
         return $query->result_array();
     }
