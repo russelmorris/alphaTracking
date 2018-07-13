@@ -186,7 +186,7 @@ class C_dashboard extends MY_Controller
             $datetime1 = new DateTime($day);
             $datetime2 = new DateTime($date);
             $interval = $datetime1->diff($datetime2);
-            if($interval === 1){
+            if($interval->invert === 1){
                 $closest = $day;
             }
             break;
