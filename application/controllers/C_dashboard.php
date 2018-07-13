@@ -37,7 +37,7 @@ class C_dashboard extends MY_Controller
         $data['ic_dates'] = $this->m_icdate->getICDates();
         $data['ic_dashboard'] = [];
         $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
-            $data['closest_icDate_from_today']);
+            $data['ic_dates']['icDate'][0]);
 
         $this->load->template('v_dashboard', $data);
     }
@@ -61,8 +61,6 @@ class C_dashboard extends MY_Controller
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
             $data['ic_dates'] = $this->m_icdate->getICDates();
-            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
-                time());
             $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate']);
