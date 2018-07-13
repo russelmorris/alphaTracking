@@ -36,8 +36,7 @@ class C_dashboard extends MY_Controller
         }
         $data['ic_dates'] = $this->m_icdate->getICDates();
         $data['ic_dashboard'] = [];
-        $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
-            $data['ic_dates']['icDate'][0]);
+        $data['finalised'] = 0;
 
         $this->load->template('v_dashboard', $data);
     }
