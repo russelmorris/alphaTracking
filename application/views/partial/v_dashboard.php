@@ -33,8 +33,14 @@
                 <label>For IC date</label>
                 <select class="form-control ic_dates">
                     <?php foreach ($ic_dates as $value): ?>
-                        <option value="<?php echo $value['icDate']; ?>">
-                            <?php echo $value['icDate']; ?></option>
+                        <?php if (new DateTime($closest_icDate_from_today) == new DateTime($value['icDate'])): ?>
+                            <option selected value="<?php echo $value['icDate']; ?>">
+                                <?php echo $value['icDate']; ?></option>
+                        <?php else: ?>
+                            <option value="<?php echo $value['icDate']; ?>">
+                                <?php echo $value['icDate']; ?></option>
+                        <?php endif; ?>
+
                     <?php endforeach; ?>
                 </select>
             </div>

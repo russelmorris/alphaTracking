@@ -19,16 +19,12 @@
                     <i class="fa fa-tasks fa-fw"></i> IC Dashboard
                 </a>
             <?php } ?>
-
-
         </li>
         <li>
             <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') { ?>
-
                 <a href="<?php echo base_url('admin_dashboard') ?>">
                     <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard
                 </a>
-
             <?php } ?>
         </li>
         <!-- /.dropdown -->

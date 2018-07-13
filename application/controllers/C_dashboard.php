@@ -35,8 +35,11 @@ class C_dashboard extends MY_Controller
             $data['admin_users'] = $this->m_ic->getMembers();
         }
         $data['ic_dates'] = $this->m_icdate->getICDates();
+        $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
+            time());
         $data['ic_dashboard'] = [];
-        $data['finalised'] = 0;
+        $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
+            $data['closest_icDate_from_today']);
 
         $this->load->template('v_dashboard', $data);
     }
@@ -60,6 +63,8 @@ class C_dashboard extends MY_Controller
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
             $data['ic_dates'] = $this->m_icdate->getICDates();
+            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
+                time());
             $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate']);
@@ -171,5 +176,22 @@ class C_dashboard extends MY_Controller
         echo $newFinalisedValue;
 
         return;
+    }
+
+
+    private function find_closest_date($array, $date)
+    {
+        $closest = null;
+        foreach ($array as $index => $day) {
+            $datetime1 = new DateTime($day);
+            $datetime2 = new DateTime($date);
+            $interval = $datetime1->diff($datetime2);
+            if($interval === 0){
+                $closest = $day;
+            }
+            break;
+        }
+
+        return $closest;
     }
 }
