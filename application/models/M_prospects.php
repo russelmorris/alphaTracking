@@ -34,6 +34,7 @@ class M_prospects extends CI_Model
                 'country' => $data['country'],
                 'sector' => $data['sector'],
                 'machineScore' => $data['machineScore'],
+                'machineRank' => $data['machineRank'],
                 'SWSurl' => $data['SWSurl'],
             ];
             if (!$this->db->insert('prospects', $insertData)) {

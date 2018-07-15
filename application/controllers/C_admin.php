@@ -70,8 +70,10 @@ class C_admin extends MY_Controller
                         'country'      => $row[7],
                         'sector'       => $row[8],
                         'machineScore' => (float)$row[9],
+                        'machineRank' => $row[10],
                         'SWSurl'       => 'https://url.com'
                     ];
+
                     $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 
                     if ($prospectCreated) {
