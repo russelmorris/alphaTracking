@@ -44,3 +44,20 @@ function randomNumber($len = 5){
 
     return $rand;
 }
+
+function find_closest_date($array)
+{
+    $currentDate = new DateTime(unix_to_human(time()));
+    $closestDate =  new DateTime($array[0]);
+    $dayDifference = $closestDate->diff($currentDate)->days;
+    foreach ($array as $index => $day) {
+        $icDate = new DateTime($day);
+        $delta = $icDate->diff($currentDate)->days;
+        if ($delta<=$dayDifference && $currentDate<=$icDate ){
+            $closestDate = $icDate;
+            $dayDifference = $delta;
+        }
+    }
+
+    return $closestDate->format('Y-m-d');
+}
