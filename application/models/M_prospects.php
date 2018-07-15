@@ -3,6 +3,7 @@
 /**
  * @property  CI_Model model
  * @property  CI_db db
+ * @property  M_countrySymbolMap m_countrySymbolMap
  */
 class M_prospects extends CI_Model
 {
@@ -13,6 +14,9 @@ class M_prospects extends CI_Model
 
     public function insert_prospects_from_csv($data)
     {
+        $this->load->model([
+            'm_countrySymbolMap'
+        ]);
         $return = true;
         $total = $this->db
             ->select("COUNT(prospectID) as total")
@@ -24,12 +28,19 @@ class M_prospects extends CI_Model
             ->count_all_results();
 
         if ($total == 0) {
+
+            $ricExchangeCode = substr($data['RIC'], strpos($data['RIC'],'.')+1);
+
+            $swsExchangeTicker = $this->m_countrySymbolMap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
+            $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
+
             $insertData = [
                 'strategyNo' => 1,
                 'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
                 'icDate' => $data['icDate'],
                 'ticker' => $data['ticker'],
                 'RIC' => $data['RIC'],
+                'RICExchangeCode' => $ricExchangeCode,
                 'name' => $data['name'],
                 'country' => $data['country'],
                 'sector' => $data['sector'],
@@ -104,5 +115,22 @@ class M_prospects extends CI_Model
 //        $this->db->limit($limit);
         $result = $this->db->get()->result_array();
         return $result;
+    }
+
+
+    public function getProspectByDateAndTicker($icDate = '', $ticker)
+    {
+        $return = [];
+        $this->db->select('*');
+        $this->db->from('prospects p');
+
+        $this->db->where('p.strategyNo', 1);
+        $this->db->where('p.icDate', $icDate);
+        $this->db->where('p.ticker', $ticker);
+        $result = $this->db->get()->result_array();
+        if (count($result) > 0){
+            $return = $result[0];
+        }
+        return $return;
     }
 }
