@@ -65,16 +65,15 @@ class C_admin extends MY_Controller
             $this->m_prospects->updateProcessedStatus($ic_date);
             foreach ($csv as $key => $value) {
                 $info            = [
-                    'strategyNo'   => 1,
-                    'icDate'       => date($ic_date),
-                    'ticker'       => $value['ticker'],
-                    'RIC'          => $value['ric'],
-                    'name'         => $value['name'],
-                    'country'      => $value['country'],
-                    'sector'       => $value['sector'],
-                    'machineScore' => (float)$value['machineScore'],
-					'machineRank' => $value['machineRank'],
-                    'SWSurl'       => 'https://url.com'
+                    'strategyNo'        => 1,
+                    'icDate'            => date($ic_date),
+                    'ticker'            => $value['ticker'],
+                    'RIC'               => $value['ric'],
+                    'name'              => $value['name'],
+                    'country'           => $value['country'],
+                    'sector'            => $value['sector'],
+                    'machineScore'      => (float)$value['machineScore'],
+					'machineRank'       => $value['machineRank']
                 ];
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 

@@ -76,6 +76,7 @@ class M_voting extends CI_Model
                            ->select('v.factorScore')
                            ->select('m.vetoFlag')
                            ->select('m.isFinalised')
+                           ->select('m.DateModified')
                            ->from('voting v')
                            ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate', 'inner')
                            ->where('v.memberNo', $user_id)

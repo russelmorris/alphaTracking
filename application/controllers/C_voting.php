@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  Ci_input input
  * @property  M_voting m_voting
  * @property  M_master m_master
+ * @property  M_prospects m_prospects
  */
 class C_voting extends MY_Controller
 {
@@ -28,7 +29,7 @@ class C_voting extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['m_voting', 'm_master']);
+        $this->load->model(['m_voting', 'm_master', 'm_prospects']);
     }
 
     public function voting($icDate, $ticker)
@@ -36,16 +37,15 @@ class C_voting extends MY_Controller
         $data                  = [];
         $data['icdate']        = $icDate;
         $data['ticker']        = $ticker;
+        $data['prospect']      = $this->m_prospects->getProspectByDateAndTicker($data['icdate'], $data['ticker']);
         $data['user']          = $this->session->userdata('user');
         $data['sub_user']      = $this->session->userdata('admin_subuser') ?
             $this->session->userdata('admin_subuser') : false;
         $data['voting_values'] = $this->m_voting->getLatestVotingValues(
             $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
             $ticker, $icDate);
-        $data['url']           = $this->m_voting->getSWSurl(
-            $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
-            $ticker);
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+        $data['dateModified'] = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
         $this->load->template('v_voting', $data);
     }
 

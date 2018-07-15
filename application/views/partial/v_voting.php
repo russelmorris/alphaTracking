@@ -2,10 +2,11 @@
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12">
-                <h4>IC Date: <?php echo $icdate; ?></h4>
-                <h4>Ticker: <?php echo $ticker; ?></h4>
+                <h4>IC Date: <b><?php echo $icdate; ?></b></h4>
+                <h4>Ticker: <b><?php echo $ticker; ?></b></h4>
+                <h4>Name: <b><?php echo $prospect['name']; ?></b></h4>
                 <h4>
-                    <a href="<?php echo $url['SWSurl']; ?>"
+                    <a href="<?php echo $prospect['SWSurl']; ?>"
                        target="_blank">
                         Company Information</a>
                 </h4>
@@ -20,7 +21,7 @@
         <div class="col-md-6">
             <div class="col-md-12">
                 <h4 class="text-right">Name: <?php echo $sub_user ? $sub_user['memberName'] : $user['memberName']; ?></h4>
-                <h4 class="text-right">Last modified: 14 June 2016</h4>
+                <h4 class="text-right">Last modified: <?php echo $dateModified; ?></h4>
             </div>
         </div>
     </div>
