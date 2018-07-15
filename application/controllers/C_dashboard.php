@@ -78,6 +78,7 @@ class C_dashboard extends MY_Controller
 
     public function finalised_value()
     {
+        $return = 0.00;
         if (!$this->input->is_ajax_request()) {
             show_404();
             die();
@@ -88,15 +89,15 @@ class C_dashboard extends MY_Controller
         if (!$selectedUser) {
             $sessionUser = $this->session->userdata('user');
         }
-//        $limit = json_decode($this->input->post('limit'));
 
         if (!$selectedUser) {
-            echo $this->m_master->finalised($sessionUser['memberNo'],
+            $return =  $this->m_master->finalised($sessionUser['memberNo'],
                 $selectedDate);
         } else {
-            echo $this->m_master->finalised($selectedUser,
+            $return =  $this->m_master->finalised($selectedUser,
                 $selectedDate);
         }
+        echo number_format($return, 2,'.', '');
     }
 
     public function updateFactor()
