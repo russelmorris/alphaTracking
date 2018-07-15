@@ -4,7 +4,7 @@
  * @property  CI_Model model
  * @property  CI_db db
  */
-class M_countrySymbolMap extends CI_Model
+class M_countrysymbolmap extends CI_Model
 {
     public function __construct()
     {

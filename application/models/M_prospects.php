@@ -3,7 +3,7 @@
 /**
  * @property  CI_Model model
  * @property  CI_db db
- * @property  M_countrySymbolMap m_countrySymbolMap
+ * @property  M_countrysymbolmap m_countrysymbolmap
  */
 class M_prospects extends CI_Model
 {
@@ -16,13 +16,13 @@ class M_prospects extends CI_Model
     {
 
         $this->load->model([
-            'm_countrySymbolMap'
+            'm_countrysymbolmap'
         ]);
         $return = true;
 
         // prepare data for update
         $ricExchangeCode = substr($data['RIC'], strpos($data['RIC'],'.')+1);
-        $swsExchangeTicker = $this->m_countrySymbolMap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
+        $swsExchangeTicker = $this->m_countrysymbolmap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
         $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
         $data['SWSurl_test']  = 'https://simplywall.st/stocks/us/software/symbolCountryMap.'.$swsExchangeTicker.'-prospects.'.$data['ticker'].'/';
 
