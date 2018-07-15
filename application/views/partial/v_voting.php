@@ -6,6 +6,12 @@
                 <h4>Ticker: <b><?php echo $ticker; ?></b></h4>
                 <h4>Name: <b><?php echo $prospect['name']; ?></b></h4>
                 <h4>
+                    <a href="<?php echo $prospect['SWSurl_test']; ?>"
+                       target="_blank">
+                        Company Information - TO BE CONFIRMED</a>
+                </h4>
+
+                <h4>
                     <a href="<?php echo $prospect['SWSurl']; ?>"
                        target="_blank">
                         Company Information</a>
@@ -138,9 +144,13 @@
             </div>
         </div>
     </div>
-    <div class="mt-10">
-        <iframe src="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm"); ?>"
-                onload="resizeIframe(this)"
-                scrolling="no"></iframe>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="mt-10">
+                <iframe src="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm"); ?>"
+                        onload="resizeIframe(this)"
+                        scrolling="no"></iframe>
+            </div>
+        </div>
     </div>
 </div>
