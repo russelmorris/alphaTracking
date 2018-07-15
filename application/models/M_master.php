@@ -25,6 +25,7 @@ class M_master extends CI_Model
             "country"        => $data['country'],
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
+            "machineRank"   => $data['machineRank'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
