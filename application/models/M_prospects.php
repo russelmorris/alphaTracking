@@ -33,6 +33,7 @@ class M_prospects extends CI_Model
 
             $swsExchangeTicker = $this->m_countrySymbolMap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
             $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
+            $data['SWSurl_test']  = 'https://simplywall.st/stocks/us/software/symbolCountryMap.'.$swsExchangeTicker.'-prospects.'.$data['ticker'].'/';
 
             $insertData = [
                 'strategyNo' => 1,
@@ -47,6 +48,7 @@ class M_prospects extends CI_Model
                 'machineScore' => $data['machineScore'],
                 'machineRank' => $data['machineRank'],
                 'SWSurl' => $data['SWSurl'],
+                'SWSurl_test' => $data['SWSurl_test'],
             ];
             if (!$this->db->insert('prospects', $insertData)) {
                 $return = false;
