@@ -38,9 +38,14 @@ class M_prospects extends CI_Model
             'sector' => $data['sector'],
             'machineScore' => $data['machineScore'],
             'machineRank' => $data['machineRank'],
+            'peerRIC1' => $data['peerRIC1'],
+            'peerRIC2' => $data['peerRIC2'],
+            'peerRIC3' => $data['peerRIC3'],
+            'peerRIC4' => $data['peerRIC4'],
+            'peerRIC5' => $data['peerRIC5'],
             'SWSurl' => $data['SWSurl'],
             'SWSurl_test' => $data['SWSurl_test'],
-            'processed' => 1
+            'processed' => 1,
         ];
 
        //check if prospect exist in database
@@ -70,6 +75,11 @@ class M_prospects extends CI_Model
                 ->set('sector', $prospectData['sector'])
                 ->set('machineScore', $prospectData['machineScore'])
                 ->set('machineRank', $prospectData['machineRank'])
+                ->set('peerRIC1', $prospectData['peerRIC1'])
+                ->set('peerRIC2', $prospectData['peerRIC2'])
+                ->set('peerRIC3', $prospectData['peerRIC3'])
+                ->set('peerRIC4', $prospectData['peerRIC4'])
+                ->set('peerRIC5', $prospectData['peerRIC5'])
                 ->set('SWSurl', $prospectData['SWSurl'])
                 ->set('SWSurl_test', $prospectData['SWSurl_test'])
                 ->set('processed', $prospectData['processed'])

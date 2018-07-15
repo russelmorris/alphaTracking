@@ -79,7 +79,12 @@ class C_admin extends MY_Controller
                     'country'           => $value['country'],
                     'sector'            => $value['sector'],
                     'machineScore'      => (float)$value['machineScore'],
-					'machineRank'       => $value['machineRank']
+					'machineRank'       => $value['machineRank'],
+					'peerRIC1'          => $value['peerRIC1'],
+					'peerRIC2'          => $value['peerRIC2'],
+					'peerRIC3'          => $value['peerRIC3'],
+					'peerRIC4'          => $value['peerRIC4'],
+					'peerRIC5'          => $value['peerRIC5']
                 ];
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 
