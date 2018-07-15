@@ -38,8 +38,8 @@ class M_master extends CI_Model
             ->select("masterID")
             ->where('strategyNo', 1)
             ->where('ticker', $prospectData['ticker'])
-            ->where('country', $prospectData['country'])
             ->where('icDate', $prospectData['icDate'])
+            ->where('country', $prospectData['country'])
             ->where('memberNo', $member['memberNo'])
             ->from('master')
             ->get();

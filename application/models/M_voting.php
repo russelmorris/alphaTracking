@@ -57,6 +57,7 @@ class M_voting extends CI_Model
             ->set('dateModified', date("Y-m-d H:i:s"))
             ->set('factorScore', $factorVal)
             ->where([
+                     'strategyNo' => 1,
                      'memberNo' => $user_id,
                      'ticker'   => $ticker,
                      'icDate'   => $ic_date,
