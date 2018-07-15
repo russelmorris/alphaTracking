@@ -35,8 +35,7 @@ class C_dashboard extends MY_Controller
             $data['admin_users'] = $this->m_ic->getMembers();
         }
         $data['ic_dates'] = $this->m_icdate->getICDates();
-        $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
-            time());
+        $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'));
         $data['ic_dashboard'] = [];
         $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
             $data['closest_icDate_from_today']);
@@ -63,8 +62,7 @@ class C_dashboard extends MY_Controller
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
             $data['ic_dates'] = $this->m_icdate->getICDates();
-            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'),
-                time());
+            $data['closest_icDate_from_today'] = $this->find_closest_date(array_column($data['ic_dates'], 'icDate'));
             $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
                 $data['selectedDate']);
@@ -179,19 +177,20 @@ class C_dashboard extends MY_Controller
     }
 
 
-    private function find_closest_date($array, $date)
+    private function find_closest_date($array)
     {
-        $closest = null;
+        $currentDate = new DateTime(unix_to_human(time()));
+        $closestDate =  new DateTime($array[0]);
+        $dayDifference = $closestDate->diff($currentDate)->days;
         foreach ($array as $index => $day) {
-            $datetime1 = new DateTime($day);
-            $datetime2 = new DateTime($date);
-            $interval = $datetime1->diff($datetime2);
-            if($interval->invert === 1){
-                $closest = $day;
+            $icDate = new DateTime($day);
+            $delta = $icDate->diff($currentDate)->days;
+            if ($delta<$dayDifference){
+                $closestDate = $icDate;
+                $dayDifference = $delta;
             }
-            break;
         }
 
-        return $closest;
+        return $closestDate->format('Y-m-d');
     }
 }
