@@ -15,7 +15,7 @@ class M_voting extends CI_Model
     {
         $return = false;
 
-        $insertData = [
+        $prospectData = [
             'strategyNo'     => 1,
             "masterID"       => $masterID,
             'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
@@ -29,8 +29,23 @@ class M_voting extends CI_Model
             "zScore"         => 0,
             "dateModified"   => date("Y-m-d H:i:s"),
         ];
-        if ($this->db->insert('voting', $insertData)) {
-            $return = true;
+
+        //check if we have already inserted
+        //check if prospect exist in database
+        $query = $this->db
+            ->select("votingID")
+            ->where('strategyNo', 1)
+            ->where('masterID', $masterID)
+            ->where('ticker', $prospectData['ticker'])
+            ->where('icDate', $prospectData['icDate'])
+            ->where('memberNo', $member['memberNo'])
+            ->where('factorNo', $factor['factorNo'])
+            ->from('voting')
+            ->get();
+        if ($query->num_rows() == 0) {
+            if ($this->db->insert('voting', $prospectData)) {
+                $return = true;
+            }
         }
 
         return $return;
@@ -38,15 +53,17 @@ class M_voting extends CI_Model
 
     public function updateFactor($user_id, $ticker, $ic_date, $factorNo, $factorVal)
     {
-        $this->db->set('factorScore', $factorVal)
-                 ->where([
+        $this->db
+            ->set('dateModified', date("Y-m-d H:i:s"))
+            ->set('factorScore', $factorVal)
+            ->where([
                      'memberNo' => $user_id,
                      'ticker'   => $ticker,
                      'icDate'   => $ic_date,
                      'factorNo' => $factorNo
                  ])
-                ->limit(1)
-                ->update('voting');
+            ->limit(1)
+            ->update('voting');
     }
 
     public function getSWSurl($user_id, $ticker)

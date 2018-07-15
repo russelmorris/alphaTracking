@@ -14,54 +14,79 @@ class M_prospects extends CI_Model
 
     public function insert_prospects_from_csv($data)
     {
+
         $this->load->model([
             'm_countrySymbolMap'
         ]);
         $return = true;
+
+        // prepare data for update
+        $ricExchangeCode = substr($data['RIC'], strpos($data['RIC'],'.')+1);
+        $swsExchangeTicker = $this->m_countrySymbolMap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
+        $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
+        $data['SWSurl_test']  = 'https://simplywall.st/stocks/us/software/symbolCountryMap.'.$swsExchangeTicker.'-prospects.'.$data['ticker'].'/';
+
+        $prospectData = [
+            'strategyNo' => 1,
+            'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
+            'icDate' => $data['icDate'],
+            'ticker' => $data['ticker'],
+            'RIC' => $data['RIC'],
+            'RICExchangeCode' => $ricExchangeCode,
+            'name' => $data['name'],
+            'country' => $data['country'],
+            'sector' => $data['sector'],
+            'machineScore' => $data['machineScore'],
+            'machineRank' => $data['machineRank'],
+            'SWSurl' => $data['SWSurl'],
+            'SWSurl_test' => $data['SWSurl_test'],
+            'processed' => 1
+        ];
+
+       //check if prospect exist in database
         $total = $this->db
             ->select("COUNT(prospectID) as total")
             ->where('strategyNo', 1)
-            ->where('ticker', $data['ticker'])
-            ->where('country', $data['country'])
-            ->where('icDate', $data['icDate'])
+            ->where('ticker', $prospectData['ticker'])
+            ->where('country', $prospectData['country'])
+            ->where('icDate', $prospectData['icDate'])
             ->from('prospects')
             ->count_all_results();
 
         if ($total == 0) {
-
-            $ricExchangeCode = substr($data['RIC'], strpos($data['RIC'],'.')+1);
-
-            $swsExchangeTicker = $this->m_countrySymbolMap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
-            $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
-            $data['SWSurl_test']  = 'https://simplywall.st/stocks/us/software/symbolCountryMap.'.$swsExchangeTicker.'-prospects.'.$data['ticker'].'/';
-
-            $insertData = [
-                'strategyNo' => 1,
-                'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
-                'icDate' => $data['icDate'],
-                'ticker' => $data['ticker'],
-                'RIC' => $data['RIC'],
-                'RICExchangeCode' => $ricExchangeCode,
-                'name' => $data['name'],
-                'country' => $data['country'],
-                'sector' => $data['sector'],
-                'machineScore' => $data['machineScore'],
-                'machineRank' => $data['machineRank'],
-                'SWSurl' => $data['SWSurl'],
-                'SWSurl_test' => $data['SWSurl_test'],
-            ];
-            if (!$this->db->insert('prospects', $insertData)) {
+            if (!$this->db->insert('prospects', $prospectData)) {
                 $return = false;
             }
+        } else {
+            $query = $this->db
+                ->set('strategyNo', $prospectData['strategyNo'])
+                ->set('prospectTextID', $prospectData['prospectTextID'])
+                ->set('icDate', $prospectData['icDate'])
+                ->set('ticker', $prospectData['ticker'])
+                ->set('RIC', $prospectData['RIC'])
+                ->set('RICExchangeCode', $prospectData['RICExchangeCode'])
+                ->set('name', $prospectData['name'])
+                ->set('country', $prospectData['country'])
+                ->set('sector', $prospectData['sector'])
+                ->set('machineScore', $prospectData['machineScore'])
+                ->set('machineRank', $prospectData['machineRank'])
+                ->set('SWSurl', $prospectData['SWSurl'])
+                ->set('SWSurl_test', $prospectData['SWSurl_test'])
+                ->set('processed', $prospectData['processed'])
+                ->where('strategyNo', 1)
+                ->where('ticker', $data['ticker'])
+                ->where('country', $data['country'])
+                ->where('icDate', $data['icDate'])
+                ->update('prospects');
         }
 
         return $return;
     }
 
-    public function updateProcessedStatus($icDate)
+    public function updateProcessedStatus($icDate, $status = 0)
     {
         $this->db
-            ->set("processed", 0)
+            ->set("processed", $status)
             ->where('strategyNo', 1)
             ->where('icDate', $icDate)
             ->update('prospects');

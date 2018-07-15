@@ -61,8 +61,14 @@ class C_admin extends MY_Controller
             http_response_code(400);
             die();
         } else {
+
             // mark all record as unprocessed. we need at the end unprocessed to mark ad not active in voting table
-            $this->m_prospects->updateProcessedStatus($ic_date);
+            $this->m_prospects->updateProcessedStatus($ic_date, 0);
+            $this->m_master->updateActiveStatus($ic_date);
+
+           // die();
+
+
             foreach ($csv as $key => $value) {
                 $info            = [
                     'strategyNo'        => 1,
@@ -80,16 +86,17 @@ class C_admin extends MY_Controller
                 if ($prospectCreated) {
                     foreach ($members as $member) {
                         $masterId = $this->m_master->insertProspect($info, $member);
-                        foreach ($factors as $factor) {
-                            $this->m_voting->insertProspect($info, $masterId, $member, $factor);
+                        if ($masterId > 0) {
+                            foreach ($factors as $factor) {
+                                $this->m_voting->insertProspect($info, $masterId, $member, $factor);
+                            }
                         }
                     }
-                } else {
-                    #TODO  we can;t insert in prospect table, need to implement admin notification
                 }
             }
-            echo true; // for closing modal on frontend
+
         }
+        echo 1;
     }
 
     public function import_returns()
