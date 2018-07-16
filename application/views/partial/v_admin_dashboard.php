@@ -64,8 +64,8 @@
                     <td class="text-center">
                         <a href="<?php echo base_url('dashboard') ?>"><?php echo $value['memberName']; ?></a>
                     </td>
-                    <td class="text-center"><?php echo rand(0, 100); ?>%</td>
-                    <td class="text-center">02-Jun-2018</td>
+                    <td class="text-center"><?php echo $value['finalise_overall']; ?>%</td>
+                    <td class="text-center"><?php echo date('d-M-Y', time($value['last_edited'])); ?></td>
                     <td class="text-center"><?php echo $value['bWeight'] * 100; ?>%</td>
                 </tr>
             <?php endforeach; ?>

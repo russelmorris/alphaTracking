@@ -57,12 +57,12 @@ class M_voting extends CI_Model
             ->set('dateModified', date("Y-m-d H:i:s"))
             ->set('factorScore', $factorVal)
             ->where([
-                     'strategyNo' => 1,
-                     'memberNo' => $user_id,
-                     'ticker'   => $ticker,
-                     'icDate'   => $ic_date,
-                     'factorNo' => $factorNo
-                 ])
+                'strategyNo' => 1,
+                'memberNo'   => $user_id,
+                'ticker'     => $ticker,
+                'icDate'     => $ic_date,
+                'factorNo'   => $factorNo
+            ])
             ->limit(1)
             ->update('voting');
     }
@@ -92,11 +92,14 @@ class M_voting extends CI_Model
         $return = false;
         $values = $this->db->select('v.factorNo')
                            ->select('v.factorScore')
+                           ->select('m.prospectTextID')
                            ->select('m.vetoFlag')
+                           ->select('m.vetoComment')
                            ->select('m.isFinalised')
                            ->select('m.DateModified')
                            ->from('voting v')
-                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate', 'inner')
+                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate',
+                               'inner')
                            ->where('v.memberNo', $user_id)
                            ->where('v.ticker', $ticker)
                            ->where('v.icDate', $ic_date)

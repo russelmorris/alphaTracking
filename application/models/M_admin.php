@@ -38,10 +38,7 @@ class M_admin extends CI_Model
                  ->update('master');
     }
 
-    public function populateVoting()
-    {
 
-    }
 
 
 }

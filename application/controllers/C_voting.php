@@ -45,7 +45,7 @@ class C_voting extends MY_Controller
             $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
             $ticker, $icDate);
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
-        $data['dateModified'] = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
+        $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
         $this->load->template('v_voting', $data);
     }
 
@@ -55,19 +55,19 @@ class C_voting extends MY_Controller
             show_404();
             die();
         }
-
         $populate_voting_data            = [
-            'ticker'    => $this->input->post('ticker'),
-            'ic_date'   => $this->input->post('ic_date'),
-            'user_id'   => $this->input->post('user_id'),
-            'fc1'       => $this->input->post('fc1'),
-            'fc2'       => $this->input->post('fc2'),
-            'fc3'       => $this->input->post('fc3'),
-            'fc4'       => $this->input->post('fc4'),
-            'fc5'       => $this->input->post('fc5'),
-            'fc6'       => $this->input->post('fc6'),
-            'veto'      => json_decode($this->input->post('veto')),
-            'finalised' => json_decode($this->input->post('finalised')),
+            'ticker'      => $this->input->post('ticker'),
+            'ic_date'     => $this->input->post('ic_date'),
+            'user_id'     => $this->input->post('user_id'),
+            'fc1'         => $this->input->post('fc1'),
+            'fc2'         => $this->input->post('fc2'),
+            'fc3'         => $this->input->post('fc3'),
+            'fc4'         => $this->input->post('fc4'),
+            'fc5'         => $this->input->post('fc5'),
+            'fc6'         => $this->input->post('fc6'),
+            'veto'        => json_decode($this->input->post('veto')),
+            'vetoComment' => $this->input->post('vetoComment'),
+            'finalised'   => json_decode($this->input->post('finalised')),
         ];
         $admin                           = $this->session->userdata('user');
         $admin_subuser                   = $this->session->userdata('admin_subuser');
@@ -100,11 +100,16 @@ class C_voting extends MY_Controller
             }
             if ( ! is_null($populate_voting_data['veto'])) {
                 $this->m_master->setVetoFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], $populate_voting_data['veto']);
+                    $populate_voting_data['ic_date']);
+            }
+            if ( ! is_null($populate_voting_data['vetoComment'])) {
+                echo $this->m_master->setVetoComment($populate_voting_data['user_id'], $populate_voting_data['ticker'],
+                    $populate_voting_data['ic_date'], $populate_voting_data['vetoComment']);
+
             }
             if ( ! is_null($populate_voting_data['finalised'])) {
                 $this->m_master->setFinaliseFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], $populate_voting_data['finalised']);
+                    $populate_voting_data['ic_date']);
             }
         }
     }

@@ -95,6 +95,16 @@ class M_master extends CI_Model
 
         return $setVetoFlagValue;
     }
+    public function setVetoComment($user_id, $ticker, $ic_date, $setVetoCommentValue)
+    {
+        return $this->db
+            ->set('vetoComment', $setVetoCommentValue)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+
+    }
+
 
     public function setFinaliseFlag($user_id, $ticker, $ic_date)
     {

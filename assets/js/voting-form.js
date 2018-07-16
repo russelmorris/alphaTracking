@@ -1,3 +1,5 @@
+$('#alert_save_success').hide();
+$('#alert_save_fail').hide();
 let vote = function () {
     $('.rb-tab').on('click', function () {
         if ($(this).parent()[0].id !== 'rb-7' && $(this).parent()[0].id !== 'rb-8') {
@@ -75,6 +77,7 @@ let vote = function () {
 
                 $.post('/submit_voting', {
                     veto: $(this).find(".rb-tab").attr("data-value"),
+                    vetoComment: $(this).find(".rb-tab").attr("data-value") == 1 ? $("textarea").val() : null,
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
                     ic_date: $('#voting_ic_date').val(),
@@ -88,11 +91,26 @@ let vote = function () {
                 }
             });
             $(".tarea").toggleClass("hidden");
+            /*if ($('#rb-7').find(".rb-tab").attr("data-value") == 1) {
+                $("textarea").change(function () {
+                    $.post('/submit_voting', {
+                        vetoComment: $("textarea").val(),
+                        user_id: $('#user_id').val(),
+                        ticker: $('#ticker').val(),
+                        ic_date: $('#voting_ic_date').val(),
+                        csnamerf: $.cookie('csrfcookiename')
+                    }).done(function (data) {
+                    });
+                })
+            }*/
+
         }
     });
 };
 $(document).ready(function () {
-    var allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
+    if ($('#dash_ajax').val() == undefined)
+        $("textarea").val($("textarea").val().trim());
+    let allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
     if (!allow_edit && !$('#allow_edit_as_admin').val()) {
         $('.rb-tab').off('click');
         $("#rb-8").off('click');
@@ -100,12 +118,15 @@ $(document).ready(function () {
             $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
         }
         $("textarea").attr('disabled', true);
+        $('#save_vetoComment').prop('disabled', true);
+
     }
     else if ($('#rb-8').find(".rb-tab").attr("data-value") == 1) {
         for (let i = 1; i < 8; i++) {
             $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
         }
         $("textarea").attr('disabled', true);
+        $('#save_vetoComment').prop('disabled', true);
     }
     else {
         vote();
@@ -113,6 +134,7 @@ $(document).ready(function () {
             $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
         }
         $("textarea").attr('disabled', false);
+        $('#save_vetoComment').prop('disabled', false);
     }
 })
 
@@ -128,6 +150,7 @@ $("#rb-8").on('click', function () {
                 $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
             }
             $("textarea").attr('disabled', true);
+            $('#save_vetoComment').prop('disabled', true);
         }
         else {
 
@@ -136,6 +159,8 @@ $("#rb-8").on('click', function () {
                 $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
             }
             $("textarea").attr('disabled', false);
+            $('#save_vetoComment').prop('disabled', false);
+
         }
         $.post('/submit_voting', {
             finalised: $(this).find(".rb-tab").attr("data-value"),
@@ -152,3 +177,41 @@ $("#rb-8").on('click', function () {
         }
     });
 });
+
+
+if ($('#rb-7').find(".rb-tab").attr("data-value") == 1) {
+    if ($("textarea").val().length === 0) {
+        $('#save_vetoComment').prop('disabled', true);
+    }
+    $("textarea").keyup(function () {
+        if ($(this).val().length === 0) {
+            $('#save_vetoComment').prop('disabled', true);
+        } else {
+            $('#save_vetoComment').prop('disabled', false);
+        }
+
+    });
+    $('#save_vetoComment').click(function () {
+        $.post('/submit_voting', {
+            vetoComment: $("textarea").val(),
+            user_id: $('#user_id').val(),
+            ticker: $('#ticker').val(),
+            ic_date: $('#voting_ic_date').val(),
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+            if (data == 1) {
+                $('#alert_save_success').show();
+                setTimeout(function () {
+                    $('#alert_save_success').hide();
+                }, 1500);
+            }
+            else {
+                $('#alert_save_fail').show();
+                setTimeout(function () {
+                    $('#alert_save_fail').hide();
+                }, 1500);
+            }
+        });
+    });
+
+}

@@ -31,10 +31,10 @@ class C_admin extends MY_Controller
 
     public function dashboard()
     {
-        $data['user']     = $this->session->userdata('user');
-        $data['admin']    = ( ! $data['user']['isAdmin']) ? false : $data['user'];
-        $data['users']    = $this->m_ic->getMembers();
-        $data['ic_dates'] = $this->m_icdate->getIcDates();
+        $data['user']                      = $this->session->userdata('user');
+        $data['admin']                     = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+        $data['users']                     = $this->m_ic->getMembers();
+        $data['ic_dates']                  = $this->m_icdate->getIcDates();
         $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
         $this->load->template('v_admin_dashboard', $data);
     }
@@ -67,25 +67,25 @@ class C_admin extends MY_Controller
             $this->m_prospects->updateProcessedStatus($ic_date, 0);
             $this->m_master->updateActiveStatus($ic_date);
 
-           // die();
+            // die();
 
 
             foreach ($csv as $key => $value) {
                 $info            = [
-                    'strategyNo'        => 1,
-                    'icDate'            => date($ic_date),
-                    'ticker'            => $value['ticker'],
-                    'RIC'               => $value['ric'],
-                    'name'              => $value['name'],
-                    'country'           => $value['country'],
-                    'sector'            => $value['sector'],
-                    'machineScore'      => (float)$value['machineScore'],
-					'machineRank'       => $value['machineRank'],
-					'peerRIC1'          => $value['peerRIC1'],
-					'peerRIC2'          => $value['peerRIC2'],
-					'peerRIC3'          => $value['peerRIC3'],
-					'peerRIC4'          => $value['peerRIC4'],
-					'peerRIC5'          => $value['peerRIC5']
+                    'strategyNo'   => 1,
+                    'icDate'       => date($ic_date),
+                    'ticker'       => $value['ticker'],
+                    'RIC'          => $value['ric'],
+                    'name'         => $value['name'],
+                    'country'      => $value['country'],
+                    'sector'       => $value['sector'],
+                    'machineScore' => (float)$value['machineScore'],
+                    'machineRank'  => $value['machineRank'],
+                    'peerRIC1'     => $value['peerRIC1'],
+                    'peerRIC2'     => $value['peerRIC2'],
+                    'peerRIC3'     => $value['peerRIC3'],
+                    'peerRIC4'     => $value['peerRIC4'],
+                    'peerRIC5'     => $value['peerRIC5']
                 ];
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 
@@ -132,4 +132,5 @@ class C_admin extends MY_Controller
             $this->m_admin->insert_returns_from_csv($info);
         }
     }
+
 }

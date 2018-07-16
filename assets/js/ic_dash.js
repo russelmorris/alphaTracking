@@ -97,16 +97,18 @@ function reloadDashboard() {
 }
 
 $(document).ready(function () {
-    reloadDashboard();
-
-    $('.ic_dates').change(function () {
+    if ($('#dash_ajax').val() != undefined) {
         reloadDashboard();
-    });
 
-    $('.admin_users').change(function () {
-        $('#user_name').text('Name: '+ $(this).find('option:selected').text().trim());
-        reloadDashboard();
-    });
+        $('.ic_dates').change(function () {
+            reloadDashboard();
+        });
+
+        $('.admin_users').change(function () {
+            $('#user_name').text('Name: ' + $(this).find('option:selected').text().trim());
+            reloadDashboard();
+        });
+    }
 });
 
 
