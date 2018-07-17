@@ -48,7 +48,7 @@
         <!-- /.col-lg-6 -->
     </div>
     <div class="row">
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class="col-sm-3 pull-right">
 
             <?php if ($user['isAdmin']): ?>
                 <div class="form-group">
