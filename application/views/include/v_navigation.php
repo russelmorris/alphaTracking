@@ -27,6 +27,12 @@
                 </a>
             <?php } ?>
         </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                Investment Committee Completion Summary
+            </a>
+        </li>
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">

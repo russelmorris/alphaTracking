@@ -48,10 +48,6 @@
         <!-- /.col-lg-6 -->
     </div>
     <div class="row">
-        <div class="col-sm-6">
-            <a class="pull-left" href="#"> Click here to see Investment Committee Completion
-                Summary</a>
-        </div>
         <div class="col-sm-offset-3 col-sm-3">
 
             <?php if ($user['isAdmin']): ?>

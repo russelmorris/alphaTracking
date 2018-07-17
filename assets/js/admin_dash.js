@@ -11,7 +11,8 @@ $('#prospect').change(function () {
 });
 
 $('#upload-prospects').click(function () {
-    var fd = new FormData();
+
+    let fd = new FormData();
     fd.append('file', prospects); // since this is your file input
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
@@ -21,9 +22,8 @@ $('#upload-prospects').click(function () {
         processData: false, // important
         contentType: false, // important
         data: fd,
-        success: function (data) {
+        success: function (data, status, xhr) {
             if (data == 1) {
-                // $('#upload-prospects').text('Upload').attr('disabled', 'disabled');
                 $('#alert-success').show();
                 setTimeout(function () {
                     $('#alert-success').hide();
@@ -31,7 +31,6 @@ $('#upload-prospects').click(function () {
                 setTimeout(function () {
                     $('#prospectModal').modal('hide');
                 }, 1500);
-
             }
         },
         error: function (data) {
@@ -43,34 +42,9 @@ $('#upload-prospects').click(function () {
             }
 
 
-        }
-    });
-});
-/*
-$('.upload-prospects').click(function () {
-    var fd = new FormData();
-    fd.append('file', prospects); // since this is your file input
-    fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
-    fd.append('ic_date', $('.import_date').val());
-    $.ajax({
-        url: "import_prospect",
-        type: "post",
-        processData: false, // important
-        contentType: false, // important
-        data: fd,
-        success: function (data) {
-            if (data == 1) {
-                $('.upload-prospects').addClass('hidden');
-                // $('#prospect').parent().toggleClass('hidden');
-                $('#alert').toggleClass('hidden');
-            }
         },
-        error: function (data) {
-            console.log(data)
-        }
     });
 });
-*/
 
 $('#returns').change(function () {
     var fd = new FormData();

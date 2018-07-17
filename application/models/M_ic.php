@@ -25,9 +25,7 @@ class M_ic extends CI_Model
             $query[$index]['finalise_overall'] = number_format($this->finalised_overall($value['memberNo']),
                 2, '.', '');
             $query[$index]['last_edited']      = $this->last_edited($value['memberNo']);
-
         }
-
         return $query;
     }
 
@@ -87,7 +85,7 @@ class M_ic extends CI_Model
 
 
         if (count($ledit) > 0) {
-            $return = $ledit[0]['DateModified'];
+            $return = array_column($ledit, 'DateModified')[0];
         }
 
         return $return;

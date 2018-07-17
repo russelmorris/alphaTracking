@@ -45,6 +45,8 @@ class C_admin extends MY_Controller
             show_404();
             die();
         }
+
+
         //$master = $this->m_admin->getMasterTable();
         $members = $this->m_ic->getMembers();
         $factors = $this->m_factors->getAllFactors();
@@ -90,6 +92,7 @@ class C_admin extends MY_Controller
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 
                 if ($prospectCreated) {
+
                     foreach ($members as $member) {
                         $masterId = $this->m_master->insertProspect($info, $member);
                         if ($masterId > 0) {
@@ -100,9 +103,8 @@ class C_admin extends MY_Controller
                     }
                 }
             }
-
+            echo true;
         }
-        echo 1;
     }
 
     public function import_returns()
@@ -132,5 +134,6 @@ class C_admin extends MY_Controller
             $this->m_admin->insert_returns_from_csv($info);
         }
     }
+
 
 }

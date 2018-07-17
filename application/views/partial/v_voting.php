@@ -165,16 +165,17 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="mt-10">
-                <iframe src="<?php echo base_url("bottomUp/infoSheets/2018-06-29/2018-06-29-XRO-Australia.htm"); ?>"
-                        onload="resizeIframe(this)"
-                        scrolling="no"></iframe>
-                <!--<iframe
-                        src="
-                        <?php /*echo
-                        file_exists("bottomUp/infoSheets/" . $icdate . "/" . $voting_values[0]['prospectTextID'])
-                            ? base_url("bottomUp/infoSheets/" . $icdate . "/" . $voting_values[0]['prospectTextID']) : ""; */ ?>"
-                        onload="resizeIframe(this)"
-                        scrolling="no"></iframe>-->
+                <?php if (file_exists("bottomUp/infoSheets/" . $icdate . "/" .
+                                      str_replace(" ", "-",
+                                          $voting_values[0]['prospectTextID']) . ".htm")): ?>
+                    <iframe src="<?php
+                    echo base_url("bottomUp/infoSheets/" . $icdate . "/" . str_replace(" ", "-",
+                            $voting_values[0]['prospectTextID']) . ".htm") ?>"
+                            onload="resizeIframe(this)"
+                            scrolling="no"></iframe>
+                <?php else: ?>
+                    <h3 class="text-center text-info">No Info Sheet Found</h3>
+                <?php endif; ?>
             </div>
         </div>
     </div>

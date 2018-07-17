@@ -108,8 +108,9 @@ let vote = function () {
     });
 };
 $(document).ready(function () {
-    if ($('#dash_ajax').val() == undefined)
+    if ($("textarea").val() !== undefined) {
         $("textarea").val($("textarea").val().trim());
+    }
     let allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
     if (!allow_edit && !$('#allow_edit_as_admin').val()) {
         $('.rb-tab').off('click');

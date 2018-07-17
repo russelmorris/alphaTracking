@@ -65,7 +65,7 @@
                         <a href="<?php echo base_url('dashboard') ?>"><?php echo $value['memberName']; ?></a>
                     </td>
                     <td class="text-center"><?php echo $value['finalise_overall']; ?>%</td>
-                    <td class="text-center"><?php echo date('d-M-Y', time($value['last_edited'])); ?></td>
+                    <td class="text-center"><?php echo date('d-M-Y', strtotime($value['last_edited'])); ?></td>
                     <td class="text-center"><?php echo $value['bWeight'] * 100; ?>%</td>
                 </tr>
             <?php endforeach; ?>
