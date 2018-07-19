@@ -66,3 +66,12 @@ $('#returns').change(function () {
         }
     });
 });
+
+$('#query_build').click(function () {
+    $.post('query_build_master', {
+        date: $('.query_ic_date').val(),
+        csnamerf: $.cookie('csrfcookiename')
+    }).done(function (data) {
+        console.log(data)
+    })
+});

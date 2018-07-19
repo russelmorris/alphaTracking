@@ -165,12 +165,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="mt-10">
-                <?php if (file_exists("bottomUp/infoSheets/" . $icdate . "/" .
-                                      str_replace(" ", "-",
-                                          $voting_values[0]['prospectTextID']) . ".htm")): ?>
+                <?php if (file_exists(
+                    "bottomUp/infoSheets/" . $icdate . "/" .
+                    strtolower(str_replace(" ", "",
+                        $voting_values[0]['prospectTextID'])) . ".htm")): ?>
                     <iframe src="<?php
-                    echo base_url("bottomUp/infoSheets/" . $icdate . "/" . str_replace(" ", "-",
-                            $voting_values[0]['prospectTextID']) . ".htm") ?>"
+                    echo base_url("bottomUp/infoSheets/" . $icdate . "/" .
+                                  strtolower(str_replace(" ", "",
+                                      $voting_values[0]['prospectTextID'])) . ".htm") ?>"
                             onload="resizeIframe(this)"
                             scrolling="no"></iframe>
                 <?php else: ?>

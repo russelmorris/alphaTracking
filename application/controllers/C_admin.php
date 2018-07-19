@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_factors m_factors
  * @property  M_master m_master
  * @property  M_icdate m_icdate
+ * @property  M_portfolio m_portfolio
  */
 class C_admin extends MY_Controller
 {
@@ -25,9 +26,9 @@ class C_admin extends MY_Controller
             'm_ic',
             'm_factors',
             'm_icdate',
+            'm_portfolio'
         ]);
     }
-
 
     public function dashboard()
     {
@@ -135,5 +136,15 @@ class C_admin extends MY_Controller
         }
     }
 
+    public function query_build_master()
+    {
+        if ( ! $this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+        $ic_date = $this->input->post('date');
+
+       $this->m_portfolio->buildPorfolioMaster($ic_date);
+    }
 
 }

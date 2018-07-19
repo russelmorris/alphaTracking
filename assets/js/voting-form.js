@@ -91,22 +91,35 @@ let vote = function () {
                 }
             });
             $(".tarea").toggleClass("hidden");
-            /*if ($('#rb-7').find(".rb-tab").attr("data-value") == 1) {
-                $("textarea").change(function () {
-                    $.post('/submit_voting', {
-                        vetoComment: $("textarea").val(),
-                        user_id: $('#user_id').val(),
-                        ticker: $('#ticker').val(),
-                        ic_date: $('#voting_ic_date').val(),
-                        csnamerf: $.cookie('csrfcookiename')
-                    }).done(function (data) {
-                    });
-                })
-            }*/
-
+            save_vetoComment();
         }
     });
 };
+let save_vetoComment = function () {
+    $('#save_vetoComment').click(function () {
+        $.post('/submit_voting', {
+            vetoComment: $("textarea").val(),
+            user_id: $('#user_id').val(),
+            ticker: $('#ticker').val(),
+            ic_date: $('#voting_ic_date').val(),
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+            if (data == 1) {
+                $('#alert_save_success').show();
+                setTimeout(function () {
+                    $('#alert_save_success').hide();
+                }, 1500);
+            }
+            else {
+                $('#alert_save_fail').show();
+                setTimeout(function () {
+                    $('#alert_save_fail').hide();
+                }, 1500);
+            }
+        });
+    });
+
+}
 $(document).ready(function () {
     if ($("textarea").val() !== undefined) {
         $("textarea").val($("textarea").val().trim());
@@ -137,7 +150,8 @@ $(document).ready(function () {
         $("textarea").attr('disabled', false);
         $('#save_vetoComment').prop('disabled', false);
     }
-})
+});
+
 
 //Switcher function:
 $("#rb-8").on('click', function () {
@@ -145,7 +159,6 @@ $("#rb-8").on('click', function () {
         $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
         $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
         if ($(this).find(".rb-tab").attr("data-value") == 1) {
-
             $('.rb-tab').off('click');
             for (let i = 1; i < 8; i++) {
                 $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
@@ -154,13 +167,13 @@ $("#rb-8").on('click', function () {
             $('#save_vetoComment').prop('disabled', true);
         }
         else {
-
             vote();
             for (let i = 1; i < 8; i++) {
                 $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
             }
             $("textarea").attr('disabled', false);
             $('#save_vetoComment').prop('disabled', false);
+            // save_vetoComment();
 
         }
         $.post('/submit_voting', {
@@ -180,39 +193,6 @@ $("#rb-8").on('click', function () {
 });
 
 
-if ($('#rb-7').find(".rb-tab").attr("data-value") == 1) {
-    if ($("textarea").val().length === 0) {
-        $('#save_vetoComment').prop('disabled', true);
-    }
-    $("textarea").keyup(function () {
-        if ($(this).val().length === 0) {
-            $('#save_vetoComment').prop('disabled', true);
-        } else {
-            $('#save_vetoComment').prop('disabled', false);
-        }
-
-    });
-    $('#save_vetoComment').click(function () {
-        $.post('/submit_voting', {
-            vetoComment: $("textarea").val(),
-            user_id: $('#user_id').val(),
-            ticker: $('#ticker').val(),
-            ic_date: $('#voting_ic_date').val(),
-            csnamerf: $.cookie('csrfcookiename')
-        }).done(function (data) {
-            if (data == 1) {
-                $('#alert_save_success').show();
-                setTimeout(function () {
-                    $('#alert_save_success').hide();
-                }, 1500);
-            }
-            else {
-                $('#alert_save_fail').show();
-                setTimeout(function () {
-                    $('#alert_save_fail').hide();
-                }, 1500);
-            }
-        });
-    });
-
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
 }

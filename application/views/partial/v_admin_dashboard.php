@@ -25,7 +25,9 @@
     </div>
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
-            <button class="btn btn-primary btn-block mbt-5">Run queries to build master</button>
+            <button data-toggle="modal"
+                    data-target="#queriesModal" class="btn btn-primary btn-block mbt-5">Run queries to build master
+            </button>
         </div>
     </div>
     <div class="col-md-6">
@@ -152,6 +154,36 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Error in uploading! Please check the fields of your CSV file</strong>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="queriesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Run Queries</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>For IC date</label>
+                    <select class="form-control query_ic_date">
+                        <?php foreach ($ic_dates as $value): ?>
+                            <?php if (strtotime($value['icDate']) >= strtotime('today')): ?>
+                                <option value="<?php echo $value['icDate']; ?>">
+                                    <?php echo $value['icDate']; ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button id="query_build" class="btn btn-primary btn-block"> Run</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
