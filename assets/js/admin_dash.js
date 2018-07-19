@@ -75,3 +75,5 @@ $('#query_build').click(function () {
         console.log(data)
     })
 });
+
+console.log($('.query_ic_date').val());
