@@ -76,4 +76,6 @@ $('#query_build').click(function () {
     })
 });
 
-console.log($('.query_ic_date').val());
+if($('.query_ic_date').val() == null){
+    $('#query_build').prop('disabled', true)
+}
