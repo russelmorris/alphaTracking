@@ -124,6 +124,7 @@ class M_prospects extends CI_Model
         $this->db->select('m.isFinalised');
         $this->db->select('m.vetoFlag');
         $this->db->select('m.icDate');
+        $this->db->select('m.humanScore');
         $this->db->select("vo1.factorScore as factorScore1");
         $this->db->select("vo2.factorScore as factorScore2");
         $this->db->select("vo3.factorScore as factorScore3");

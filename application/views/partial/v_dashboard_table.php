@@ -14,6 +14,8 @@
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Machine Rank">MR
             <i class="fa fa-info-circle"></i></th>
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Human Score">HS
+            <i class="fa fa-info-circle"></i></th>
         <th>&nbsp;</th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
             <i class="fa fa-info-circle"></i></th>
@@ -70,6 +72,11 @@
             </td>
             <td class="vcenter final click">
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>"><?php echo $ic['machineRank']; ?></a>
+            </td>
+            <td class="vcenter final click">
+                <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
+                    <?php echo is_null($ic['humanScore']) ? 0 : $ic['humanScore']; ?>
+                </a>
             </td>
             <td class="no-padding final click">
                 <div class="cell_holder">
