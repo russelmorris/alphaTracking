@@ -81,7 +81,7 @@ $db['default'] = array(
     'database'     => 'disrupt_alphaTrack',
     'dbdriver'     => 'mysqli',
     'dbprefix'     => '',
-    'pconnect'     => true,
+    'pconnect'     => false,
     'db_debug'     => (ENVIRONMENT !== 'production'),
     'cache_on'     => false,
     'cachedir'     => '',

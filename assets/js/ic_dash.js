@@ -109,6 +109,26 @@ $(document).ready(function () {
             reloadDashboard();
         });
     }
+    $('#create-human-score').on('click', function(){
+        $('#create-human-score').attr('disabled', true);
+        console.log('on clisk');
+        var icDate = $('#ic_dates').val();
+        console.log(icDate);
+
+        $.post('create-human-score', {
+            ic_date: icDate,
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+            console.log('done', data);
+            $('#create-human-score').removeAttr('disabled');
+            alert(data)
+        }).fail(function (err) {
+            console.log('err', err);
+            $('#create-human-score').removeAttr('disabled');
+            alert(err)
+
+         });
+    })
 });
 
 
