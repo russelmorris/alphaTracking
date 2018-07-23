@@ -26,8 +26,7 @@
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
             <button data-toggle="modal"
-                    data-target="#queriesModal" class="btn btn-primary btn-block mbt-5">Run queries to build master
-            </button>
+                    data-target="#queriesModal" class="btn btn-primary btn-block mbt-5">Build Portfolios</button>
         </div>
     </div>
     <div class="col-md-6">
