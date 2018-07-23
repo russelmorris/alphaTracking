@@ -22,4 +22,19 @@ class M_icdate extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * @param $icDate
+     * @return int
+     */
+    public function checkIfIcDateExist($icDate)
+    {
+        $query = $this->db
+            ->select("icDateID")
+            ->where ('strategyNo', 1)
+            ->where ('icDate', $icDate)
+            ->from('icdate')
+            ->get();
+        return $query->num_rows();
+    }
+
 }

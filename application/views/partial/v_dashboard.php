@@ -31,7 +31,7 @@
         <div class="col-sm-offset-3 col-sm-3">
             <div class="form-group">
                 <label>For IC date</label>
-                <select class="form-control ic_dates">
+                <select id="ic_dates" class="form-control ic_dates">
                     <?php foreach ($ic_dates as $value): ?>
                         <?php if (new DateTime($closest_icDate_from_today) == new DateTime($value['icDate'])): ?>
                             <option selected value="<?php echo $value['icDate']; ?>">
@@ -48,6 +48,9 @@
         <!-- /.col-lg-6 -->
     </div>
     <div class="row">
+        <div class="coll col-sm-6">
+            <input type="button" class="btn btn-default" id="create-human-score" value="Create Human Score"/>
+        </div>
         <div class="col-sm-3 pull-right">
 
             <?php if ($user['isAdmin']): ?>
