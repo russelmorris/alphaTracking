@@ -97,6 +97,7 @@ class M_voting extends CI_Model
                            ->select('m.vetoComment')
                            ->select('m.isFinalised')
                            ->select('m.DateModified')
+                           ->select('m.country')
                            ->from('voting v')
                            ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate',
                                'inner')

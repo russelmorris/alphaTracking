@@ -29,7 +29,8 @@ class M_prospects extends CI_Model
 
         $prospectData = [
             'strategyNo'      => 1,
-            'prospectTextID'  => $data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'],
+            'prospectTextID'  => str_replace(" ", "",
+                strtolower($data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'])),
             'icDate'          => $data['icDate'],
             'ticker'          => $data['ticker'],
             'RIC'             => $data['RIC'],

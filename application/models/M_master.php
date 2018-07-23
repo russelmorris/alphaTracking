@@ -13,19 +13,20 @@ class M_master extends CI_Model
 
     public function insertProspect($data, $member)
     {
-        $masterID   = 0;
+        $masterID     = 0;
         $prospectData = [
             'strategyNo'     => 1,
             "icDate"         => $data['icDate'],
             "DateModified"   => date("Y-m-d"),
-            'prospectTextID' => $data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'],
+            'prospectTextID' => str_replace(" ", "",
+                strtolower($data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'])),
             "ticker"         => $data['ticker'],
             "RIC"            => $data['RIC'],
             "name"           => $data['name'],
             "country"        => $data['country'],
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
-            "machineRank"   => $data['machineRank'],
+            "machineRank"    => $data['machineRank'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
@@ -49,7 +50,7 @@ class M_master extends CI_Model
                 $masterID = $this->db->insert_id();
             }
         } else {
-            $result = $query->result_array();
+            $result   = $query->result_array();
             $masterID = $result[0]['masterID'];
 
             $this->db
@@ -71,6 +72,7 @@ class M_master extends CI_Model
                 ->where('masterID', $masterID)
                 ->update('master');
         }
+
         return $masterID;
     }
 
@@ -95,6 +97,7 @@ class M_master extends CI_Model
 
         return $setVetoFlagValue;
     }
+
     public function setVetoComment($user_id, $ticker, $ic_date, $setVetoCommentValue)
     {
         return $this->db
@@ -109,13 +112,13 @@ class M_master extends CI_Model
     public function setFinaliseFlag($user_id, $ticker, $ic_date)
     {
         $setFinaliseValue = 0;
-        $oldVetoFlag = $this->db->select('isFinalised')
-            ->where('strategyNo', 1)
-            ->where('memberNo', $user_id)
-            ->where('ticker', $ticker)
-            ->where('icDate', $ic_date)
-            ->from('master')
-            ->get()->result_array();
+        $oldVetoFlag      = $this->db->select('isFinalised')
+                                     ->where('strategyNo', 1)
+                                     ->where('memberNo', $user_id)
+                                     ->where('ticker', $ticker)
+                                     ->where('icDate', $ic_date)
+                                     ->from('master')
+                                     ->get()->result_array();
         if (count($oldVetoFlag) > 0) {
             $setFinaliseValue = ($oldVetoFlag[0]['isFinalised'] == 1) ? 0 : 1;
             $this->db
@@ -155,7 +158,8 @@ class M_master extends CI_Model
         return $return;
     }
 
-    public function updateActiveStatus($icDate){
+    public function updateActiveStatus($icDate)
+    {
         $this->db
             ->set("isActive", 0)
             ->where('strategyNo', 1)
