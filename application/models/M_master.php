@@ -18,7 +18,7 @@ class M_master extends CI_Model
             'strategyNo'     => 1,
             "icDate"         => $data['icDate'],
             "DateModified"   => date("Y-m-d"),
-            'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
+            'prospectTextID' => $data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'],
             "ticker"         => $data['ticker'],
             "RIC"            => $data['RIC'],
             "name"           => $data['name'],

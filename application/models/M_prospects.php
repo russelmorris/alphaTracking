@@ -21,34 +21,35 @@ class M_prospects extends CI_Model
         $return = true;
 
         // prepare data for update
-        $ricExchangeCode = substr($data['RIC'], strpos($data['RIC'],'.')+1);
-        $swsExchangeTicker = $this->m_countrysymbolmap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'], $ricExchangeCode );
-        $data['SWSurl']  = 'https://simplywall.st/stocks/hk/capital-goods/'.$swsExchangeTicker.'-'.strtolower($data['ticker']);
-        $data['SWSurl_test']  = 'https://simplywall.st/stocks/us/software/symbolCountryMap.'.$swsExchangeTicker.'-prospects.'.$data['ticker'].'/';
+        $ricExchangeCode     = substr($data['RIC'], strpos($data['RIC'], '.') + 1);
+        $swsExchangeTicker   = $this->m_countrysymbolmap->getSWSExchangeTickerByCountryAndRICExchangeField($data['country'],
+            $ricExchangeCode);
+        $data['SWSurl']      = 'https://simplywall.st/stocks/hk/capital-goods/' . $swsExchangeTicker . '-' . strtolower($data['ticker']);
+        $data['SWSurl_test'] = 'https://simplywall.st/stocks/us/software/symbolCountryMap.' . $swsExchangeTicker . '-prospects.' . $data['ticker'] . '/';
 
         $prospectData = [
-            'strategyNo' => 1,
-            'prospectTextID' => $data['ticker'] . '-' . $data['country'] . '-' . $data['icDate'],
-            'icDate' => $data['icDate'],
-            'ticker' => $data['ticker'],
-            'RIC' => $data['RIC'],
+            'strategyNo'      => 1,
+            'prospectTextID'  => $data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'],
+            'icDate'          => $data['icDate'],
+            'ticker'          => $data['ticker'],
+            'RIC'             => $data['RIC'],
             'RICExchangeCode' => $ricExchangeCode,
-            'name' => $data['name'],
-            'country' => $data['country'],
-            'sector' => $data['sector'],
-            'machineScore' => $data['machineScore'],
-            'machineRank' => $data['machineRank'],
-            'peerRIC1' => $data['peerRIC1'],
-            'peerRIC2' => $data['peerRIC2'],
-            'peerRIC3' => $data['peerRIC3'],
-            'peerRIC4' => $data['peerRIC4'],
-            'peerRIC5' => $data['peerRIC5'],
-            'SWSurl' => $data['SWSurl'],
-            'SWSurl_test' => $data['SWSurl_test'],
-            'processed' => 1,
+            'name'            => $data['name'],
+            'country'         => $data['country'],
+            'sector'          => $data['sector'],
+            'machineScore'    => $data['machineScore'],
+            'machineRank'     => $data['machineRank'],
+            'peerRIC1'        => $data['peerRIC1'],
+            'peerRIC2'        => $data['peerRIC2'],
+            'peerRIC3'        => $data['peerRIC3'],
+            'peerRIC4'        => $data['peerRIC4'],
+            'peerRIC5'        => $data['peerRIC5'],
+            'SWSurl'          => $data['SWSurl'],
+            'SWSurl_test'     => $data['SWSurl_test'],
+            'processed'       => 1,
         ];
 
-       //check if prospect exist in database
+        //check if prospect exist in database
         $total = $this->db
             ->select("COUNT(prospectID) as total")
             ->where('strategyNo', 1)
@@ -59,7 +60,7 @@ class M_prospects extends CI_Model
             ->count_all_results();
 
         if ($total == 0) {
-            if (!$this->db->insert('prospects', $prospectData)) {
+            if ( ! $this->db->insert('prospects', $prospectData)) {
                 $return = false;
             }
         } else {
@@ -151,6 +152,7 @@ class M_prospects extends CI_Model
         $this->db->order_by('m.masterID', 'ASC');
 //        $this->db->limit($limit);
         $result = $this->db->get()->result_array();
+
         return $result;
     }
 
@@ -165,9 +167,10 @@ class M_prospects extends CI_Model
         $this->db->where('p.icDate', $icDate);
         $this->db->where('p.ticker', $ticker);
         $result = $this->db->get()->result_array();
-        if (count($result) > 0){
+        if (count($result) > 0) {
             $return = $result[0];
         }
+
         return $return;
     }
 }
