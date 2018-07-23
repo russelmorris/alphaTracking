@@ -22,7 +22,7 @@ class M_countrysymbolmap extends CI_Model
             ->select("SWSExchangeTicker")
             //->where('Country', $country) // We exclude for now because i found cases where countr don;t match with Ric
             ->where('RICExchangeField', $ric)
-            ->from('countrysymbolmap')
+            ->from('countrySymbolMap')
             ->get();
         $result = $query->result_array();
         if($query->num_rows() > 0){
