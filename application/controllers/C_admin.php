@@ -136,15 +136,6 @@ class C_admin extends MY_Controller
         }
     }
 
-    public function query_build_master()
-    {
-        if ( ! $this->input->is_ajax_request()) {
-            show_404();
-            die();
-        }
-        $ic_date = $this->input->post('date');
 
-       $this->m_portfolio->buildPorfolioMaster($ic_date);
-    }
 
 }

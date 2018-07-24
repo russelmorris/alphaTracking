@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @property  M_calculation m_calculation
  * @property  M_icdate m_icdate
+ * @property  M_portfolio m_portfolio
  */
 class C_calculation extends MY_Controller
 {
@@ -12,7 +13,8 @@ class C_calculation extends MY_Controller
         parent::__construct();
         $this->load->model([
             'm_calculation',
-            'm_icdate'
+            'm_icdate',
+            'm_portfolio'
         ]);
     }
 
@@ -46,6 +48,22 @@ class C_calculation extends MY_Controller
         echo 'Human Score has been created';
         return;
 
+    }
+
+    public function buildPortfolio()
+    {
+        if ( ! $this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+        $ic_date = $this->input->post('date');
+
+        $this->m_portfolio->buildPortfolioMasterStep1($ic_date);
+        $this->m_portfolio->buildPortfolioMasterStep2($ic_date);
+        $this->m_portfolio->buildPortfolioMasterStep3($ic_date);
+        $this->m_portfolio->buildPortfolioMasterALL($ic_date);
+        echo 'Portfolio has been builded';
+        return;
     }
 
 

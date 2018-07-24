@@ -69,9 +69,9 @@ $route['finalised_value']  = 'c_dashboard/finalised_value';
 
 $route['import_prospect']      = 'c_admin/import_prospect';
 $route['import_returns']       = 'c_admin/import_returns';
-$route['query_build_master']       = 'c_admin/query_build_master';
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
 $route['submit_voting']        = 'c_voting/submit_voting';
 
 
+$route['build-portfolio']       = 'c_calculation/buildPortfolio';
 $route['create-human-score'] = 'c_calculation/create_human_score';

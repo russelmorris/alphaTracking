@@ -12,7 +12,7 @@ $('#prospect').change(function () {
 
 $('#upload-prospects').click(function () {
 
-    let fd = new FormData();
+    var fd = new FormData();
     fd.append('file', prospects); // since this is your file input
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
@@ -68,11 +68,16 @@ $('#returns').change(function () {
 });
 
 $('#query_build').click(function () {
-    $.post('query_build_master', {
+    $body = $("body");
+    $body.addClass("loading");
+    $.post('build-portfolio', {
         date: $('.query_ic_date').val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        console.log(data)
+        console.log(data);
+        alert(data);
+        $body.removeClass("loading");
+
     })
 });
 
