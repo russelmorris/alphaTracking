@@ -179,6 +179,20 @@
                 <?php else: ?>
                     <h3 class="text-center text-info">No Info Sheet Found</h3>
                 <?php endif; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="mt-10">
+                <img src="http://disrupterfund.com.au/bottomUp/digiFootprint/alexa/2018-03-31/2018-03-31-pph-newzealand-alexa.jpg" height="100%" width="100%" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="mt-10">
+                <img src="http://disrupterfund.com.au/bottomUp/digiFootprint/googletrends/2018-03-31/2018-03-31-pph-newzealand-googletrends.jpg" height="100%" width="100%" />
             </div>
         </div>
     </div>
