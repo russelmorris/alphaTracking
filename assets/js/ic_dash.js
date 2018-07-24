@@ -97,12 +97,6 @@ function reloadDashboard() {
 }
 
 $(document).ready(function () {
-
-
-    $(document).on({
-        ajaxStart: function() {     },
-        ajaxStop: function() { }
-    });
     if ($('#dash_ajax').val() != undefined) {
         reloadDashboard();
 
@@ -116,6 +110,7 @@ $(document).ready(function () {
         });
     }
     $('#create-human-score').on('click', function(){
+        console.log('1')
         $body = $("body");
         $body.addClass("loading");
 
