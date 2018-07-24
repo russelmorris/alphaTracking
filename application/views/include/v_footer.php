@@ -1,7 +1,7 @@
 </div>
 </div>
 <!-- /#wrapper -->
-
+<div class="modal"><!-- Place at bottom of page --></div>
 <!-- jQuery -->
 <script src="<?php echo base_url() ?>vendor/jquery/jquery.min.js"></script>
 

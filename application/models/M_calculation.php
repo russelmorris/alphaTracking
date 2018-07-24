@@ -16,8 +16,7 @@ class M_calculation extends CI_Model
         $sql = <<<EOT
         DROP TABLE if exists factorstatsTemp;
 EOT;
-        $query = $this->db->query($sql);
-
+        $this->db->query($sql);
 
         $sql = <<<EOT
         CREATE TABLE  factorstatsTemp
@@ -42,7 +41,8 @@ EOT;
 		    voting.factorDesc
 		  HAVING voting.icDate = '$icDate';
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
+
         return true;
     }
 
@@ -58,12 +58,12 @@ EOT;
                 AND (factorstats.icDate = factorstatsTemp.icDate)
             WHERE 1=1;
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
 
         $sql = <<<EOT
         insert into factorstats select * from factorstatsTemp;
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
         return true;
     }
 
@@ -71,11 +71,11 @@ EOT;
     {
         $sql = <<<EOT
         update voting as v
-          INNER JOIN factorstats ON factorstats.factorNo = v.factorNo AND factorstats.icDate = v.icDate AND factorstats.memberNo = v.memberNo
-            set v.zScore = (factorScore - factorstats.factorMean)/factorstats.factorStDev
+            INNER JOIN factorstats ON factorstats.factorNo = v.factorNo AND factorstats.icDate = v.icDate AND factorstats.memberNo = v.memberNo
+              set v.zScore = if (factorstats.factorStDev >0,(factorScore - factorstats.factorMean)/factorstats.factorStDev,0)
               where factorstats.factorStDev > 0;
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
         return true;
     }
 
@@ -84,7 +84,7 @@ EOT;
         $sql = <<<EOT
         drop table if exists tempAggZScore;;
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
 
         $sql = <<<EOT
         create table tempAggZScore
@@ -102,20 +102,21 @@ EOT;
             GROUP BY
             voting.masterID;
 EOT;
-        $query = $this->db->query($sql);
+        $this->db->query($sql);
         return true;
     }
 
     public function updateMasterWithHumanScores()
     {
         $sql = <<<EOT
-        update `master` as m
+        update master as m
             INNER JOIN tempAggZScore ON tempAggZScore.masterID = m.masterID
             set m.humanScore = tempAggZScore.aggZScore,
                     m.bWeightedHumanScore = tempAggZScore.aggZScore * m.bWeight
             where m.isActive = 1;
 		
 EOT;
+        $this->db->query($sql);
         return true;
     }
 }

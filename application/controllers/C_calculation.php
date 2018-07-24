@@ -39,7 +39,7 @@ class C_calculation extends MY_Controller
 
         $this->m_calculation->writeToFactorStats($icDate);
         $this->m_calculation->updateFactoryStats();
-        $this->m_calculation->updateFactoryStats();
+        $this->m_calculation->updateVotingWithZScore();
         $this->m_calculation->writeTempAggZScore();
         $this->m_calculation->updateMasterWithHumanScores();
 

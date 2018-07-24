@@ -97,6 +97,12 @@ function reloadDashboard() {
 }
 
 $(document).ready(function () {
+
+
+    $(document).on({
+        ajaxStart: function() {     },
+        ajaxStop: function() { }
+    });
     if ($('#dash_ajax').val() != undefined) {
         reloadDashboard();
 
@@ -110,22 +116,24 @@ $(document).ready(function () {
         });
     }
     $('#create-human-score').on('click', function(){
-        $('#create-human-score').attr('disabled', true);
-        console.log('on clisk');
-        var icDate = $('#ic_dates').val();
-        console.log(icDate);
+        $body = $("body");
+        $body.addClass("loading");
 
+        $('#create-human-score').attr('disabled', true);
+        var icDate = $('#ic_dates').val();
         $.post('create-human-score', {
             ic_date: icDate,
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
-            console.log('done', data);
             $('#create-human-score').removeAttr('disabled');
-            alert(data)
+            alert(data);
+            $body.removeClass("loading");
+            reloadDashboard();
         }).fail(function (err) {
-            console.log('err', err);
             $('#create-human-score').removeAttr('disabled');
-            alert(err)
+            alert(err);
+            $body.removeClass("loading");
+            reloadDashboard();
 
          });
     })
