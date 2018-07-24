@@ -64,7 +64,7 @@ EOT;
                     0 AS finalRank, 
                     DATE_ADD(icDate, INTERVAL IF(DAYNAME(icDate) = 'Saturday', 2, IF(DAYNAME(icDate) = 'Friday', 3, 1)) DAY) AS planExecDate, 
                     DATE_ADD(icDate, INTERVAL IF(DAYNAME(icDate) = 'Saturday', 2, IF(DAYNAME(icDate) = 'Friday', 3, 1)) DAY) AS actualExecDate
-                FROM MASTER
+                FROM master
                 WHERE
                     master.isActive = 1 AND icDate = '{$analysisDate}'
                 GROUP BY
