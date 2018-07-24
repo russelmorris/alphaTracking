@@ -6,12 +6,6 @@
                 <h4>Ticker: <b><?php echo $ticker; ?></b></h4>
                 <h4>Name: <b><?php echo $prospect['name']; ?></b></h4>
                 <h4>
-                    <a href="<?php echo $prospect['SWSurl_test']; ?>"
-                       target="_blank">
-                        Company Information - TO BE CONFIRMED</a>
-                </h4>
-
-                <h4>
                     <a href="<?php echo $prospect['SWSurl']; ?>"
                        target="_blank">
                         Company Information</a>
