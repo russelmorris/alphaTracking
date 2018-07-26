@@ -1,11 +1,16 @@
 function final_value() {
+    $('#prospectCount').html('');
+    $('#portfolioCount').html('');
     $.post('finalised_value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        $('#finalised-label').text(data + "% Finalised");
-        $('#finalised-value').prop('aria-valuenow', data).css('width', data + '%');
+        var returnData = JSON.parse(data);
+        $('#finalised-label').text(returnData.percent + "% Finalised");
+        $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
+        $('#prospectCount').html(returnData.prospectCount);
+        $('#portfolioCount').html(returnData.portfolioCount);
     }).fail(function (err) {
 
     });

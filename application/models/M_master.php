@@ -134,6 +134,10 @@ class M_master extends CI_Model
 
     public function finalised($user_id, $icDate)
     {
+        $data = [
+            'overall' => 0,
+            'percent' => 0.00
+        ];
         $return = 0;
         $final  = $this->db->select('isFinalised')
                            ->where('isActive', 1)
@@ -155,7 +159,11 @@ class M_master extends CI_Model
             $return = ($final / $overall) * 100;
         }
 
-        return $return;
+        $data = [
+            'overall' => $overall,
+            'percent' => $return
+        ];
+        return $data;
     }
 
     public function updateActiveStatus($icDate)

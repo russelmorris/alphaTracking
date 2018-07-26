@@ -37,9 +37,6 @@ class C_dashboard extends MY_Controller
         $data['ic_dates'] = $this->m_icdate->getICDates();
         $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
         $data['ic_dashboard'] = [];
-        $data['finalised'] = $this->m_master->finalised($data['user']['memberNo'],
-            $data['closest_icDate_from_today']);
-
         $this->load->template('v_dashboard', $data);
     }
 
@@ -78,7 +75,13 @@ class C_dashboard extends MY_Controller
 
     public function finalised_value()
     {
-        $return = 0.00;
+
+        $returnArray = [
+            'percent' => '0.00',
+            'prospectCount' => '111',
+            'portfolioCount' => '230',
+        ];
+
         if (!$this->input->is_ajax_request()) {
             show_404();
             die();
@@ -97,7 +100,11 @@ class C_dashboard extends MY_Controller
             $return =  $this->m_master->finalised($selectedUser,
                 $selectedDate);
         }
-        echo number_format($return, 2,'.', '');
+        $returnArray['percent'] = number_format($return['percent'], 2,'.', '');
+        $returnArray['prospectCount'] = $return['overall'];
+
+        $returnArray['portfolioCount'] = $this->m_icdate->getPortfolioCount($selectedDate);
+        echo json_encode($returnArray);
     }
 
     public function updateFactor()

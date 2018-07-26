@@ -14,16 +14,16 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label id="finalised-label"><?php echo $finalised . ('% Finalised') ?></label>
+            <label id="finalised-label"></label>
             <div class="progress">
                 <div id="finalised-value"
                      class="progress-bar"
                      role="progressbar"
-                     aria-valuenow="<?php echo $finalised ?>"
+                     aria-valuenow="0"
                      aria-valuemin="0"
                      aria-valuemax="100"
-                     style="width: <?php echo $finalised; ?>%;">
-                    <span class="sr-only"><?php echo $finalised . ('% Complete') ?></span>
+                     style="width: 0%">
+                    <span class="sr-only"></span>
                 </div>
             </div>
         </div>
@@ -73,8 +73,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            &nbsp;
+        <div class="col com-sm-12">
+            <div class="ml-15">
+                <p>"This Period there are <span id="prospectCount"></span> prospects and <span id="portfolioCount"></span> stocks to be included in the portfolio</p>
+            </div>
         </div>
     </div>
     <div>

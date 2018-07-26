@@ -37,4 +37,24 @@ class M_icdate extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * @param $icDate
+     * @return int
+     */
+    public function getPortfolioCount($icDate)
+    {
+        $return = 0;
+        $query = $this->db
+            ->select("portfolioCount")
+            ->where ('strategyNo', 1)
+            ->where ('icDate', $icDate)
+            ->from('icdate')
+            ->get();
+        if($query->num_rows() > 0){
+            $result = $query->result_array();
+            $return = $result[0]['portfolioCount'];
+        }
+        return $return;
+    }
+
 }
