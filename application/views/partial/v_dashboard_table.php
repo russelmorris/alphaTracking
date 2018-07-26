@@ -2,6 +2,8 @@
     <thead>
     <tr>
         <th class="text-center">#</th>
+        <th data-toggle="tooltip" data-placement="top" title="Included in Portfolio" class="text-center">In?
+            <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" title="Finalised" class="text-center">Fin
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Ticker">Ticker
@@ -51,6 +53,11 @@
         <tr class="row_odd <?php echo $ic['isFinalised'] ? "row-finished" : '' ?>" id="tr_<?php echo $ic['ticker']; ?>">
 
             <td class="vcenter final"><?php echo $index + 1; ?>
+            </td>
+            <td class="vcenter">
+                <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
+                    <?php echo $ic['inPortfolio'] == '1' ? "yes": "no"; ?>
+                </a>
             </td>
             <td class="vcenter hcenter final final-dis">
                 <button class="btn btn-default btn-circle finalised"

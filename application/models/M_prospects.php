@@ -114,6 +114,8 @@ class M_prospects extends CI_Model
          * If not is admin get user from session and owerwrite  passed admin
          */
         $result = [];
+
+        $this->db->select('coalesce(p.strategyNo, 0) as inPortfolio' );
         $this->db->select('m.masterID');
         $this->db->select('m.ticker');
         $this->db->select('m.name');
@@ -147,6 +149,7 @@ class M_prospects extends CI_Model
         $this->db->join('voting vo5', "vo5.masterID = m.masterID and vo5.factorNo = 5", "inner");
         $this->db->join('voting vo6', "vo6.masterID = m.masterID and vo6.factorNo = 6", "inner");
         $this->db->join('voting vo7', "vo7.masterID = m.masterID and vo7.factorNo = 7", "inner");
+        $this->db->join('portfolio p',  "p.memberNo = ".$id."  and p.icDate = '".$icDate."' and p.ticker = m.ticker", 'left');
         $this->db->where('m.strategyNo', 1);
         $this->db->where('m.isActive', 1);
         $this->db->where('m.memberNo', $id);
