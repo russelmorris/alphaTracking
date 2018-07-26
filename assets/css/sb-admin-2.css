@@ -581,6 +581,10 @@ table.dataTable thead > tr > th {
     margin-top: 10px !important;
 }
 
+.ml-15 {
+    margin-left: 15px !important;
+}
+
 .mbt-5 {
     margin-bottom: 5px !important;
     margin-top: 5px !important;
