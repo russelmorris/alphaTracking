@@ -46,6 +46,22 @@ class C_voting extends MY_Controller
             $ticker, $icDate);
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
+
+
+        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . $data['voting_values'][0]['prospectTextID'] . ".htm";
+        $data['infoSheetURL']  =  strtolower(str_replace(" ", "", $data['infoSheetURL'] ));
+        $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ?  true : false;
+
+
+        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-alexa.jpg";
+        $data['alexaImageURL']  =  strtolower(str_replace(" ", "", $data['alexaImageURL'] ));
+        $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
+
+
+        $data['googleImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-googletrends.jpg";
+        $data['googleImageURL']  =  strtolower(str_replace(" ", "", $data['googleImageURL'] ));
+        $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
+
         $this->load->template('v_voting', $data);
     }
 

@@ -156,35 +156,34 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="mt-10">
-                <?php if (
-                file_exists("bottomUp/infoSheets/" . $icdate . "/" .
-                            $voting_values[0]['prospectTextID'] . ".htm")): ?>
-                    <iframe src="<?php
-                    echo base_url("bottomUp/infoSheets/" . $icdate . "/" .
-                                  $voting_values[0]['prospectTextID'] . ".htm") ?>"
-                            onload="resizeIframe(this)"
-                            scrolling="no"></iframe>
-                <?php elseif (file_exists("bottomUp/infoSheets/" . $icdate . "/" .
-                                          str_replace(" ", "",
-                                              strtolower($icdate . '-' . $ticker . '-' . $voting_values[0]['country'])) . ".htm")): ?>
-                    <iframe src="<?php
-                    echo base_url("bottomUp/infoSheets/" . $icdate . "/" .
-                                  str_replace(" ", "",
-                                      strtolower($icdate . '-' . $ticker . '-' . $voting_values[0]['country'])) . ".htm") ?>"
-                            onload="resizeIframe(this)"
-                            scrolling="no"></iframe>
-                <?php else: ?>
-                    <h3 class="text-center text-info">No Info Sheet Found</h3>
-                <?php endif; ?>
+                <?php if ($infoSheetURLExist == true) {?>
+                    <iframe src="<?php echo base_url($infoSheetURL) ?>" onload="resizeIframe(this)" scrolling="no"></iframe>
+                <?php } else { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        No Info Sheet Found
+                    </div>
+                <?php } ?>
+            </div>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="mt-10">
-                <img src="http://disrupterfund.com.au/bottomUp/digiFootprint/alexa/2018-03-31/2018-03-31-pph-newzealand-alexa.jpg" height="100%" width="100%" />
+                <?php if ($alexaImageURLExist == true) {?>
+                    <img src="<?php echo base_url($alexaImageURL) ;?>" alt="Alexa Data not found" height="100%" width="100%" />
+                <?php } else { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Alexa Data not found
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -192,7 +191,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="mt-10">
-                <img src="http://disrupterfund.com.au/bottomUp/digiFootprint/googletrends/2018-03-31/2018-03-31-pph-newzealand-googletrends.jpg" height="100%" width="100%" />
+                <?php if ($googleImageURLExist == true) {?>
+                    <img src="<?php echo base_url($googleImageURL) ;?>" alt="Alexa Data not found" height="100%" width="100%" />
+                <?php } else { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Google Trends Data not found
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
