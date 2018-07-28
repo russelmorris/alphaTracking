@@ -1,0 +1,76 @@
+/* Containers */
+.rb-box {
+    padding: 1.3em;
+    background: #333f58;
+    border-radius: 0.75em;
+}
+
+.rb-box > p {
+    color: #FFFFFF;
+    margin: 1%;
+}
+
+.rb > span {
+    color: #FFFFFF;
+}
+
+.rb {
+    padding: 1%;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.3em;
+}
+
+.rb-tab {
+    display: inline-block;
+    position: relative;
+    width: 9%;
+    margin-left: 0.5%;
+}
+
+.rb-txt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
+    color: #ffffff;
+}
+
+.rb-spot {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    cursor: pointer;
+    transition: ease 0.5s;
+}
+
+.rb-tab-active .rb-spot {
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px solid rgba(243, 49, 128, 0.6);
+
+}
+
+#rb-8 > div > div > span, #rb-7 > div > div > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70%;
+    color: #ffffff;
+}
+
+iframe {
+    width: 100%;
+    overflow: hidden;
+    border: none;
+}
+
+.add-disabled-cursor {
+    cursor: not-allowed;
+}
