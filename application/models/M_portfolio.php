@@ -13,19 +13,19 @@ class M_portfolio extends CI_Model
 
     public function buildPortfolioMasterStep1($ic_date)
     {
-        $sql= <<<EOT
+        $sql = <<<EOT
         DELETE FROM portfolio_temp2 WHERE 1=1;
 EOT;
         $this->db->query($sql);
 
 
-        $sql= <<<EOT
+        $sql = <<<EOT
             ALTER TABLE portfolio_temp2 AUTO_INCREMENT = 1;
 EOT;
         $this->db->query($sql);
 
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         SELECT bWeight INTO @a
             FROM ic
             WHERE memberName = "machine";
@@ -33,7 +33,7 @@ EOT;
         $this->db->query($sql);
 
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         SELECT icd.icDate,  icd.portfolioCount  
             FROM icdate icd 
             where icd.icDate = '{$ic_date}';
@@ -45,7 +45,7 @@ EOT;
         $analysisDate = $result[0]->icDate;
         $portfolioCount = $result[0]->portfolioCount;
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         INSERT INTO portfolio_temp2
           SELECT temp.* from (
             SELECT
@@ -89,19 +89,19 @@ EOT;
 
     public function buildPortfolioMasterStep2($ic_date)
     {
-        $sql= <<<EOT
+        $sql = <<<EOT
         DELETE FROM portfolio_temp1 where 1=1; 
 EOT;
         $this->db->query($sql);
 
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         ALTER TABLE portfolio_temp1 AUTO_INCREMENT = 1;
 EOT;
         $this->db->query($sql);
 
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         SELECT icd.icDate,  icd.portfolioCount  
             FROM icdate icd 
             where icd.icDate = '{$ic_date}';
@@ -113,7 +113,7 @@ EOT;
         $analysisDate = $result[0]->icDate;
         $portfolioCount = $result[0]->portfolioCount;
 
-        $sql= <<<EOT
+        $sql = <<<EOT
         INSERT INTO portfolio_temp1
           SELECT temp.* from (
             SELECT
@@ -166,6 +166,7 @@ EOT;
 EOT;
         $this->db->query($sql);
 
+
         $sql = <<<EOT
        DELETE
             FROM portfolio
@@ -182,11 +183,140 @@ EOT;
         $this->db->query($sql);
     }
 
-    public function buildPortfolioMasterALL($ic_date)
+    public function buildPortfolioMasterALL($ic_date, $members)
     {
-        $sql = <<<EOT
-        call ic_loop_all('{$ic_date}');
+        foreach ($members as $member) {
+
+            $sql = <<<EOT
+            DELETE FROM portfolio_temp1 WHERE 1=1;
 EOT;
         $this->db->query($sql);
+
+
+        $sql = <<<EOT
+		ALTER TABLE portfolio_temp1 auto_increment = 1;
+EOT;
+        $this->db->query($sql);
+
+
+        $sql = <<<EOT
+		INSERT INTO portfolio_temp1  (
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					name,
+					country,
+					sector,
+					vetoCount,
+					machineScore,
+					machineRank,
+					humanScore,
+					humanRank,
+					finalScore,
+					finalRank,
+					planExecDate,
+					actualExecDate
+		)
+		SELECT 
+				strategyNo,
+				memberName,
+				memberNo,
+				prospectTextID,
+				icDate,
+				ticker,
+				RIC,
+				`name`,
+				country,
+				sector,
+				vetoFlag as vetoCount,
+				machineScore,
+				machineRank,
+				humanScore,
+				0 as humanRank,
+				humanScore as finalScore,
+				0 as finalRank,
+				DATE_ADD(icDate, INTERVAL 
+                IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                        IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                ) DAY) as planExecDate,
+				DATE_ADD(icDate, INTERVAL 
+                IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                        IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                ) DAY) as actualExecDate							
+		
+			FROM
+				master
+		
+			WHERE
+				master.isActive = 1 AND
+				vetoFlag is null AND
+				memberNo = {$member['memberNo']} AND
+				master.icDate = '{$ic_date}'
+			ORDER BY
+				humanScore DESC;
+EOT;
+            $this->db->query($sql);
+
+
+            $sql = <<<EOT
+            DELETE FROM  portfolio WHERE icDate = '{$ic_date}' and memberNo = {$member['memberNo']};
+EOT;
+            $this->db->query($sql);
+
+            $sql = <<<EOT
+			INSERT INTO portfolio
+			(
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					name,
+					country,
+					sector,
+					vetoCount,
+					machineScore,
+					machineRank,
+					humanRank,
+					humanScore,
+					finalRank,
+					finalScore,
+					planExecDate,
+					actualExecDate
+			)
+				SELECT
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					name,
+					country,
+					sector,
+					vetoCount,
+					machineScore,
+					machineRank,
+					finalRank as humanRank,
+					humanScore,
+					finalRank,
+					finalScore,
+					planExecDate,
+					actualExecDate
+				
+				FROM 
+					portfolio_temp1;
+EOT;
+            $this->db->query($sql);
+
+        }
+
     }
 }
