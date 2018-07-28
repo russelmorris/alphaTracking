@@ -57,12 +57,13 @@ class C_calculation extends MY_Controller
             die();
         }
         $ic_date = $this->input->post('date');
+        $members = $this->m_ic->getMembers();
 
         $this->m_portfolio->buildPortfolioMasterStep1($ic_date);
         $this->m_portfolio->buildPortfolioMasterStep2($ic_date);
         $this->m_portfolio->buildPortfolioMasterStep3($ic_date);
-        $this->m_portfolio->buildPortfolioMasterALL($ic_date);
-        echo 'Portfolio has been builded';
+        $this->m_portfolio->buildPortfolioMasterALL($ic_date, $members);
+        echo 'Portfolio has been built';
         return;
     }
 
