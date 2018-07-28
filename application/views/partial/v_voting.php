@@ -9,6 +9,12 @@
                     <a href="<?php echo $prospect['SWSurl']; ?>"
                        target="_blank">
                         Company Information</a>
+                    <br>
+                    <small>
+                        Simply Wall St login:<br>
+                        un: portfolio@skyeam.com.au<br>
+                        pw: skyam
+                    </small>
                 </h4>
                 <input id="user_id" hidden value="<?php echo $sub_user ? $sub_user['memberNo'] : $user['memberNo']; ?>">
                 <input id="ticker" hidden value="<?php echo $ticker; ?>">
