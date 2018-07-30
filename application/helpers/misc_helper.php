@@ -61,3 +61,19 @@ function find_closest_date($array)
 
     return $closestDate->format('Y-m-d');
 }
+
+function find_latest_date($array)
+{
+
+    $closestDate =  new DateTime($array[0]['icDate']);
+
+    foreach ($array as $index => $day) {
+        $icDate = new DateTime($day['icDate']);
+
+        if ($closestDate<=$icDate ){
+            $closestDate = $icDate;
+        }
+    }
+
+    return $closestDate->format('Y-m-d');
+}
