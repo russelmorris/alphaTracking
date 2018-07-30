@@ -80,10 +80,14 @@ class C_create_csv extends MY_Controller
             foreach ($googleCsvData as $line) {
                 fputcsv($fp, $line);
             }
+
             echo "<p><a href='{$this->alexaPath}{$latestIcDates}/{$csvName}' target='_blank'>{$prospect["RIC"]}</a></p>";
             fclose($fp);
+
         }
 
-        echo 'Googletrends CSV files are created';
+        echo 'Alexa CSV files are created';
     }
+
+
 }
