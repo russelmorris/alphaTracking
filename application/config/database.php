@@ -75,6 +75,7 @@ $query_builder = true;
 
 $db['default'] = array(
     'dsn'          => '',
+//    'hostname'     => '221.121.140.232',
     'hostname'     => 'localhost',
     'username'     => 'disrupt_alpTrack',
     'password'     => '8_Y7yyaCq3$$',
