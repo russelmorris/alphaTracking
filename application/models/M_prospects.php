@@ -178,4 +178,12 @@ class M_prospects extends CI_Model
 
         return $return;
     }
+
+    public function getProspectsByDate($icDate){
+         return $this->db
+            ->select('*')
+            ->where("icDate",$icDate)
+            ->from ("prospects")
+            ->get()->result_array();
+    }
 }
