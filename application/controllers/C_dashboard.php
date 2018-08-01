@@ -184,4 +184,28 @@ class C_dashboard extends MY_Controller
         return;
     }
 
+    public function updateFinaliseAll()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+
+        $icDate = $this->input->post('ic_date');
+        $user_id = $this->input->post('ic_user');
+        $finalized = $this->input->post('finalized');
+
+        $userData = $this->session->userdata('user');
+
+        if ($userData['isAdmin'] == 0) {
+            $user_id = $userData['memberNo'];
+        }
+        $newFinalisedValue = $this->m_master->setAllFinaliseFlag(
+            $user_id,
+            $icDate,
+            $finalized
+        );
+        return;
+    }
+
 }

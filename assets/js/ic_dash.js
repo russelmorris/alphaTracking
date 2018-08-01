@@ -8,9 +8,17 @@ function final_value() {
     }).done(function (data) {
         var returnData = JSON.parse(data);
         $('#finalised-label').text(returnData.percent + "% Finalised");
+        $('#finalised-label-value').val(returnData.percent);
         $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
         $('#prospectCount').html(returnData.prospectCount);
         $('#portfolioCount').html(returnData.portfolioCount);
+
+        if (parseInt(returnData.percent) == 100){
+            $('#finalize-all').val(' Unfinalize all');
+        } else {
+            $('#finalize-all').val('Finalize all');
+        }
+
     }).fail(function (err) {
 
     });
@@ -137,6 +145,32 @@ $(document).ready(function () {
 
          });
     })
+
+    $('#finalize-all').on('click', function(){
+        $body = $("body");
+        $body.addClass("loading");
+
+        var icUser = $('.admin_users').val();
+        var icDate = $('#ic_dates').val();
+        var finalized = $('#finalised-label-value').val();
+        $('#finalize-all').attr('disabled', true);
+        $.post('update-finalise-all', {
+            ic_date: icDate,
+            ic_user: icUser,
+            finalized: finalized,
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+           $('#finalize-all').removeAttr('disabled');
+            $body.removeClass("loading");
+            reloadDashboard();
+        }).fail(function (err) {
+            $('#finalize-all').removeAttr('disabled');
+            alert(err);
+            $body.removeClass("loading");
+            reloadDashboard();
+
+        });
+    });
 });
 
 
