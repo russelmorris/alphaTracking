@@ -44,7 +44,11 @@
             <button id="crate_alexa_cvs" class="btn btn-primary btn-block mbt-5">Create Alexa CVS files</button>
         </div>
     </div>
-
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
+            &nbsp;
+        </div>
+    </div>
     <!-- /.col-lg-6 -->
 
     <!-- /.col-lg-6 -->
