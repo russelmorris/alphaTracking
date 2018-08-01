@@ -131,6 +131,18 @@ class M_master extends CI_Model
         return $setFinaliseValue;
     }
 
+    public function setAllFinaliseFlag($user_id, $ic_date, $finalized)
+    {
+        $finalized = ($finalized == 100) ? 0 : 1;
+
+        $this->db
+            ->set('isFinalised', $finalized)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'icDate' => $ic_date])
+            ->update('master');
+        return true;
+    }
+
 
     public function finalised($user_id, $icDate)
     {

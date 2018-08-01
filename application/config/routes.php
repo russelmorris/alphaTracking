@@ -63,12 +63,15 @@ $route['admin_dashboard'] = 'c_admin/dashboard';
 $route['update-factor'] = 'c_dashboard/updateFactor';
 $route['update-veto'] = 'c_dashboard/updateVeto';
 $route['update-finalise'] = 'c_dashboard/updateFinalise';
+$route['update-finalise-all'] = 'c_dashboard/updateFinaliseAll';
 
 $route['dashboard_ajax']  = 'c_dashboard/dashboard_ajax';
 $route['finalised_value']  = 'c_dashboard/finalised_value';
 
 $route['import_prospect']      = 'c_admin/import_prospect';
 $route['import_returns']       = 'c_admin/import_returns';
+
+
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
 $route['submit_voting']        = 'c_voting/submit_voting';
 
