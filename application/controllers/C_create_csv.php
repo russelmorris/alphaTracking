@@ -49,7 +49,7 @@ class C_create_csv extends MY_Controller
             foreach ($googleCsvData as $line) {
                 fputcsv($fp, $line);
             }
-            echo "<p><a href='{$this->googlePath}{$latestIcDates}/{$csvName}' target='_blank'>{$prospect["RIC"]}</a></p>";
+           // echo "<p><a href='{$this->googlePath}{$latestIcDates}/{$csvName}' target='_blank'>{$prospect["RIC"]}</a></p>";
             fclose($fp);
         }
 
@@ -81,7 +81,7 @@ class C_create_csv extends MY_Controller
                 fputcsv($fp, $line);
             }
 
-            echo "<p><a href='{$this->alexaPath}{$latestIcDates}/{$csvName}' target='_blank'>{$prospect["RIC"]}</a></p>";
+            //echo "<p><a href='{$this->alexaPath}{$latestIcDates}/{$csvName}' target='_blank'>{$prospect["RIC"]}</a></p>";
             fclose($fp);
 
         }
