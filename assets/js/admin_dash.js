@@ -84,3 +84,31 @@ $('#query_build').click(function () {
 if($('.query_ic_date').val() == null){
     $('#query_build').prop('disabled', true)
 }
+
+
+$('#create_googletrends_cvs').click(function () {
+    $body = $("body");
+    $body.addClass("loading");
+
+    $.get('create-csv-googletrends').done(function (data) {
+        console.log(data);
+        alert(data);
+        $body.removeClass("loading");
+
+    })
+
+})
+
+
+$('#crate_alexa_cvs').click(function () {
+    $body = $("body");
+    $body.addClass("loading");
+
+    $.get('create-csv-alexa').done(function (data) {
+        console.log(data);
+        alert(data);
+        $body.removeClass("loading");
+
+    })
+
+})
