@@ -48,22 +48,19 @@ class C_voting extends MY_Controller
         $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
 
 
-        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . $data['voting_values'][0]['prospectTextID'] . ".htm";
-        $data['infoSheetURL']  =  strtolower(str_replace(" ", "", $data['infoSheetURL'] ));
+        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . strtolower(str_replace(" " , '',$data['voting_values'][0]['prospectTextID'])) . ".htm";
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ?  true : false;
 
 
-        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-alexa.jpg";
-        $data['alexaImageURL']  =  strtolower(str_replace(" ", "", $data['alexaImageURL'] ));
+        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace($ticker."-".$data['prospect']['country']))."-alexa.jpg";
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
 
 
-        $data['googleImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-googletrends.jpg";
-        $data['googleImageURL']  =  strtolower(str_replace(" ", "", $data['googleImageURL'] ));
+        $data['googleImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
 
         $this->load->template('v_voting', $data);
-        print_f($data);
+        //print_f($data);
     }
 
     public function submit_voting()
