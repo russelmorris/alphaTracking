@@ -109,10 +109,10 @@ EOT;
     public function updateMasterWithHumanScores()
     {
         $sql = <<<EOT
-        update master as m
+        update `master` as m
             INNER JOIN tempAggZScore ON tempAggZScore.masterID = m.masterID
-            set m.humanScore = tempAggZScore.aggZScore,
-                    m.bWeightedHumanScore = tempAggZScore.aggZScore * m.bWeight
+            set m.humanScore = if(m.vetoFlag = 1,-100,tempAggZScore.aggZScore),
+            m.bWeightedHumanScore = tempAggZScore.aggZScore * m.bWeight
             where m.isActive = 1;
 		
 EOT;
