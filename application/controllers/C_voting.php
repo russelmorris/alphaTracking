@@ -63,6 +63,7 @@ class C_voting extends MY_Controller
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
 
         $this->load->template('v_voting', $data);
+        print_f($data);
     }
 
     public function submit_voting()
