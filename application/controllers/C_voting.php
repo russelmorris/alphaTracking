@@ -56,7 +56,7 @@ class C_voting extends MY_Controller
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
 
 
-        $data['googleImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
+        $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
 
         $this->load->template('v_voting', $data);
