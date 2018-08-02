@@ -52,7 +52,7 @@ class C_voting extends MY_Controller
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ?  true : false;
 
 
-        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace($ticker."-".$data['prospect']['country']))."-alexa.jpg";
+        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-alexa.jpg";
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
 
 
