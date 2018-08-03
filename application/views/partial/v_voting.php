@@ -13,7 +13,7 @@
                     <small>
                         Simply Wall St login:<br>
                         un: portfolio@skyeam.com.au<br>
-                        pw: skyam
+                        pw: skyeam
                     </small>
                 </h4>
                 <input id="user_id" hidden value="<?php echo $sub_user ? $sub_user['memberNo'] : $user['memberNo']; ?>">
