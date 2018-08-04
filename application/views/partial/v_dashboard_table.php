@@ -104,17 +104,16 @@
             </td>
             <td class="no-padding">
                 <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
+                            <span class="hidden"><?php echo $ic['factorScore1']; ?></span>
                             <select class="form-control business-model ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 1, this.value)"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 1, this.value, this)"
                                 <?php if ($ic['isFinalised'] == 1) {
                                     echo ' disabled ';
                                 } ?>
                             >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore1'] == $i) {
                                         echo ' selected ';
                                     } ?>><?php echo $i; ?></option>
@@ -130,17 +129,16 @@
             </td>
             <td class="no-padding">
                 <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
+                            <span class="hidden"><?php echo $ic['factorScore2']; ?></span>
                             <select class="form-control business-valuation ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 2, this.value)"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 2, this.value, this)"
                                 <?php if ($ic['isFinalised'] == 1) {
                                     echo ' disabled ';
                                 } ?>
                             >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore2'] == $i) {
                                         echo ' selected ';
                                     } ?>><?php echo $i; ?></option>
@@ -156,17 +154,16 @@
             </td>
             <td class="no-padding">
                 <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
+                            <span class="hidden"><?php echo $ic['factorScore3']; ?></span>
                             <select class="form-control digital-footprint ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 3, this.value)"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 3, this.value, this)"
                                 <?php if ($ic['isFinalised'] == 1) {
                                     echo ' disabled ';
                                 } ?>
                             >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore3'] == $i) {
                                         echo ' selected ';
                                     } ?>><?php echo $i; ?></option>
@@ -182,17 +179,16 @@
             </td>
             <td class="no-padding">
                 <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
                     <div class="cell_part mbt-5">
                         <div class="form-group">
+                            <span class="hidden"><?php echo $ic['factorScore6']; ?></span>
                             <select class="form-control risk ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 6, this.value)"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 6, this.value, this)"
                                 <?php if ($ic['isFinalised'] == 1) {
                                     echo ' disabled ';
                                 } ?>
                             >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore6'] == $i) {
                                         echo ' selected ';
                                     } ?>><?php echo $i; ?></option>

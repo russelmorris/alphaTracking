@@ -25,7 +25,7 @@ function final_value() {
 
 }
 
-function updateTicker(ticker, factor, value) {
+function updateTicker(ticker, factor, value, element) {
     $.post('update-factor', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
@@ -34,12 +34,26 @@ function updateTicker(ticker, factor, value) {
         value: value,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-
+        $(element).siblings('span:first').html(value);
+        refreshTableData();
     }).fail(function (err) {
 
     });
 };
 
+function refreshTableData() {
+    var oldOrder = table.order();
+    table.destroy();
+    table = $('#dataTables-example').DataTable({
+        retrieve: true,
+        responsive: false,
+        paging: false,
+        autoWidth: false,
+        bAutoWidth: false,
+        order: oldOrder
+
+    });
+}
 function updateVeto(ticker, element) {
     $.post('update-veto', {
         ticker: ticker,
@@ -54,17 +68,7 @@ function updateVeto(ticker, element) {
             $(element).siblings('span:first').html('1');
             element.innerHTML = '<i class="fa fa-check"></i>';
         }
-        var oldOrder = table.order();
-        table.destroy();
-        table = $('#dataTables-example').DataTable({
-            retrieve: true,
-            responsive: false,
-            paging: false,
-            autoWidth: false,
-            bAutoWidth: false,
-            order: oldOrder
-
-        });
+        refreshTableData();
     }).fail(function (err) {
 
     });
@@ -90,17 +94,7 @@ function updateFinalise(ticker, element) {
             $('#tr_' + ticker).closest("tr").addClass("row-finished");
 
         }
-        var oldOrder = table.order();
-        table.destroy();
-        table = $('#dataTables-example').DataTable({
-            retrieve: true,
-            responsive: false,
-            paging: false,
-            autoWidth: false,
-            bAutoWidth: false,
-            order: oldOrder
-
-        });
+        refreshTableData();
     }).fail(function (err) {
 
     });
