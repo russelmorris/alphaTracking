@@ -72,8 +72,7 @@ EOT;
         $sql = <<<EOT
         update voting as v
             INNER JOIN factorstats ON factorstats.factorNo = v.factorNo AND factorstats.icDate = v.icDate AND factorstats.memberNo = v.memberNo
-              set v.zScore = if (factorstats.factorStDev >0,(factorScore - factorstats.factorMean)/factorstats.factorStDev,0)
-              where factorstats.factorStDev > 0;
+            set v.zScore = if (factorstats.factorStDev >0,(factorScore - factorstats.factorMean)/factorstats.factorStDev,factorstats.factorMean);
 EOT;
         $this->db->query($sql);
         return true;
