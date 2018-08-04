@@ -48,10 +48,23 @@ function updateVeto(ticker, element) {
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
         if (data == '0') {
+            $(element).siblings('span:first').html('0');
             element.innerHTML = '<i class="fa"></i>';
         } else {
+            $(element).siblings('span:first').html('1');
             element.innerHTML = '<i class="fa fa-check"></i>';
         }
+        var oldOrder = table.order();
+        table.destroy();
+        table = $('#dataTables-example').DataTable({
+            retrieve: true,
+            responsive: false,
+            paging: false,
+            autoWidth: false,
+            bAutoWidth: false,
+            order: oldOrder
+
+        });
     }).fail(function (err) {
 
     });
@@ -66,19 +79,33 @@ function updateFinalise(ticker, element) {
     }).done(function (data) {
         final_value();
         if (data == 0) {
+            $(element).siblings('span:first').html('0');
             element.innerHTML = '<i class="fa"></i>';
             $(".ticker_" + ticker).prop('disabled', false);
             $('#tr_' + ticker).closest("tr").removeClass("row-finished");
         } else {
+            $(element).siblings('span:first').html('1');
             element.innerHTML = '<i class="fa fa-check"></i>';
             $(".ticker_" + ticker).prop('disabled', true);
             $('#tr_' + ticker).closest("tr").addClass("row-finished");
 
         }
+        var oldOrder = table.order();
+        table.destroy();
+        table = $('#dataTables-example').DataTable({
+            retrieve: true,
+            responsive: false,
+            paging: false,
+            autoWidth: false,
+            bAutoWidth: false,
+            order: oldOrder
+
+        });
     }).fail(function (err) {
 
     });
 };
+
 
 function reloadDashboard() {
     $('#dashboard-table-holder').html('' +

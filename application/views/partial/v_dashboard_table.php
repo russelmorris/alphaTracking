@@ -50,7 +50,7 @@
                     <?php echo $ic['inPortfolio'] == '1' ? "yes": "no"; ?>
                 </a>
             </td>
-            <td class="vcenter hcenter final final-dis">
+            <td class="vcenter hcenter final final-dis"><span class="hidden"><?php echo $ic['isFinalised']?></span>
                 <button class="btn btn-default btn-circle finalised"
                         onclick="updateFinalise('<?php echo $ic['ticker']; ?>', this)">
                     <i class="fa <?php echo $ic['isFinalised'] ? "fa-check" : '' ?>"></i>
@@ -89,7 +89,7 @@
             </td>
             <td class="vcenter hcenter no-padding">
                 <div class="cell_holder">
-                    <div class="cell_part">
+                    <div class="cell_part"><span class="hidden"><?php echo $ic['vetoFlag']?></span>
                         <button class="btn btn-default btn-circle veto ticker_<?php echo $ic['ticker']; ?>"
                                 onclick="updateVeto('<?php echo $ic['ticker']; ?>', this)"
                             <?php if ($ic['isFinalised'] == 1) {
@@ -214,7 +214,8 @@
 <?php /*endif; */ ?>
 
 <script>
-    $('#dataTables-example').DataTable({
+    table = $('#dataTables-example').DataTable({
+        retrieve: true,
         responsive: false,
         paging: false,
         autoWidth: false,
