@@ -69,8 +69,22 @@ class C_dashboard extends MY_Controller
             $data['ic_dashboard'] = $this->m_prospects->getProspectsByDateAndId($data['user']['memberNo'],
                 $data['selectedDate']);
         }
+        $portfolioCount = $this->m_icdate->getPortfolioCount($data['selectedDate']);
+        $icDashboard = $data['ic_dashboard'];
+        usort($icDashboard,"cmp_humanScore");
 
-        $this->load->view('partial/v_dashboard_table', $data);
+        foreach($icDashboard as $key => &$element){
+            if ($key > $portfolioCount) {
+                $element['inPortfolio'] = 0;
+            } else {
+                $element['inPortfolio'] = 1;
+            }
+        }
+        usort($icDashboard,"cmp_masterID");
+
+        $data['ic_dashboard'] = $icDashboard ;
+
+         $this->load->view('partial/v_dashboard_table', $data);
     }
 
     public function finalised_value()
