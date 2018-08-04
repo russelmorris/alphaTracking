@@ -144,7 +144,6 @@ $(document).ready(function () {
         });
     }
     $('#create-human-score').on('click', function(){
-        console.log('1')
         $body = $("body");
         $body.addClass("loading");
 
