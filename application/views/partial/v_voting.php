@@ -79,35 +79,7 @@
                     </div>
                 <?php endif; ?>
                 <!-- Radio Button Module -->
-                <p>4. Upside in capturing unexploited markets (geography or x-selling extra products)</p>
-                <?php if ($voting_values[3]['factorNo'] == 4): ?>
-                    <div id="rb-4" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>5. Competitor Analysis</p>
-                <?php if ($voting_values[4]['factorNo'] == 5): ?>
-                    <div id="rb-5" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>6. Risks</p>
+                <p>4. Risks</p>
                 <?php if ($voting_values[5]['factorNo'] == 6): ?>
                     <div id="rb-6" class="rb">
                         <?php for ($i = 1; $i < 11; $i++): ?>
@@ -120,7 +92,7 @@
                         <?php endfor; ?>
                     </div>
                 <?php endif; ?>
-                <p>7. Veto (optional)</p>
+                <p>5. Veto (optional)</p>
                 <div id="rb-7" class="rb <?php echo $voting_values[0]['vetoFlag'] == 1 ? 'rb-tab-active' : ''; ?>">
                     <div class="rb-tab " data-value="<?php echo $voting_values[0]['vetoFlag'] == 1 ? '1' : '0'; ?>">
                         <div class="rb-spot">
@@ -151,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-                <p>8. Finalise?</p>
+                <p>6. Finalise?</p>
                 <div id="rb-8" class="rb <?php echo $voting_values[0]['isFinalised'] == 1 ? 'rb-tab-active' : ''; ?>">
                     <div class="rb-tab" data-value="<?php echo $voting_values[0]['isFinalised'] == 1 ? '1' : '0'; ?>">
                         <div class="rb-spot">

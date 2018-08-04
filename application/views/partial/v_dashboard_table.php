@@ -22,26 +22,17 @@
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business model">
-            Business
+            Model
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip"
             data-placement="top"
             class="text-center"
-            title="Business valuation">Business
+            title="Business valuation">Valuation
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip"
             data-placement="top"
             class="text-center"
             title="Digital Footprint">Footprint
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip"
-            data-placement="top" class="text-center"
-            title="Significant uplft in addressable maret">Uplft <i class="fa fa-info-circle"></i>
-        </th>
-        <th data-toggle="tooltip"
-            data-placement="top"
-            class="text-center"
-            title="Competitor Analysis">Analysis
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
             <i class="fa fa-info-circle"></i></th>
@@ -186,58 +177,6 @@
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
                         <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld3']; ?></p>
-                    </div>
-                </div>
-            </td>
-            <td class="no-padding">
-                <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <select class="form-control uplift ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 4, this.value)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore4'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld4']; ?></p>
-                    </div>
-                </div>
-            </td>
-            <td class="no-padding">
-                <div class="cell_holder">
-                                        <span class="hidden"><?php echo str_pad(rand(1, 10), 2, '0',
-                                                STR_PAD_LEFT); ?></span>
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <select class="form-control competitor-analysis ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5, this.value)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 1; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore5'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld5']; ?></p>
                     </div>
                 </div>
             </td>
