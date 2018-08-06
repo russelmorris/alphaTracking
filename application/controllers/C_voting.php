@@ -59,6 +59,9 @@ class C_voting extends MY_Controller
         $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
 
+        $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
+        $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
+
         $this->load->template('v_voting', $data);
         //print_f($data);
     }
