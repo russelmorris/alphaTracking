@@ -107,7 +107,14 @@ function reloadDashboard() {
         '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>' +
         '<span class="sr-only">Loading...</span>' +
         '</div>');
-    var allow_edit = moment(new Date()).isBefore($('.ic_dates').val());
+
+    var currentDate = new Date();
+    var isDate = new Date($('.ic_dates').val()+' 23:59:59');
+    var allow_edit = false;
+    if(currentDate < isDate){
+        allow_edit = true;
+    }
+
     $.post('/dashboard_ajax', {
         ic_date: $('.ic_dates').val(),
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,

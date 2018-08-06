@@ -124,7 +124,13 @@ $(document).ready(function () {
     if ($("textarea").val() !== undefined) {
         $("textarea").val($("textarea").val().trim());
     }
-    let allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
+    // let allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
+    var currentDate = new Date();
+    var isDate = new Date($('#voting_ic_date').val()+' 23:59:59');
+    var allow_edit = false;
+    if(currentDate < isDate){
+        allow_edit = true;
+    }
     if (!allow_edit && !$('#allow_edit_as_admin').val()) {
         $('.rb-tab').off('click');
         $("#rb-8").off('click');
