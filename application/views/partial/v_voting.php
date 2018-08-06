@@ -1,4 +1,16 @@
 <div id="page-wrapper dashboard">
+    <div class="row mt-10">
+        <div class="col col-sm-6">
+            <?php if(!empty($prev)) {?>
+                <a href="<?php echo base_url('/voting/'.$icdate.'/'.$prev); ?>" class="btn btn-default">Previous</a>
+            <?php } ?>
+        </div>
+        <div class="col col-sm-6">
+            <?php if(!empty($next)) {?>
+            <a href="<?php echo base_url('/voting/'.$icdate.'/'.$next); ?>" class="btn btn-default pull-right">Next</a>
+            <?php } ?>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12">

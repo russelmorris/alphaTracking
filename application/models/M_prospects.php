@@ -179,6 +179,45 @@ class M_prospects extends CI_Model
         return $return;
     }
 
+    public function getPreviousProspectByDateAndTicker($icDate = '', $prospectId)
+    {
+        $return = [];
+        $this->db->select('ticker');
+        $this->db->from('prospects p');
+
+        $this->db->where('p.strategyNo', 1);
+        $this->db->where('p.icDate', $icDate);
+        $this->db->where('p.prospectId < ', $prospectId);
+        $this->db->limit(1);
+        $this->db->order_by('p.prospectId', 'desc');
+        $result = $this->db->get()->result_array();
+        if (count($result) > 0) {
+            $return = $result[0]['ticker'];
+        }
+
+        return $return;
+    }
+    public function getNextProspectByDateAndTicker($icDate = '', $prospectId)
+    {
+        $return = [];
+        $this->db->select('ticker');
+        $this->db->from('prospects p');
+
+        $this->db->where('p.strategyNo', 1);
+        $this->db->where('p.icDate', $icDate);
+        $this->db->where('p.prospectId > ', $prospectId);
+        $this->db->limit(1);
+        $this->db->order_by('p.prospectId', 'asc');
+        $result = $this->db->get()->result_array();
+        if (count($result) > 0) {
+            $return = $result[0]['ticker'];
+        }
+
+        return $return;
+    }
+
+
+
     public function getProspectsByDate($icDate){
          return $this->db
             ->select('*')
