@@ -52,23 +52,27 @@ class C_dashboard extends MY_Controller
         $data['selectedUser'] = json_decode($this->input->post('user_id'));
         $sessionUser = [];
         if (!$data['selectedUser']) {
+
             $sessionUser = $this->session->userdata('user');
             $data['user'] = $sessionUser;
             $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
             if ($data['user']['isAdmin']) {
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
+
             $data['ic_dates'] = $this->m_icdate->getICDates();
+
             $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
-            $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate']);
+
+
+            $data['ic_dashboard'] = $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'], $data['selectedDate']);
         } else {
             $data['user'] = $this->m_ic->getUserByID($data['selectedUser']);
             $this->session->set_userdata('admin_subuser', $data['user']);
             $data['ic_dashboard'] = $this->m_prospects->getProspectsByDateAndId($data['user']['memberNo'],
                 $data['selectedDate']);
         }
+
         $portfolioCount = $this->m_icdate->getPortfolioCount($data['selectedDate']);
         $icDashboard = $data['ic_dashboard'];
         usort($icDashboard,"cmp_humanScore");

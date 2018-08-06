@@ -155,7 +155,7 @@ class M_prospects extends CI_Model
         $this->db->where('m.memberNo', $id);
         $this->db->where('m.icDate', $icDate);
         $this->db->order_by('m.masterID', 'ASC');
-//        $this->db->limit($limit);
+//        $this->db->limit(1);
         $result = $this->db->get()->result_array();
 
         return $result;
