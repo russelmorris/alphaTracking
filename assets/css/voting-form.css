@@ -23,8 +23,11 @@
 .rb-tab {
     display: inline-block;
     position: relative;
-    width: 9%;
+    width: 7.8%;
     margin-left: 0.5%;
+}
+.rb-null-element{
+    margin-right: 3%;
 }
 
 .rb-txt {
@@ -34,6 +37,10 @@
     transform: translate(-50%, -50%);
     font-size: 1em;
     color: #ffffff;
+}
+
+.rb-txt-na{
+    font-size: .7em;
 }
 
 .rb-spot {

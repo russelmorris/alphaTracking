@@ -72,20 +72,21 @@ class C_voting extends MY_Controller
             show_404();
             die();
         }
-        $populate_voting_data            = [
-            'ticker'      => $this->input->post('ticker'),
-            'ic_date'     => $this->input->post('ic_date'),
-            'user_id'     => $this->input->post('user_id'),
-            'fc1'         => $this->input->post('fc1'),
-            'fc2'         => $this->input->post('fc2'),
-            'fc3'         => $this->input->post('fc3'),
-            'fc4'         => $this->input->post('fc4'),
-            'fc5'         => $this->input->post('fc5'),
-            'fc6'         => $this->input->post('fc6'),
-            'veto'        => json_decode($this->input->post('veto')),
-            'vetoComment' => $this->input->post('vetoComment'),
-            'finalised'   => json_decode($this->input->post('finalised')),
-        ];
+
+        $populate_voting_data = [];
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['user_id'] = $this->input->post('user_id');
+        $populate_voting_data['fc1'] = $this->input->post('fc1');
+        $populate_voting_data['fc2'] = $this->input->post('fc2');
+        $populate_voting_data['fc3'] = $this->input->post('fc3');
+        $populate_voting_data['fc4'] = $this->input->post('fc4');
+        $populate_voting_data['fc5'] = $this->input->post('fc5');
+        $populate_voting_data['fc6'] = $this->input->post('fc6');
+        $populate_voting_data['veto'] = json_decode($this->input->post('veto'));
+        $populate_voting_data['vetoComment'] = $this->input->post('vetoComment');
+        $populate_voting_data['finalised'] = json_decode($this->input->post('finalised'));
+
         $admin                           = $this->session->userdata('user');
         $admin_subuser                   = $this->session->userdata('admin_subuser');
         $populate_voting_data['user_id'] = ($populate_voting_data['user_id'] == $admin['memberNo']) ?

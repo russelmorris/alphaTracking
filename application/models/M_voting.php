@@ -55,7 +55,7 @@ class M_voting extends CI_Model
     {
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
-            ->set('factorScore', $factorVal)
+            ->set('factorScore', $factorVal == 0 ? null : $factorVal )
             ->where([
                 'strategyNo' => 1,
                 'memberNo'   => $user_id,
