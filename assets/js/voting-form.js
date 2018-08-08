@@ -142,7 +142,7 @@ $(document).ready(function () {
 
     }
     else if ($('#rb-8').find(".rb-tab").attr("data-value") == 1) {
-        for (let i = 1; i < 8; i++) {
+        for (var i = 1; i < 8; i++) {
             $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
         }
         $("textarea").attr('disabled', true);

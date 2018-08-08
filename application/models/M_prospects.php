@@ -29,8 +29,7 @@ class M_prospects extends CI_Model
 
         $prospectData = [
             'strategyNo'      => 1,
-            'prospectTextID'  => str_replace(" ", "",
-                strtolower($data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'])),
+            'prospectTextID'  => str_replace(" ", "", strtolower($data['icDate'] . '-' . $data['ticker'] . '-' . $data['country'])),
             'icDate'          => $data['icDate'],
             'ticker'          => $data['ticker'],
             'RIC'             => $data['RIC'],
@@ -40,14 +39,15 @@ class M_prospects extends CI_Model
             'sector'          => $data['sector'],
             'machineScore'    => $data['machineScore'],
             'machineRank'     => $data['machineRank'],
-            'peerRIC1'        => $data['peerRIC1'],
-            'peerRIC2'        => $data['peerRIC2'],
-            'peerRIC3'        => $data['peerRIC3'],
-            'peerRIC4'        => $data['peerRIC4'],
-            'peerRIC5'        => $data['peerRIC5'],
-            'SWSurl'          => $data['SWSurl'],
-            'SWSurl_test'     => $data['SWSurl_test'],
+            'machineScore2'   => $data['machineScore2'],
+            'machineRank2'    => $data['machineRank2'],
+            'machineScore3'   => $data['machineScore3'],
+            'machineRank3'    => $data['machineRank3'],
             'processed'       => 1,
+            'SWSurl_test'     => $data['SWSurl_test'],
+            'SWSurl'          => $data['SWSurl'],
+
+
         ];
 
         //check if prospect exist in database
@@ -77,11 +77,10 @@ class M_prospects extends CI_Model
                 ->set('sector', $prospectData['sector'])
                 ->set('machineScore', $prospectData['machineScore'])
                 ->set('machineRank', $prospectData['machineRank'])
-                ->set('peerRIC1', $prospectData['peerRIC1'])
-                ->set('peerRIC2', $prospectData['peerRIC2'])
-                ->set('peerRIC3', $prospectData['peerRIC3'])
-                ->set('peerRIC4', $prospectData['peerRIC4'])
-                ->set('peerRIC5', $prospectData['peerRIC5'])
+                ->set('machineScore2', $prospectData['machineScore2'])
+                ->set('machineRank2', $prospectData['machineRank2'])
+                ->set('machineScore3', $prospectData['machineScore3'])
+                ->set('machineRank3', $prospectData['machineRank3'])
                 ->set('SWSurl', $prospectData['SWSurl'])
                 ->set('SWSurl_test', $prospectData['SWSurl_test'])
                 ->set('processed', $prospectData['processed'])
