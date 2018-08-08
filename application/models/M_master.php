@@ -27,6 +27,10 @@ class M_master extends CI_Model
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
             "machineRank"    => $data['machineRank'],
+            "machineScore2"   => $data['machineScore2'],
+            "machineRank2"    => $data['machineRank2'],
+            "machineScore3"   => $data['machineScore3'],
+            "machineRank3"    => $data['machineRank3'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
@@ -65,6 +69,10 @@ class M_master extends CI_Model
                 ->set("sector", $prospectData['sector'])
                 ->set("machineScore", $prospectData['machineScore'])
                 ->set("machineRank", $prospectData['machineRank'])
+                ->set("machineScore2", $prospectData['machineScore2'])
+                ->set("machineRank2", $prospectData['machineRank2'])
+                ->set("machineScore3", $prospectData['machineScore3'])
+                ->set("machineRank3", $prospectData['machineRank3'])
                 ->set("memberNo", $prospectData['memberNo'])
                 ->set("memberName", $prospectData['memberName'])
                 ->set("bWeight", $prospectData['bWeight'])
