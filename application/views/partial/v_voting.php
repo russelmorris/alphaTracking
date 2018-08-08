@@ -51,11 +51,15 @@
                 <p>1. Business Model (sustainable, high margin, well executed) </p>
                 <?php if ($voting_values[0]['factorNo'] == 1): ?>
                     <div id="rb-1" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                        <?php for ($i = 0; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php  if($i == 0){ echo 'rb-null-element'; }?>"
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
+                                    <?php if ($i == 0){ ?>
+                                        <span class="rb-txt rb-txt-na">NA</span>
+                                    <?php } else { ?>
                                     <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -66,11 +70,15 @@
                 <p>2. Value vs current price</p>
                 <?php if ($voting_values[1]['factorNo'] == 2): ?>
                     <div id="rb-2" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                        <?php for ($i = 0; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php  if($i == 0){ echo 'rb-null-element'; }?>"
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php if ($i == 0){ ?>
+                                        <span class="rb-txt rb-txt-na">NA</span>
+                                    <?php } else { ?>
+                                        <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -80,11 +88,15 @@
                 <p>3. Digital Footprint (growing in web traffic/ app downloads/ trends</p>
                 <?php if ($voting_values[2]['factorNo'] == 3): ?>
                     <div id="rb-3" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                        <?php for ($i = 0; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php  if($i == 0){ echo 'rb-null-element'; }?>"
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php if ($i == 0){ ?>
+                                        <span class="rb-txt rb-txt-na">NA</span>
+                                    <?php } else { ?>
+                                        <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -94,11 +106,15 @@
                 <p>4. Risks</p>
                 <?php if ($voting_values[5]['factorNo'] == 6): ?>
                     <div id="rb-6" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
+                        <?php for ($i = 0; $i < 11; $i++): ?>
+                            <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php  if($i == 0){ echo 'rb-null-element'; }?>"
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                                    <?php if ($i == 0){ ?>
+                                        <span class="rb-txt rb-txt-na">NA</span>
+                                    <?php } else { ?>
+                                        <span class="rb-txt" ><?php echo $i;?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                         <?php endfor; ?>
