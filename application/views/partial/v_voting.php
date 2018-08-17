@@ -56,7 +56,7 @@
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
                                     <?php if ($i == 0){ ?>
-                                        <span class="rb-txt rb-txt-na">NA</span>
+                                        <span class="rb-txt rb-txt-na">Pass</span>
                                     <?php } else { ?>
                                     <span class="rb-txt"><?php echo $i; ?></span>
                                     <?php } ?>
@@ -75,7 +75,7 @@
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
                                     <?php if ($i == 0){ ?>
-                                        <span class="rb-txt rb-txt-na">NA</span>
+                                        <span class="rb-txt rb-txt-na">Pass</span>
                                     <?php } else { ?>
                                         <span class="rb-txt"><?php echo $i; ?></span>
                                     <?php } ?>
@@ -93,7 +93,7 @@
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
                                     <?php if ($i == 0){ ?>
-                                        <span class="rb-txt rb-txt-na">NA</span>
+                                        <span class="rb-txt rb-txt-na">Pass</span>
                                     <?php } else { ?>
                                         <span class="rb-txt"><?php echo $i; ?></span>
                                     <?php } ?>
@@ -111,7 +111,7 @@
                                  data-value="<?php echo $i; ?>">
                                 <div class="rb-spot">
                                     <?php if ($i == 0){ ?>
-                                        <span class="rb-txt rb-txt-na">NA</span>
+                                        <span class="rb-txt rb-txt-na">Pass</span>
                                     <?php } else { ?>
                                         <span class="rb-txt" ><?php echo $i;?></span>
                                     <?php } ?>
