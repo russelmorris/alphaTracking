@@ -14,7 +14,7 @@
 
     <ul class="nav navbar-top-links navbar-right">
         <li>
-            <?php if ($user['isComittee'] == 1 && uri_string() != 'dashboard') { ?>
+            <?php if (($user['isComittee'] == 1 || $user['isAdmn'] == 1 )&& uri_string() != 'dashboard') { ?>
                 <a href="<?php echo base_url('dashboard') ?>">
                     <i class="fa fa-tasks fa-fw"></i> IC Dashboard
                 </a>
