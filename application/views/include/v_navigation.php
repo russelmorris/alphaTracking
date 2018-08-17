@@ -20,19 +20,22 @@
                 </a>
             <?php } ?>
         </li>
-        <li>
-            <?php if ($user['isAdmin'] == 1 && uri_string() != 'admin_dashboard') { ?>
+        <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin_dashboard', 'committee_completion_summary'])) { ?>
+            <li>
                 <a href="<?php echo base_url('admin_dashboard') ?>">
                     <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard
                 </a>
-            <?php } ?>
-        </li>
+            </li>
+        <?php } ?>
+
+        <?php if ($user['isAdmin'] == 1 && uri_string() == 'dashboard') {  ?>
         <li>
-            <a href="#">
+            <a href="<?php echo  base_url('committee_completion_summary')?>#">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                 Investment Committee Completion Summary
             </a>
         </li>
+        <?php } ?>
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">

@@ -1,4 +1,5 @@
 <div id="page-wrapper dashboard">
+    <?php if ($user['isAdmin'] == 1 ){ ?>
     <div class="col-lg-12 col-md-12">
         <h2>Current Admin: <?php echo $user['memberName']; ?></h2>
     </div>
@@ -54,6 +55,7 @@
     <!-- /.col-lg-6 -->
 
     <!-- /.row -->
+<?php } ?>
     <div class="col-lg-12 col-md-12">
         <table width="100%"
                class="table table-striped table-bordered table-hover "

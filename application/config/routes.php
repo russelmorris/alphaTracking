@@ -58,6 +58,7 @@ $route['logout'] = 'c_login/logout';
 
 $route['dashboard']       = 'c_dashboard/dashboard';
 $route['admin_dashboard'] = 'c_admin/dashboard';
+$route['committee_completion_summary'] = 'c_admin/dashboard';
 
 
 $route['update-factor'] = 'c_dashboard/updateFactor';
