@@ -116,7 +116,7 @@
                                 <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore1'] == $i) {
                                         echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
+                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -141,7 +141,7 @@
                                 <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore2'] == $i) {
                                         echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
+                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -166,7 +166,7 @@
                                 <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore3'] == $i) {
                                         echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
+                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -191,7 +191,7 @@
                                 <?php for ($i = 0; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php if ($ic['factorScore6'] == $i) {
                                         echo ' selected ';
-                                    } ?>><?php echo $i; ?></option>
+                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
