@@ -17,7 +17,7 @@ $('#upload-prospects').click(function () {
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
     $.ajax({
-        url: "import_prospect",
+        url: "import-prospect",
         type: "post",
         processData: false, // important
         contentType: false, // important
@@ -52,7 +52,7 @@ $('#returns').change(function () {
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
 
     $.ajax({
-        url: "import_returns",
+        url: "import-returns",
         type: "post",
         dataType: 'json',
         processData: false, // important

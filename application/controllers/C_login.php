@@ -34,7 +34,7 @@ class C_login extends CI_Controller
                 $this->session->set_userdata('user', $user);
 
                 if ($user['isAdmin'] == 1) {
-                    $redirect = 'admin_dashboard';
+                    $redirect = 'admin-dashboard';
                 } else {
                     $redirect = 'dashboard';
                 }

@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_voting m_voting
  * @property  M_ic m_ic
  * @property  M_factors m_factors
- * @property  M_master m_master
+ * @property  M_master m_masterF
  * @property  M_icdate m_icdate
  * @property  M_portfolio m_portfolio
  */

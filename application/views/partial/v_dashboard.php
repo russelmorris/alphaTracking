@@ -5,7 +5,7 @@
             <input id="dash_ajax"
                    type="text"
                    hidden
-                   value="<?php echo uri_string() == 'admin_dashboard' ? false : true; ?>">
+                   value="<?php echo uri_string() == 'admin-dashboard' ? false : true; ?>">
             <input id="allow_edit_as_admin"
                    hidden
                    value="<?php echo $user['isAdmin'] ? true : false; ?>">

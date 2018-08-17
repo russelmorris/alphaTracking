@@ -23,4 +23,17 @@ class M_factors extends CI_Model
         return $query->result_array();
     }
 
+    public function getFactorWeights($user, $icDate)
+    {
+
+        $query = $this->db
+            ->select("*")
+            ->where('strategyNo', 1)
+            ->where('memberNo', $user)
+            ->where('icDate', $icDate)
+            ->from('factorWeights')
+            ->get();
+        return $query->result_array();
+    }
+
 }

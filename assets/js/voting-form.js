@@ -6,7 +6,7 @@ let vote = function () {
             $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
             $(this).addClass("rb-tab-active");
             if ($(this).parent()[0].id === 'rb-1') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc1: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -17,7 +17,7 @@ let vote = function () {
                 })
             }
             if ($(this).parent()[0].id === 'rb-2') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc2: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -28,7 +28,7 @@ let vote = function () {
 
             }
             if ($(this).parent()[0].id === 'rb-3') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc3: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -39,7 +39,7 @@ let vote = function () {
 
             }
             if ($(this).parent()[0].id === 'rb-4') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc4: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -50,7 +50,7 @@ let vote = function () {
 
             }
             if ($(this).parent()[0].id === 'rb-5') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc5: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -60,7 +60,7 @@ let vote = function () {
                 })
             }
             if ($(this).parent()[0].id === 'rb-6') {
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     fc6: $(this).attr('data-value'),
                     user_id: $('#user_id').val(),
                     ticker: $('#ticker').val(),
@@ -75,7 +75,7 @@ let vote = function () {
                 $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
                 $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
 
-                $.post('/submit_voting', {
+                $.post('/submit-voting', {
                     veto: $(this).find(".rb-tab").attr("data-value"),
                     vetoComment: $(this).find(".rb-tab").attr("data-value") == 1 ? $("textarea").val() : null,
                     user_id: $('#user_id').val(),
@@ -97,7 +97,7 @@ let vote = function () {
 };
 let save_vetoComment = function () {
     $('#save_vetoComment').click(function () {
-        $.post('/submit_voting', {
+        $.post('/submit-voting', {
             vetoComment: $("textarea").val(),
             user_id: $('#user_id').val(),
             ticker: $('#ticker').val(),
@@ -182,7 +182,7 @@ $("#rb-8").on('click', function () {
             // save_vetoComment();
 
         }
-        $.post('/submit_voting', {
+        $.post('/submit-voting', {
             finalised: $(this).find(".rb-tab").attr("data-value"),
             user_id: $('#user_id').val(),
             ticker: $('#ticker').val(),

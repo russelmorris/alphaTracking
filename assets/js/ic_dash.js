@@ -1,7 +1,7 @@
 function final_value() {
     $('#prospectCount').html('');
     $('#portfolioCount').html('');
-    $.post('finalised_value', {
+    $.post('finalised-value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')
@@ -115,7 +115,7 @@ function reloadDashboard() {
         allow_edit = true;
     }
 
-    $.post('/dashboard_ajax', {
+    $.post('/dashboard-ajax', {
         ic_date: $('.ic_dates').val(),
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         csnamerf: $.cookie('csrfcookiename')

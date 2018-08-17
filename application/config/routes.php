@@ -57,8 +57,8 @@ $route['login']  = 'c_login/login';
 $route['logout'] = 'c_login/logout';
 
 $route['dashboard']       = 'c_dashboard/dashboard';
-$route['admin_dashboard'] = 'c_admin/dashboard';
-$route['committee_completion_summary'] = 'c_admin/dashboard';
+$route['admin-dashboard'] = 'c_admin/dashboard';
+$route['committee-completion-summary'] = 'c_admin/dashboard';
 
 
 $route['update-factor'] = 'c_dashboard/updateFactor';
@@ -66,15 +66,20 @@ $route['update-veto'] = 'c_dashboard/updateVeto';
 $route['update-finalise'] = 'c_dashboard/updateFinalise';
 $route['update-finalise-all'] = 'c_dashboard/updateFinaliseAll';
 
-$route['dashboard_ajax']  = 'c_dashboard/dashboard_ajax';
-$route['finalised_value']  = 'c_dashboard/finalised_value';
+$route['dashboard-ajax']  = 'c_dashboard/dashboard_ajax';
+$route['finalised-value']  = 'c_dashboard/finalised_value';
 
-$route['import_prospect']      = 'c_admin/import_prospect';
-$route['import_returns']       = 'c_admin/import_returns';
+$route['import-prospect']      = 'c_admin/import_prospect';
+$route['import-returns']       = 'c_admin/import_returns';
 
 
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
-$route['submit_voting']        = 'c_voting/submit_voting';
+$route['submit-voting']        = 'c_voting/submit_voting';
+
+
+$route['factor-weights']        = 'c_factors/factorWeights';
+
+
 
 
 $route['build-portfolio']       = 'c_calculation/buildPortfolio';
@@ -84,3 +89,4 @@ $route['create-human-score'] = 'c_calculation/create_human_score';
 
 $route['create-csv-googletrends'] = 'c_create_csv/createGoogletrends';
 $route['create-csv-alexa'] = 'c_create_csv/createAlexa';
+

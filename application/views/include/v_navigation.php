@@ -14,15 +14,15 @@
 
     <ul class="nav navbar-top-links navbar-right">
         <li>
-            <?php if (($user['isComittee'] == 1 || $user['isAdmn'] == 1 )&& uri_string() != 'dashboard') { ?>
+            <?php if (($user['isComittee'] == 1 || $user['isAdmin'] == 1 )&& uri_string() != 'dashboard') { ?>
                 <a href="<?php echo base_url('dashboard') ?>">
                     <i class="fa fa-tasks fa-fw"></i> IC Dashboard
                 </a>
             <?php } ?>
         </li>
-        <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin_dashboard', 'committee_completion_summary'])) { ?>
+        <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin-dashboard', 'committee-completion-summary'])) { ?>
             <li>
-                <a href="<?php echo base_url('admin_dashboard') ?>">
+                <a href="<?php echo base_url('admin-dashboard') ?>">
                     <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard
                 </a>
             </li>
@@ -30,7 +30,7 @@
 
         <?php if ($user['isAdmin'] == 1 && uri_string() == 'dashboard') {  ?>
         <li>
-            <a href="<?php echo  base_url('committee_completion_summary')?>#">
+            <a href="<?php echo  base_url('committee-completion-summary')?>">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                 Investment Committee Completion Summary
             </a>
