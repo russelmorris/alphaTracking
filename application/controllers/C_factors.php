@@ -32,7 +32,6 @@ class C_factors extends CI_Controller
         $data['ic_dates'] = $this->m_icdate->getICDates();
         $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
         $data['factorWeights'] = $this->m_factors->getFactorWeights($data['user']['memberNo'], $data['closest_icDate_from_today']);
-
         $this->load->template('v_factor_weights', $data);
 
     }

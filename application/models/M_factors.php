@@ -30,7 +30,14 @@ class M_factors extends CI_Model
      */
     public function getFactorWeights($user, $icDate)
     {
-
+        $orderArray = [
+            1, //'Business model',
+            4,//'Growth Sustainability',
+            2,//'Business valuation',
+            3,//'Digital Footprint',
+            5,//'Overall Momentum Likely to Continue',
+            6,//'Risk (execution, roll out, operational)'
+           ];
         $query = $this->db
             ->select("*")
             ->where('strategyNo', 1)
@@ -38,7 +45,19 @@ class M_factors extends CI_Model
             ->where('icDate', $icDate)
             ->from('factorWeights')
             ->get();
-        return $query->result_array();
+        $result = $query->result_array();
+            $ordered = [];
+            foreach ($orderArray as $key){
+                foreach ($result as $factor){
+                    if($factor['factorNo'] == $key){
+                        $ordered[]=$factor;
+
+                    }
+                }
+
+            }
+        return $ordered;
+
     }
 
     /**
