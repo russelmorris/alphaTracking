@@ -56,7 +56,7 @@ class M_factors extends CI_Model
                 'factorNo'   => $factorNo
             ])
             ->limit(1)
-            ->update('factorweights');
+            ->update('factorWeights');
 
     }
 
