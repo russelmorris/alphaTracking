@@ -1,68 +1,81 @@
 <div id="page-wrapper" class="dashboard pt-20">
     <form class="form-horizontal" role="form">
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">IC Date</label>
+            <label for="closestIcDate" class="col-sm-2 control-label">IC Date</label>
             <div class="col-sm-3">
-                <input type="input" class="form-control" id="inputEmail3"
+                <input type="input" class="form-control" id="closestIcDate"
                        value="<?php echo $closest_icDate_from_today; ?>"
+                       disabled>
+                <input type="hidden" class="form-control" id="factorWeightIcUser"
+                       value="<?php echo $user['memberNo']; ?>"
                        disabled>
             </div>
         </div>
+        <?php if ($user['isAdmin'] == 1 ){ ?>
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">IC Member</label>
+            <label for="factorWeightIcMember" class="col-sm-2 control-label">IC Member</label>
             <div class="col-sm-3">
-                <select class="form-control admin_users">-->
+                <select class="form-control admin_users" id="factorWeightIcMember">
                     <?php foreach ($admin_users as $value): ?>
-                        <?php if ($value['isAdmin']): ?>
-                            <option selected value="<?php echo $value['memberNo']; ?>">
-                                <?php echo $value['memberName']; ?></option>
-                        <?php else: ?>
-                            <option value="<?php echo $value['memberNo']; ?>">
-                                <?php echo $value['memberName']; ?></option>
-                        <?php endif; ?>
+                            <option value="<?php echo $value['memberNo']; ?>"><?php echo $value['memberName']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
-        <?php foreach($factorWeights as $key => $factorWeight ) {?>
+        <?php } ?>
+        <?php foreach($factorWeights as $factorWeight ) {?>
             <div class="form-group">
-                <label for="factor_<?php echo $key;?>" class="col-sm-2 control-label"><?php echo $factorWeight['factorDesc'] ;?></label>
+                <label for="factor_<?php echo $factorWeight['factorNo'];?>" class="col-sm-2 control-label">
+                    <?php echo $factorWeight['factorDesc'] ;?></label>
                 <div class="col-sm-3">
-                    <input type="range" min="0" max="100" value="<?php echo $factorWeight['factorWeight']*10 ;?>" class="slider" id="factor_<?php echo $key;?>">
+                    <input type="range" min="0" max="100" value="0"
+                           class="slider" id="factor_<?php echo $factorWeight['factorNo'];?>">
                 </div>
                 <div class="col-sm-1">
-                    <label id="factor_label_<?php echo $key;?>"></label>
+                    <label id="factor_label_<?php echo $factorWeight['factorNo'];?>"></label>
                 </div>
             </div>
             <script>
-                var slider_<?php echo $key;?> = document.getElementById("factor_<?php echo $key;?>");
-                var output_<?php echo $key;?> = document.getElementById("factor_label_<?php echo $key;?>");
-                output_<?php echo $key;?>.innerHTML = slider_<?php echo $key;?>.value/10; // Display the default slider value
+                var slider_<?php echo $factorWeight['factorNo'];?> = document.getElementById("factor_<?php echo $factorWeight['factorNo'];?>");
+                var output_<?php echo $factorWeight['factorNo'];?> = document.getElementById("factor_label_<?php echo $factorWeight['factorNo'];?>");
+                output_<?php echo $factorWeight['factorNo'];?>.innerHTML = slider_<?php echo $factorWeight['factorNo'];?>.value/10; // Display the default slider value
 
                 // Update the current slider value (each time you drag the slider handle)
-                slider_<?php echo $key;?>.oninput = function() {
-                    output_<?php echo $key;?>.innerHTML = this.value/10;
+                slider_<?php echo $factorWeight['factorNo'];?>.oninput = function() {
+                    output_<?php echo $factorWeight['factorNo'];?>.innerHTML = this.value/10;
                 }
             </script>
         <?php } ?>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-3">
                 <button type="button" onclick="saveFactorWeight()" class="btn btn-default">Save</button>
-            </div>
+                <p class="hidden text-success" id ="help-block">Factors weights has been saved.</p>
+        </div>
         </div>
     </form>
 </div>
 <script>
    function saveFactorWeight () {
+       var factors = [];
+       <?php foreach($factorWeights as $factorWeight ) {?>
+            factors.push({
+                    factor_id: <?php echo $factorWeight['factorNo'];?>,
+                    factor_value: $('#factor_<?php echo $factorWeight['factorNo'];?>').val()/10
+            });
+       <?php } ?>
        $.post('/submit-factors-weight', {
-//           fc2: $(this).attr('data-value'),
-//           user_id: $('#user_id').val(),
-//           ticker: $('#ticker').val(),
-//           ic_date: $('#voting_ic_date').val(),
+           factors: factors,
+           ic_date: $('#closestIcDate').val(),
+           ic_user: $('#factorWeightIcUser').val(),
            csnamerf: $.cookie('csrfcookiename')
        }).done(function (data) {
-           console.log('on return', data);
+           $('#help-block').removeClass('hidden');
+           setTimeout(function(){
+               $('#help-block').addClass('hidden');
+           }, 2000);
+
        })
    }
+
 </script>
 
