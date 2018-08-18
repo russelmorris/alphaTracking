@@ -198,6 +198,27 @@ $(document).ready(function () {
 
         });
     });
+
+    $('#factorWeightIcMember').change(function(){
+        $('#factorWeightIcUser').val($(this).val());
+        $('#factorWeightIcUser').trigger('change');
+    });
+
+    $('#factorWeightIcUser').change(function(){
+        $.get('get-factors-weight/'+$(this).val()+'/'+$('#closestIcDate').val(), {})
+            .done(function (data) {
+                factors = JSON.parse(data);
+                var arrayLength = factors.length;
+                for (var i = 0; i < arrayLength; i++) {
+
+                    $("#factor_"+factors[i].factorNo).val(factors[i].factorWeight*10);
+                    $("#factor_label_"+factors[i].factorNo).html(factors[i].factorWeight);
+                    //Do something
+                }
+
+        });
+    });
+    $('#factorWeightIcUser').trigger('change');
 });
 
 

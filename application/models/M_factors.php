@@ -23,6 +23,11 @@ class M_factors extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * @param $user
+     * @param $icDate
+     * @return array
+     */
     public function getFactorWeights($user, $icDate)
     {
 
@@ -34,6 +39,25 @@ class M_factors extends CI_Model
             ->from('factorWeights')
             ->get();
         return $query->result_array();
+    }
+
+    /**
+     * @param $factorNo
+     * @param $memberNo
+     * @param $icDate
+     * @param $factorWeight
+     */
+    public function updateFactorWeights($factorNo, $memberNo, $icDate, $factorWeight){
+        $this->db
+            ->set('factorWeight',$factorWeight)
+            ->where([
+                'memberNo'   => $memberNo,
+                'icDate'     => $icDate,
+                'factorNo'   => $factorNo
+            ])
+            ->limit(1)
+            ->update('factorweights');
+
     }
 
 }
