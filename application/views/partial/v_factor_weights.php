@@ -1,7 +1,7 @@
 <div id="page-wrapper" class="dashboard pt-20">
     <form class="form-horizontal" role="form">
         <div class="form-group">
-            <label for="closestIcDate" class="col-sm-2 control-label">IC Date</label>
+            <label for="closestIcDate" class="col-sm-4 control-label">IC Date</label>
             <div class="col-sm-3">
                 <input type="input" class="form-control" id="closestIcDate"
                        value="<?php echo $closest_icDate_from_today; ?>"
@@ -13,7 +13,7 @@
         </div>
         <?php if ($user['isAdmin'] == 1 ){ ?>
         <div class="form-group">
-            <label for="factorWeightIcMember" class="col-sm-2 control-label">IC Member</label>
+            <label for="factorWeightIcMember" class="col-sm-4 control-label">IC Member</label>
             <div class="col-sm-3">
                 <select class="form-control admin_users" id="factorWeightIcMember">
                     <?php foreach ($admin_users as $value): ?>
@@ -25,11 +25,11 @@
         <?php } ?>
         <?php foreach($factorWeights as $factorWeight ) {?>
             <div class="form-group">
-                <label for="factor_<?php echo $factorWeight['factorNo'];?>" class="col-sm-2 control-label">
+                <label for="factor_<?php echo $factorWeight['factorNo'];?>" class="col-sm-4 text-right pt-0">
                     <?php echo $factorWeight['factorDesc'] ;?></label>
                 <div class="col-sm-3">
                     <input type="range" min="0" max="100" value="0"
-                           class="slider" id="factor_<?php echo $factorWeight['factorNo'];?>">
+                           class="slider " id="factor_<?php echo $factorWeight['factorNo'];?>">
                 </div>
                 <div class="col-sm-1">
                     <label id="factor_label_<?php echo $factorWeight['factorNo'];?>"></label>
@@ -47,7 +47,7 @@
             </script>
         <?php } ?>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-3">
+            <div class="col-sm-offset-4 col-sm-3">
                 <button type="button" onclick="saveFactorWeight()" class="btn btn-default">Save</button>
                 <p class="hidden text-success" id ="help-block">Factors weights has been saved.</p>
         </div>

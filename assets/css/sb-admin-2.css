@@ -572,7 +572,9 @@ table.dataTable thead > tr > th {
 .cell_part_hr {
     border: 1px solid #ddd;
 }
-
+.mb-5{
+    margin-bottom: 5px; !important;
+}
 .mb-10 {
     margin-bottom: 10px !important;
 }
@@ -600,7 +602,9 @@ table.dataTable thead > tr > th {
     margin-bottom: 5px !important;
     margin-top: 5px !important;
 }
-
+.pt-0{
+    padding-top: 0px; !important;
+}
 .pt-10{
     padding-top: 10px !important;
 }
@@ -608,6 +612,7 @@ table.dataTable thead > tr > th {
 .pt-20{
     padding-top: 20px !important;
 }
+
 .div-inline-block {
     display: inline-block;
 }
