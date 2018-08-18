@@ -47,9 +47,22 @@
         <?php } ?>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-3">
-                <button type="submit" class="btn btn-default">Save</button>
+                <button type="button" onclick="saveFactorWeight()" class="btn btn-default">Save</button>
             </div>
         </div>
     </form>
 </div>
+<script>
+   function saveFactorWeight () {
+       $.post('/submit-factors-weight', {
+//           fc2: $(this).attr('data-value'),
+//           user_id: $('#user_id').val(),
+//           ticker: $('#ticker').val(),
+//           ic_date: $('#voting_ic_date').val(),
+           csnamerf: $.cookie('csrfcookiename')
+       }).done(function (data) {
+           console.log('on return', data);
+       })
+   }
+</script>
 

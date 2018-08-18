@@ -78,7 +78,7 @@ $route['submit-voting']        = 'c_voting/submit_voting';
 
 
 $route['factor-weights']        = 'c_factors/factorWeights';
-
+$route['submit-factors-weight']        = 'c_factors/submitFactorsWeight';
 
 
 

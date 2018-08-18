@@ -35,4 +35,9 @@ class C_factors extends CI_Controller
         $this->load->template('v_factor_weights', $data);
     }
 
+    public function submitFactorsWeight() {
+        echo '1234';
+    }
+
+
 }
