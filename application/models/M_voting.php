@@ -26,7 +26,7 @@ class M_voting extends CI_Model
             "factorNo"       => $factor['factorNo'],
             "factorDesc"     => $factor['factorDesc'],
             "factorScore"    => null,
-            "zScore"         => 0,
+            "zScore"         => null,
             "dateModified"   => date("Y-m-d H:i:s"),
         ];
 
