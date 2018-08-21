@@ -198,4 +198,35 @@ class M_master extends CI_Model
 
     }
 
+    /**
+     * @param $veto
+     * @param $comment
+     * @param $user_id
+     * @param $ticker
+     * @param $ic_date
+     */
+    public function updateVetoAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+        $this->db
+            ->set('vetoFlag', $vote)
+            ->set('vetoComment', $comment)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+    }
+/**
+     * @param $veto
+     * @param $comment
+     * @param $user_id
+     * @param $ticker
+     * @param $ic_date
+     */
+    public function updateDeepDiveAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+        $this->db
+            ->set('isDeepDive', $vote)
+            ->set('deepDiveComment', $comment)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+    }
+
 }

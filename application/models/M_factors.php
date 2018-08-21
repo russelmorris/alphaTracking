@@ -79,4 +79,18 @@ class M_factors extends CI_Model
 
     }
 
+    public function getAllActiveFactors()
+    {
+
+        $query = $this->db
+            ->select("*")
+            ->where('strategyNo', 1)
+            ->where('isActive', 1)
+            ->where('includeDashboard', 1)
+            ->order_by('factorOrder', 'asc')
+            ->from('factors')
+            ->get();
+        return $query->result_array();
+    }
+
 }

@@ -75,6 +75,8 @@ $route['import-returns']       = 'c_admin/import_returns';
 
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
 $route['submit-voting']        = 'c_voting/submit_voting';
+$route['submit-master-veto']        = 'c_voting/submit_master_veto';
+$route['submit-master-deep-dive']        = 'c_voting/submit_master_deep_dive';
 
 
 $route['factor-weights']        = 'c_factors/factorWeights';

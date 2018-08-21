@@ -95,3 +95,10 @@ function cmp_masterID($a, $b)
     }
     return ($a["masterID"] < $b["masterID"]) ? -1 : 1;
 }
+
+function cmp_voting($a, $b) {
+    if ($a['factorOrder'] == $b['factorOrder']) {
+        return 0;
+    }
+    return ($a['factorOrder'] < $b['factorOrder']) ? -1 : 1;
+}
