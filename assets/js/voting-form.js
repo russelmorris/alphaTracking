@@ -98,5 +98,46 @@ $(document).ready(function () {
         $(".deep_dive_togle").toggleClass("hidden");
     });
 
+    //Switcher function:
+    $("#rb-8").on('click', function () {
+        $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
+        $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
+        $.post('/submit-master-finalise', {
+            finalised: $(this).find(".rb-tab").attr("data-value"),
+            user_id: $('#user_id').val(),
+            ticker: $('#ticker').val(),
+            ic_date: $('#voting_ic_date').val(),
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+        });
+        if ($(this).find(".rb-tab").attr("data-value") == 1) {
+            $(this).addClass("rb-tab-active")
+        } else {
+            $(this).removeClass("rb-tab-active")
+        }
+
+        // $(this).toggleClass(function () {
+        //     if ($(this).find(".rb-tab").attr("data-value") == 1) {
+        //         $('.rb-tab').off('click');
+        //         for (let i = 1; i < 8; i++) {
+        //             $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
+        //         }
+        //         $("textarea").attr('disabled', true);
+        //         $('#save_vetoComment').prop('disabled', true);
+        //     }
+        //     else {
+        //         vote();
+        //         for (let i = 1; i < 8; i++) {
+        //             $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
+        //         }
+        //         $("textarea").attr('disabled', false);
+        //         $('#save_vetoComment').prop('disabled', false);
+        //
+        //
+        //     }
+        //
+        // });
+
+    });
 
 });

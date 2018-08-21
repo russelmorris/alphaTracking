@@ -127,4 +127,19 @@ class C_voting extends MY_Controller
             $populate_voting_data['ic_date']
         );
     }
+
+    public function submit_master_finalise(){
+        $populate_voting_data = [];
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['user_id'] =  $this->input->post('user_id');
+        $populate_voting_data['finalised'] = $this->input->post('finalised');
+
+        $this->m_master->updateFinalise(
+            $populate_voting_data['user_id'],
+            $populate_voting_data['ticker'],
+            $populate_voting_data['ic_date'],
+            $populate_voting_data['finalised']
+        );
+    }
 }

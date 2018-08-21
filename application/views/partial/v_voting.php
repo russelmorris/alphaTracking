@@ -129,6 +129,15 @@
                     </div>
                 </div>
 
+                <p><?php echo ++$listNumber;?>. Finalise?</p>
+                <div id="rb-8" class="rb <?php echo $voting_values[0]['isFinalised'] == 1 ? 'rb-tab-active' : ''; ?>">
+                    <div class="rb-tab" data-value="<?php echo $voting_values[0]['isFinalised'] == 1 ? '1' : '0'; ?>">
+                        <div class="rb-spot">
+                            <span class="rb-txt"><?php echo $voting_values[0]['isFinalised'] == 1 ? 'Yes' : 'No'; ?></span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- _______________________________________________ Voting Part end ______________________________________________-->

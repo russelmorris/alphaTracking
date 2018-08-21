@@ -229,4 +229,13 @@ class M_master extends CI_Model
             ->update('master');
     }
 
+    public function updateFinalise($user_id, $ticker, $ic_date, $finalised)
+    {
+       $this->db
+            ->set('isFinalised', $finalised)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+    }
+
 }
