@@ -56,6 +56,9 @@
     cursor: pointer;
     transition: ease 0.5s;
 }
+.rb-yes {
+    left: 200% !important;
+}
 
 .rb-tab-active .rb-spot {
     background: rgba(0, 0, 0, 0.35);
@@ -63,7 +66,7 @@
 
 }
 
-#rb-8 > div > div > span, #rb-7 > div > div > span {
+#rb-8 > div > div > span, .rb-7 > div > div > span {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,4 +83,10 @@ iframe {
 
 .add-disabled-cursor {
     cursor: not-allowed;
+}
+
+.alert-save{
+    color: white;
+    font-weight: bold;
+    padding-top: 15px;
 }
