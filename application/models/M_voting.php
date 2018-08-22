@@ -60,7 +60,7 @@ class M_voting extends CI_Model
      */
     public function updateFactor($user_id, $ticker, $ic_date, $factorNo, $factorVal)
     {
-
+        echo "ovde";
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
             ->set('factorScore', $factorVal == 0 ? null : $factorVal )
@@ -73,6 +73,7 @@ class M_voting extends CI_Model
             ])
             ->limit(1)
             ->update('voting');
+        echo $this->db->last_query();
     }
 
     public function getSWSurl($user_id, $ticker)
@@ -102,6 +103,7 @@ class M_voting extends CI_Model
                            ->select('f.factorDesc')
                            ->select('v.factorNo')
                            ->select('v.factorScore')
+                           ->select('v.factorDesc')
                            ->select('v.factorDesc')
                            ->select('m.prospectTextID')
                            ->select('m.vetoFlag')
