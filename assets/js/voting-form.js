@@ -14,6 +14,21 @@ $(document).ready(function () {
         })
     });
 
+
+    $('#factor_5').on('change', function(){
+        $('#factor_label_5').html($(this).val()/10);
+        $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $.post('/submit-voting', {
+            ic_date: $('#voting_ic_date').val(),
+            ticker: $('#ticker').val(),
+            user_id: $('#user_id').val(),
+            factor: 5,
+            vote: $(this).val()/10,
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+        })
+    });
+
     $('#save_vetoComment').on('click', function(){
         $.post('/submit-master-veto', {
             factor: 'veto',

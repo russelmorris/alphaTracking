@@ -53,26 +53,47 @@
             <div class="rb-box">
                 <?php $listNumber = 0; ?>
                 <?php foreach ($voting_values as $key => $voting_value){ ?>
+                    <?php if ($voting_value['factorNo'] == 5) { ?>
+                        <!--                        Slider Start-->
 
-                    <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?> </p>
-                    <div id="rb-1" class="rb">
-                        <?php for ($i = 0; $i < 11; $i++): ?>
-                            <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
-                                echo 'rb-null-element';
-                            } ?>"
-                                 data-value="<?php echo $i; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
-                                <span class="rb-spot">
-                                    <?php if ($i == 0) { ?>
-                                        <span class="rb-txt rb-txt-na">Pass</span>
-                                    <?php } else { ?>
-                                        <span class="rb-txt"><?php echo $i; ?></span>
-                                    <?php } ?>
-                                </span>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
+                        <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?>  <?php echo $voting_value['factorScore']*10;?></p>
+                        <div id="rb-1" class="rb">
+                                <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
+                                    echo 'rb-null-element';
+                                } ?>"
+                                     data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
+                                    <span class="rb-spot"><span class="rb-txt rb-txt-na">Pass</span></span>
+                                </div>
+                               <label id="factor_label_5" class="slider_label_holder"><?php echo $voting_value['factorScore'];?></label>
+                                <div class="slider-holder">
+                                    <input type="range" min="0" max="100" value="<?php echo $voting_value['factorScore']*10;?>" class="slider" id="factor_5">
+                                </div>
+                        </div>
 
+                        <!--                        slider stop-->
 
+                    <?php } else { ?>
+                        <!--                        Round Buttons start     -->
+                        <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?> </p>
+                        <div id="rb-1" class="rb">
+                            <?php for ($i = 0; $i < 11; $i++): ?>
+                                <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
+                                    echo 'rb-null-element';
+                                } ?>"
+                                     data-value="<?php echo $i; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
+                                    <span class="rb-spot">
+                                        <?php if ($i == 0) { ?>
+                                            <span class="rb-txt rb-txt-na">Pass</span>
+                                        <?php } else { ?>
+                                            <span class="rb-txt"><?php echo $i; ?></span>
+                                        <?php } ?>
+                                    </span>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+
+                        <!--round buttons end -->
+                    <?php }?>
                 <?php }?>
 
                 <p><?php echo ++$listNumber;?>. Veto (optional)</p>
