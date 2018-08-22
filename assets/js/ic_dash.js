@@ -34,7 +34,7 @@ function updateTicker(ticker, factor, value, element) {
         value: value,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        $(element).siblings('span:first').html(value);
+        $(element).siblings('span:first').html(Math.round(value));
         refreshTableData();
     }).fail(function (err) {
 

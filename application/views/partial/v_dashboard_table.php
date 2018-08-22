@@ -36,6 +36,8 @@
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
             <i class="fa fa-info-circle"></i></th>
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue">Up?
+            <i class="fa fa-info-circle"></i></th>
     </tr>
     </thead>
     <tbody>
@@ -202,6 +204,21 @@
                     </div>
                 </div>
             </td>
+            <td class="no-padding">
+                <div class="cell_holder">
+                    <div class="cell_part mbt-5">
+                        <div class="form-group">
+                            <span class="dashboard-slider-5-text"><?php echo round($ic['factorScore5'], 0); ?></span>
+                            <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5, this.value/10, this)"
+                                   type="range" min="0" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
+                        </div>
+                    </div>
+                    <div class="cell_part_hr"></div>
+                    <div class="cell_part">
+                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld5']; ?></p>
+                    </div>
+                </div>
+            </td>
         </tr>
 
     <?php endforeach; ?>
@@ -218,5 +235,11 @@
         bAutoWidth: false
 
     });
+    $('.slider_5').on('change', function(){
+        const value_selector = Math.round($(this).val()/10);
+        $(this).parent().find(".dashboard-slider-5-text").html(value_selector);
+
+    })
+
 </script>
 

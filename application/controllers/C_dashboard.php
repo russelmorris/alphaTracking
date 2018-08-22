@@ -87,6 +87,7 @@ class C_dashboard extends MY_Controller
         usort($icDashboard,"cmp_masterID");
 
         $data['ic_dashboard'] = $icDashboard ;
+//        print_r( $data['ic_dashboard']);
 
          $this->load->view('partial/v_dashboard_table', $data);
     }
