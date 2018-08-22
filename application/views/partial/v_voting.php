@@ -56,7 +56,7 @@
                     <?php if ($voting_value['factorNo'] == 5) { ?>
                         <!--                        Slider Start-->
 
-                        <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?>  <?php echo $voting_value['factorScore']*10;?></p>
+                        <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?> </p>
                         <div id="rb-1" class="rb">
                                 <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
                                     echo 'rb-null-element';
@@ -64,7 +64,7 @@
                                      data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
                                     <span class="rb-spot"><span class="rb-txt rb-txt-na">Pass</span></span>
                                 </div>
-                               <label id="factor_label_5" class="slider_label_holder"><?php echo $voting_value['factorScore'];?></label>
+                               <label id="factor_label_5" class="slider_label_holder"><?php echo round($voting_value['factorScore']);?></label>
                                 <div class="slider-holder">
                                     <input type="range" min="0" max="100" value="<?php echo $voting_value['factorScore']*10;?>" class="slider" id="factor_5">
                                 </div>
