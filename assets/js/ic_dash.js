@@ -26,6 +26,7 @@ function final_value() {
 }
 
 function updateTicker(ticker, factor, value, element) {
+
     $.post('update-factor', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,

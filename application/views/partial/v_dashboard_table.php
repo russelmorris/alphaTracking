@@ -216,8 +216,8 @@
                     <div class="cell_part mbt-5">
                         <div class="form-group">
                             <span class="dashboard-slider-5-text"><?php echo round($ic['factorScore5'], 0); ?></span>
-                            <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5, this.value/10, this)"
-                                   type="range" min="0" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
+                            <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5,  this.value/10, this)"
+                                   type="range" min="0" max="100" value="<?php echo $ic['factorScore5'];?>" class="slider slider_5" >
                         </div>
                     </div>
                     <div class="cell_part_hr"></div>
@@ -243,7 +243,7 @@
 
     });
     $('.slider_5').on('change', function(){
-        const value_selector = Math.round($(this).val()/10);
+        const value_selector = Math.round($(this).val());
         $(this).parent().find(".dashboard-slider-5-text").html(value_selector);
 
     })
