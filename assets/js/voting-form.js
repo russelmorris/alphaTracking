@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 
     $('#factor_5').on('change', function(){
-        $('#factor_label_5').html( Math.round ($(this).val()/10));
+        $('#factor_label_5').html( Math.round ($(this).val()));
         $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
         $.post('/submit-voting', {
             ic_date: $('#voting_ic_date').val(),
