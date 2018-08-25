@@ -38,7 +38,7 @@
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
             <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue">going up?
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue">Going up?
             <i class="fa fa-info-circle"></i></th>
     </tr>
     </thead>
