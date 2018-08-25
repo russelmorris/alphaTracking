@@ -33,7 +33,7 @@
             </li>
         <?php } ?>
 
-        <?php if ($user['isAdmin'] == 1 && uri_string() == 'dashboard') {  ?>
+        <?php if (uri_string() == 'dashboard') {  ?>
         <li>
             <a href="<?php echo  base_url('committee-completion-summary')?>">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
