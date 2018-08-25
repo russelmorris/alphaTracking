@@ -33,7 +33,7 @@
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
             <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue">Going up?
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue?">Going up?
             <i class="fa fa-info-circle"></i></th>
     </tr>
     </thead>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld1']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld1']) ? round($ic['factorScoreOld1']) : 'N/A' ; ?></p>
                     </div>
                 </div>
             </td>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld4']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld4']) ? round($ic['factorScoreOld4']): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
@@ -182,7 +182,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld2']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld2']) ? $ic['factorScoreOld2']: 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
@@ -207,7 +207,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld3']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld3']) ? round($ic['factorScoreOld3']): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld6']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld6']) ? round($ic['factorScoreOld6']): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
@@ -247,7 +247,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld5']; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld5'])? $ic['factorScoreOld5']*10: 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
