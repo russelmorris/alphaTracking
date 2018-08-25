@@ -316,4 +316,52 @@ class M_prospects extends CI_Model
             ->from ("prospects")
             ->get()->result_array();
     }
+
+    public function getGoogletrendsFilePaths(){
+        $sql = <<<EOT
+       SELECT
+            concat("http://disrupterfund.com.au/bottomUp/digiFootprint/googletrends/",
+                date_format(icDate,'%Y-%m-%d'),
+                    "/", date_format(icDate,'%Y-%m-%d'),
+                        "-",lower(ticker),"-",lower(replace(country," ","")),"-googletrends.csv") as inputFile,
+            concat("http://disrupterfund.com.au/bottomUp/digiFootprint/googletrends/",
+                date_format(icDate,'%Y-%m-%d'),
+                    "/", date_format(icDate,'%Y-%m-%d'),
+                        "-",lower(ticker),"-",lower(replace(country," ","")),"-googletrends.jpg") as outputFile
+            FROM
+            prospects inner join peerRIC on (prospects.RIC = peerRIC.RIC)
+            where ((icDate = (select currentICdate.currentICdate from currentICdate)) and peerRIC1<>'')
+	;
+EOT;
+        $this->db->query($sql);
+
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result;
+    }
+
+    public function getAlexaFilePaths(){
+        $sql = <<<EOT
+              SELECT
+                concat("http://disrupterfund.com.au/bottomUp/digiFootprint/alexa/",
+                    date_format(icDate,'%Y-%m-%d'),
+                        "/", date_format(icDate,'%Y-%m-%d'),
+                            "-",lower(ticker),"-",lower(replace(country," ","")),"-alexa.csv") as inputFile,
+                concat("http://disrupterfund.com.au/bottomUp/digiFootprint/alexa/",
+                    date_format(icDate,'%Y-%m-%d'),
+                        "/", date_format(icDate,'%Y-%m-%d'),
+                            "-",lower(ticker),"-",lower(replace(country," ","")),"-alexa.jpg") as outputFile
+                FROM
+                prospects inner join peerRIC on (prospects.RIC = peerRIC.RIC)
+                where ((icDate = (select currentICdate.currentICdate from currentICdate)) and peerRIC1<>'')
+                
+                ;
+
+EOT;
+        $this->db->query($sql);
+
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result;
+    }
 }

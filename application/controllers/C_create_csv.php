@@ -53,6 +53,16 @@ class C_create_csv extends MY_Controller
             fclose($fp);
         }
 
+        $googletrendsFilePaths = $this->m_prospects->getGoogletrendsFilePaths();
+        if(file_exists($this->googlePath . '/googletrendsfilepaths.csv')){
+            unlink($this->googlePath . '/googletrendsfilepaths.csv');
+        }
+        $fp = fopen($this->googlePath . '/googletrendsfilepaths.csv', 'w');
+        fputcsv($fp,['inputFile','outputFile']);
+        foreach ($googletrendsFilePaths as $line) {
+            fputcsv($fp, $line);
+        }
+        fclose($fp);
         echo 'Googletrends CSV files are created';
     }
 
@@ -85,6 +95,17 @@ class C_create_csv extends MY_Controller
             fclose($fp);
 
         }
+
+        $alexaFilePaths= $this->m_prospects->getAlexaFilePaths();
+        if(file_exists($this->alexaPath . '/alexafilepaths.csv')){
+            unlink($this->alexaPath . '/alexafilepaths.csv');
+        }
+        $fp = fopen($this->alexaPath . '/alexafilepaths.csv', 'w');
+        fputcsv($fp,['inputFile','outputFile']);
+        foreach ($alexaFilePaths as $line) {
+            fputcsv($fp, $line);
+        }
+        fclose($fp);
 
         echo 'Alexa CSV files are created';
     }
