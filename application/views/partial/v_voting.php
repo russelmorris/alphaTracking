@@ -56,7 +56,7 @@
                     <?php if ($voting_value['factorNo'] == 5) { ?>
                         <!--                        Slider Start-->
 
-                        <p><?php echo ++$listNumber;?>. Overall momentum likely to continue? <?php// echo $voting_value['factorDesc'] ?> </p>
+                        <p><?php echo ++$listNumber;?>. Overall momentum likely to continue? </p>
                         <div id="rb-1" class="rb">
                                 <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
                                     echo 'rb-null-element';
