@@ -182,7 +182,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld2']) ? $ic['factorScoreOld2']: 'N/A'; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld2']) ? round($ic['factorScoreOld2']): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
@@ -247,7 +247,7 @@
                     </div>
                     <div class="cell_part_hr"></div>
                     <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld5'])? $ic['factorScoreOld5']*10: 'N/A'; ?></p>
+                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld5'])? round($ic['factorScoreOld5']*10): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>
