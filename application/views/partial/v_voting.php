@@ -61,10 +61,10 @@
                                 <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
                                     echo 'rb-null-element';
                                 } ?>"
-                                     data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
+                                     data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo']*10;?>">
                                     <span class="rb-spot"><span class="rb-txt rb-txt-na">Pass</span></span>
                                 </div>
-                               <label id="factor_label_5" class="slider_label_holder"><?php echo round($voting_value['factorScore'])*10;?></label>
+                               <label id="factor_label_5" class="slider_label_holder"><?php echo $voting_value['factorScore']*10;?></label>
                                 <div class="slider-holder">
                                     <input type="range" min="0" max="100" value="<?php echo $voting_value['factorScore']*10;?>" class="slider" id="factor_5">
                                 </div>
