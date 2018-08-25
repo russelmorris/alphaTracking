@@ -35,7 +35,6 @@ function updateTicker(ticker, factor, value, element) {
         value: value,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        console.log ('on return', data)
        if (factor === 5) {
            $(element).siblings('span:first').html(value*10);
        } else {

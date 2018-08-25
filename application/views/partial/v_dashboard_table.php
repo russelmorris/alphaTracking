@@ -23,18 +23,13 @@
         <th>&nbsp;</th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
             <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business model">
-            Model
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business model">Model
             <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip"
-            data-placement="top"
-            class="text-center"
-            title="Business valuation">Valuation
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Growth sustainability going forward">Growth
             <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip"
-            data-placement="top"
-            class="text-center"
-            title="Digital Footprint">Footprint
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business valuation">Valuation
+            <i class="fa fa-info-circle"></i></th>
+        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Digital Footprint">Footprint
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
             <i class="fa fa-info-circle"></i></th>
@@ -136,6 +131,36 @@
                     </div>
                 </div>
             </td>
+
+
+            <td class="no-padding">
+                <div class="cell_holder">
+                    <div class="cell_part mbt-5">
+                        <div class="form-group">
+                            <span class="hidden"><?php echo $ic['factorScore4']; ?></span>
+                            <select class="form-control business-valuation ticker_<?php echo $ic['ticker']; ?>"
+                                    onchange="updateTicker('<?php echo $ic['ticker']; ?>', 4, this.value, this)"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>
+                            >
+                                <?php for ($i = 0; $i <= 10; $i++): ?>
+                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore4'] == $i) {
+                                        echo ' selected ';
+                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell_part_hr"></div>
+                    <div class="cell_part">
+                        <p class="mb-10 mt-10"><?php echo $ic['factorScoreOld4']; ?></p>
+                    </div>
+                </div>
+            </td>
+
+
+
             <td class="no-padding">
                 <div class="cell_holder">
                     <div class="cell_part mbt-5">
