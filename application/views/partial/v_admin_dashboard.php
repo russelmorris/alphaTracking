@@ -37,12 +37,12 @@
     </div>
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
-            <button id="create_googletrends_cvs" class="btn btn-primary btn-block mbt-5">Create Google CVS files</button>
+            <button id="create_googletrends_cvs" class="btn btn-primary btn-block mbt-5">Create Google CSV files</button>
         </div>
     </div>
     <div class="col-md-6">
         <div class="col-md-8 col-md-offset-2">
-            <button id="crate_alexa_cvs" class="btn btn-primary btn-block mbt-5">Create Alexa CVS files</button>
+            <button id="crate_alexa_cvs" class="btn btn-primary btn-block mbt-5">Create Alexa CSV files</button>
         </div>
     </div>
     <div class="col-md-12">
