@@ -1,7 +1,9 @@
 $(document).ready(function () {
     $('.ticker_click').on("click", function(elem){
-
         $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $(this).parent().find("#factor_label_5").html(" ");
+        $(this).parent().find("#factor_5").val("0");
+
         $(this).addClass('rb-tab-active');
         $.post('/submit-voting', {
             ic_date: $('#voting_ic_date').val(),
@@ -17,7 +19,7 @@ $(document).ready(function () {
 
     $('#factor_5').on('change', function(){
         $('#factor_label_5').html( Math.round ($(this).val()));
-        $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $('#factor5-pass').removeClass("rb-tab-active");
         $.post('/submit-voting', {
             ic_date: $('#voting_ic_date').val(),
             ticker: $('#ticker').val(),
