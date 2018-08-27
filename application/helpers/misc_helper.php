@@ -49,6 +49,7 @@ function randomNumber($len = 5)
 
 function find_closest_date($array)
 {
+    $found = false;
     $currentDate = new DateTime(unix_to_human(time()));
     $closestDate = new DateTime($array[0]);
     $dayDifference = $closestDate->diff($currentDate)->days;
@@ -62,6 +63,27 @@ function find_closest_date($array)
     }
 
     return $closestDate->format('Y-m-d');
+}
+
+function find_next_ic_date($array)
+{
+    $found = false;
+    $currentDate = new DateTime(unix_to_human(time()));
+    $closestDate = null;
+    foreach ($array as $index => $day) {
+        $icDate = new DateTime($day);
+        $delta = $icDate->diff($currentDate);
+        $deltaDays = $delta->invert ? (-1) * $delta->days : $delta->days;
+        if ($deltaDays <= 0 && $found === false) {
+            $found = true;
+            $closestDate = $icDate;
+        }
+    }
+    if ($closestDate !== null) {
+        return $closestDate->format('Y-m-d');
+    } else {
+        return false;
+    }
 }
 
 function find_latest_date($array)
@@ -96,7 +118,8 @@ function cmp_masterID($a, $b)
     return ($a["masterID"] < $b["masterID"]) ? -1 : 1;
 }
 
-function cmp_voting($a, $b) {
+function cmp_voting($a, $b)
+{
     if ($a['factorOrder'] == $b['factorOrder']) {
         return 0;
     }
