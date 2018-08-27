@@ -22,16 +22,33 @@ class C_factors extends CI_Controller
         ]);
     }
 
-    public function factorWeights()
+    public function factorWeights($specificDate = null)
     {
+
         $data['user'] = $this->session->userdata('user');
         $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
         if ($data['user']['isAdmin']) {
             $data['admin_users'] = $this->m_ic->getMembers();
         }
         $data['ic_dates'] = $this->m_icdate->getICDates();
-        $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
+        if ($specificDate){
+            $data['closest_icDate_from_today'] = $specificDate;
+        } else {
+            $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
+        }
+
+        $currentDate = new DateTime(unix_to_human(time()));
+
+        if($data['closest_icDate_from_today'] !== null &&
+            strtotime($currentDate->format('Y-m-d')) <= strtotime($data['closest_icDate_from_today']) )
+        {
+            $data['enableEditing'] = true;
+        } else {
+            $data['enableEditing'] = false;
+        }
+
         $data['factorWeights'] = $this->m_factors->getFactorWeights($data['user']['memberNo'], $data['closest_icDate_from_today']);
+
         $this->load->template('v_factor_weights', $data);
 
     }

@@ -210,7 +210,7 @@ $(document).ready(function () {
     });
 
     $('#factorWeightIcUser').change(function(){
-        $.get('get-factors-weight/'+$(this).val()+'/'+$('#closestIcDate').val(), {})
+        $.get('/get-factors-weight/'+$(this).val()+'/'+$('#closestIcDate').val(), {})
             .done(function (data) {
                 factors = JSON.parse(data);
                 var arrayLength = factors.length;
@@ -224,6 +224,7 @@ $(document).ready(function () {
         });
     });
     $('#factorWeightIcUser').trigger('change');
+
 });
 
 

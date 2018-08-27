@@ -23,6 +23,7 @@
 <script src="<?php echo base_url() ?>assets/js/ic_dash.js"></script>
 <script src="<?php echo base_url() ?>vendor/jquery/jquery.cookie.js"></script>
 <script src="<?php echo base_url() ?>vendor/jquery/moment.js"></script>
+<script src="<?php echo base_url() ?>assets/js/factor_weights.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
