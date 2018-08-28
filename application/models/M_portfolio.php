@@ -25,11 +25,12 @@ EOT;
         $this->db->query($sql);
 
 
-        $sql = <<<EOT
-        select bWeight into @a from ic where memberName = "machine"
-EOT;
-        $this->db->query($sql);
-
+        $query = $this->db->select ('bWeight')
+            ->where('memberName', "machine" )
+            ->from('ic')
+            ->get();
+        $result = $query->result_array();
+        $bWeight = $result[0]['bWeight'] ;
 
         $sql = <<<EOT
         SELECT icd.icDate,  icd.portfolioCount  
@@ -42,7 +43,6 @@ EOT;
 
         $analysisDate = $result[0]->icDate;
         $portfolioCount = $result[0]->portfolioCount;
-
         $sql = <<<EOT
         insert into portfolio_temp2
             
@@ -62,7 +62,7 @@ EOT;
             `master`.machineRank,
             Sum(`master`.bWeightedHumanScore) as humanScore,
             0 as humanRank,
-            Sum(`master`.bWeightedHumanScore) + @a * machineScore as finalScore,
+            Sum(`master`.bWeightedHumanScore) + {$bWeight} * machineScore as finalScore,
             0 as finalRank,
             DATE_ADD(icDate, INTERVAL 
                             IF(DAYNAME(icDate)  = 'Saturday', 2, 
@@ -102,12 +102,6 @@ EOT;
 
     public function buildPortfolioMasterStep2($ic_date)
     {
-        $sql = <<<EOT
-        select portfolioCount into @portCount from icdate 
-where icDate = (select currentICdate from currentICdate)
-EOT;
-        $this->db->query($sql);
-
 
 
         $sql = <<<EOT
@@ -122,17 +116,17 @@ EOT;
         $this->db->query($sql);
 
 
-//        $sql = <<<EOT
-//        SELECT icd.icDate,  icd.portfolioCount
-//            FROM icdate icd
-//            where icd.icDate = '{$ic_date}';
-//EOT;
-//        $query = $this->db->query($sql);
+        $sql = <<<EOT
+        SELECT icd.icDate,  icd.portfolioCount
+            FROM icdate icd
+            where icd.icDate = '{$ic_date}';
+EOT;
+        $query = $this->db->query($sql);
 
-//        $result = $query->result();
-//
-//        $analysisDate = $result[0]->icDate;
-//        $portfolioCount = $result[0]->portfolioCount;
+        $result = $query->result();
+
+        $analysisDate = $result[0]->icDate;
+        $portfolioCount = $result[0]->portfolioCount;
 
         $sql = <<<EOT
         insert into portfolio_temp1
@@ -160,7 +154,7 @@ EOT;
             FROM
                 portfolio_temp2
             
-            where portfolio_temp2.humanRank <= @portCount
+            where portfolio_temp2.humanRank <= {$portfolioCount}
             
             order by finalScore desc, machineScore desc
 
@@ -171,13 +165,7 @@ EOT;
     public function buildPortfolioMasterStep3($ic_date)
     {
         $sql = <<<EOT
-        select icdate into @analysisDate from portfolio_temp1 group by icDate
-EOT;
-        $this->db->query($sql);
-
-
-        $sql = <<<EOT
-      delete from portfolio where portfolio.icDate = @analysisDate and portfolio.memberName = "master"
+      delete from portfolio where portfolio.icDate = '{$ic_date}' and portfolio.memberName = "master"
 EOT;
         $this->db->query($sql);
 
@@ -187,6 +175,8 @@ EOT;
 EOT;
         $this->db->query($sql);
     }
+
+
 
     public function buildPortfolioMasterALL($ic_date, $members)
     {
