@@ -1,12 +1,12 @@
 function final_value() {
     $('#prospectCount').html('');
     $('#portfolioCount').html('');
-    $.post('finalised-value', {
+    $.post('/finalised-value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-        var returnData = JSON.parse(data);
+        let returnData = JSON.parse(data);
         $('#finalised-label').text(returnData.percent + "% Finalised");
         $('#finalised-label-value').val(returnData.percent);
         $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
@@ -27,7 +27,7 @@ function final_value() {
 
 function updateTicker(ticker, factor, value, element) {
 
-    $.post('update-factor', {
+    $.post('/update-factor', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
@@ -60,7 +60,7 @@ function refreshTableData() {
     });
 }
 function updateVeto(ticker, element) {
-    $.post('update-veto', {
+    $.post('/update-veto', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
@@ -80,7 +80,7 @@ function updateVeto(ticker, element) {
 };
 
 function updateFinalise(ticker, element) {
-    $.post('update-finalise', {
+    $.post('/update-finalise', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),

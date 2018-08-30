@@ -58,16 +58,11 @@
 
             <?php if ($user['isAdmin']): ?>
                 <div class="form-group">
-                    <label>Users</label>
+                    <label>Users <?php echo $selectedMemberNo ; ?></label>
                     <select class="form-control admin_users">
                         <?php foreach ($admin_users as $value): ?>
-                            <?php if ($value['isAdmin']): ?>
-                                <option selected value="<?php echo $value['memberNo']; ?>">
-                                    <?php echo $value['memberName']; ?></option>
-                            <?php else: ?>
-                                <option value="<?php echo $value['memberNo']; ?>">
-                                    <?php echo $value['memberName']; ?></option>
-                            <?php endif; ?>
+                                <option <?php if($selectedMemberNo == $value['memberNo']) {echo 'selected';}?> value="<?php echo $value['memberNo']; ?>">
+                                    <?php echo $value['memberName'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
