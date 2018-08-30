@@ -690,3 +690,13 @@ body.loading .modal-overload {
 body.loading .modal-overload {
     display: block;
 }
+
+.in-portfolio{
+    color: green;
+    font-size: 24px;
+}
+
+.out-portfolio{
+    color: red;
+    font-size: 24px;
+}
