@@ -198,19 +198,19 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="mt-10">
-                    <?php if ($googleImageURLExist == true) { ?>
-                        <img src="<?php echo base_url($googleImageURL); ?>" alt="Alexa Data not found" height="100%"
-                             width="100%"/>
-                    <?php } else { ?>
-                        <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            Google Trends Data not found
-                        </div>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-md-8 col-md-offset-2">-->
+<!--                <div class="mt-10">-->
+<!--                    --><?php //if ($googleImageURLExist == true) { ?>
+<!--                        <img src="--><?php //echo base_url($googleImageURL); ?><!--" alt="Alexa Data not found" height="100%"-->
+<!--                             width="100%"/>-->
+<!--                    --><?php //} else { ?>
+<!--                        <div class="alert alert-danger" role="alert">-->
+<!--                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>-->
+<!--                            Google Trends Data not found-->
+<!--                        </div>-->
+<!--                    --><?php //} ?>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
