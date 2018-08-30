@@ -46,7 +46,9 @@
             </td>
             <td class="vcenter">
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
-                    <?php echo $ic['inPortfolio'] == '1' ? "yes": "no"; ?>
+                    <?php echo $ic['inPortfolio'] == '1' ?
+                        '<span class="in-portfolio glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>':
+                        '<span class="out-portfolio glyphicon glyphicon-remove" aria-hidden="true"></span>'; ?>
                 </a>
             </td>
             <td class="vcenter hcenter final final-dis"><span class="hidden"><?php echo $ic['isFinalised']?></span>
