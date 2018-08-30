@@ -57,6 +57,7 @@ $route['login']  = 'c_login/login';
 $route['logout'] = 'c_login/logout';
 
 $route['dashboard']       = 'c_dashboard/dashboard';
+$route['dashboard/(:any)']       = 'c_dashboard/dashboard/$1';
 $route['admin-dashboard'] = 'c_admin/dashboard';
 $route['committee-completion-summary'] = 'c_admin/dashboard';
 
