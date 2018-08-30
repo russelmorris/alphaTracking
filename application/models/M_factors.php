@@ -46,6 +46,17 @@ class M_factors extends CI_Model
             ->from('factorWeights')
             ->get();
         $result = $query->result_array();
+        if (count($result) ==0 ){
+            $this->m_factors->createFactors($user, $icDate);
+            $query = $this->db
+                ->select("*")
+                ->where('strategyNo', 1)
+                ->where('memberNo', $user)
+                ->where('icDate', $icDate)
+                ->from('factorWeights')
+                ->get();
+            $result = $query->result_array();
+        }
             $ordered = [];
             foreach ($orderArray as $key){
                 foreach ($result as $factor){
@@ -58,6 +69,46 @@ class M_factors extends CI_Model
             }
         return $ordered;
 
+    }
+
+    public function createFactors($memberNo, $icDate){
+        $this->load->model('m_ic');
+        $factors = $this->getAllFactors();
+        $member = $this->m_ic->getUserByID($memberNo);
+        foreach($factors as $factor) {
+            $data = [
+                'strategyNo' => 1,
+                'factorNo' => $factor['factorNo'],
+                'factorDesc' => $factor['factorDesc'],
+                'factorWeight' => $this->getLatestFactorWeights($factor['factorNo'], $memberNo, $icDate),
+                'memberNo' => $memberNo,
+                'memberName' => $member['memberName'],
+                'icDate' => $icDate
+            ];
+            $this->db->insert('factorWeights',$data);
+        }
+
+        return true;
+    }
+
+    public function getLatestFactorWeights($factorNo, $memberNo, $icDate){
+        $latestFactorWeight = 1.00;
+        $query = $this->db
+            ->select('*')
+            ->where('memberNo',$memberNo)
+            ->where('factorNo',$factorNo)
+            ->where('icDate < ',$icDate)
+            ->from('factorWeights')
+            ->limit(1)
+            ->order_by('icDate','desc')
+            ->get();
+        $result = $query->row_array();
+
+        if($result && count($result)>0){
+            $latestFactorWeight = $result['factorWeight'];
+        }
+
+        return $latestFactorWeight;
     }
 
     /**
