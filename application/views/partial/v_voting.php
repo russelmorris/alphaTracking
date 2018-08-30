@@ -108,6 +108,7 @@
                     <div class="row">
                         <div class="col-md-12 tarea veto_togle <?php echo $voting_values[0]['vetoFlag'] == 1 ? '' : 'hidden'; ?> "
                              style="padding-top: 2%">
+                            <p class="sub-header-comment">Comment</p>
                             <textarea id='textarea-veto' placeholder="Explain wshy?" class="form-control">
                                 <?php echo ! is_null($voting_values[0]['vetoComment']) ?
                                     $voting_values[0]['vetoComment'] : ''; ?>
@@ -135,6 +136,7 @@
                     <div class="row">
                         <div class="col-md-12 tarea deep_dive_togle <?php echo $voting_values[0]['isDeepDive'] == 1 ? '' : 'hidden'; ?> "
                              style="padding-top: 2%">
+                            <p class="sub-header-comment">Comment</p>
                             <textarea id='textarea-deep-dive' placeholder="Explain wshy?" class="form-control">
                                 <?php echo ! is_null($voting_values[0]['deepDiveComment']) ?
                                     $voting_values[0]['deepDiveComment'] : ''; ?>
