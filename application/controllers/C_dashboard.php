@@ -27,7 +27,7 @@ class C_dashboard extends MY_Controller
     }
 
 
-    public function dashboard()
+    public function dashboard($memberNo = 0)
     {
         $data['user'] = $this->session->userdata('user');
         $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
@@ -37,6 +37,11 @@ class C_dashboard extends MY_Controller
         $data['ic_dates'] = $this->m_icdate->getICDates();
         $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
         $data['ic_dashboard'] = [];
+        if($memberNo != 0 && $data['user']['isAdmin']){
+            $data['selectedMemberNo'] = $memberNo;
+        } else {
+            $data['selectedMemberNo'] = $data['user']['memberNo'];
+        }
         $this->load->template('v_dashboard', $data);
     }
 
