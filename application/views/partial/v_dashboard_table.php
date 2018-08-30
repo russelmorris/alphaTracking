@@ -240,9 +240,9 @@
                 <div class="cell_holder">
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <span class="dashboard-slider-5-text"><?php echo $ic['factorScore5']*10; ?></span>
+                            <span class="dashboard-slider-5-text"><?php echo ($ic['factorScore5'] == 0)? '-': $ic['factorScore5']*10; ?></span>
                             <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5,  this.value/10, this)"
-                                   type="range" min="0" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
+                                   type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
                         </div>
                     </div>
                     <div class="cell_part_hr"></div>
