@@ -25,8 +25,8 @@ class M_voting extends CI_Model
             "memberName"     => $member['memberName'],
             "factorNo"       => $factor['factorNo'],
             "factorDesc"     => $factor['factorDesc'],
-            "factorScore"    => 5,
-            "zScore"         => 0,
+            "factorScore"    => null,
+            "zScore"         => null,
             "dateModified"   => date("Y-m-d H:i:s"),
         ];
 
@@ -51,11 +51,18 @@ class M_voting extends CI_Model
         return $return;
     }
 
+    /**
+     * @param $user_id
+     * @param $ticker
+     * @param $ic_date
+     * @param $factorNo
+     * @param $factorVal
+     */
     public function updateFactor($user_id, $ticker, $ic_date, $factorNo, $factorVal)
     {
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
-            ->set('factorScore', $factorVal)
+            ->set('factorScore', $factorVal == 0 ? null : $factorVal )
             ->where([
                 'strategyNo' => 1,
                 'memberNo'   => $user_id,
@@ -65,6 +72,7 @@ class M_voting extends CI_Model
             ])
             ->limit(1)
             ->update('voting');
+       // echo $this->db->last_query();
     }
 
     public function getSWSurl($user_id, $ticker)
@@ -90,21 +98,30 @@ class M_voting extends CI_Model
     public function getLatestVotingValues($user_id, $ticker, $ic_date)
     {
         $return = false;
-        $values = $this->db->select('v.factorNo')
+        $values = $this->db->select('f.factorOrder')
+                           ->select('f.factorDesc')
+                           ->select('v.factorNo')
                            ->select('v.factorScore')
+                           ->select('v.factorDesc')
+                           ->select('v.factorDesc')
                            ->select('m.prospectTextID')
                            ->select('m.vetoFlag')
                            ->select('m.vetoComment')
+                           ->select('m.isDeepDive')
+                           ->select('m.deepDiveComment')
                            ->select('m.isFinalised')
                            ->select('m.DateModified')
                            ->select('m.country')
                            ->from('voting v')
                            ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate',
                                'inner')
+                            ->join('factors f', 'v.factorNo = f.factorNo',
+                                'inner')
                            ->where('v.memberNo', $user_id)
                            ->where('v.ticker', $ticker)
                            ->where('v.icDate', $ic_date)
-                           ->order_by('factorNo', 'ASC')
+                           ->where('f.includeDashboard', 1)
+                           ->order_by('factorOrder', 'ASC')
                            ->get()
                            ->result_array();
 

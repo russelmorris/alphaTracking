@@ -5,7 +5,7 @@
             <input id="dash_ajax"
                    type="text"
                    hidden
-                   value="<?php echo uri_string() == 'admin_dashboard' ? false : true; ?>">
+                   value="<?php echo uri_string() == 'admin-dashboard' ? false : true; ?>">
             <input id="allow_edit_as_admin"
                    hidden
                    value="<?php echo $user['isAdmin'] ? true : false; ?>">
@@ -25,7 +25,9 @@
                      style="width: 0%">
                     <span class="sr-only"></span>
                 </div>
+
             </div>
+            <input type="hidden" id="finalised-label-value" value="0">
         </div>
         <!-- /.col-lg-6 -->
         <div class="col-sm-offset-3 col-sm-3">
@@ -49,7 +51,8 @@
     </div>
     <div class="row">
         <div class="coll col-sm-6">
-            <input type="button" class="btn btn-default" id="create-human-score" value="Create Human Score"/>
+            <input type="button" class="btn btn-default" id="create-human-score" value="Create Human Score"/><br><br>
+            <input type="button" class="btn btn-default" id="finalize-all" value="Finalize all"/><br><br>
         </div>
         <div class="col-sm-3 pull-right">
 

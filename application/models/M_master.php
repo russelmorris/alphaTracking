@@ -27,6 +27,10 @@ class M_master extends CI_Model
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
             "machineRank"    => $data['machineRank'],
+            "machineScore2"   => $data['machineScore2'],
+            "machineRank2"    => $data['machineRank2'],
+            "machineScore3"   => $data['machineScore3'],
+            "machineRank3"    => $data['machineRank3'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
@@ -65,6 +69,10 @@ class M_master extends CI_Model
                 ->set("sector", $prospectData['sector'])
                 ->set("machineScore", $prospectData['machineScore'])
                 ->set("machineRank", $prospectData['machineRank'])
+                ->set("machineScore2", $prospectData['machineScore2'])
+                ->set("machineRank2", $prospectData['machineRank2'])
+                ->set("machineScore3", $prospectData['machineScore3'])
+                ->set("machineRank3", $prospectData['machineRank3'])
                 ->set("memberNo", $prospectData['memberNo'])
                 ->set("memberName", $prospectData['memberName'])
                 ->set("bWeight", $prospectData['bWeight'])
@@ -131,6 +139,18 @@ class M_master extends CI_Model
         return $setFinaliseValue;
     }
 
+    public function setAllFinaliseFlag($user_id, $ic_date, $finalized)
+    {
+        $finalized = ($finalized == 100) ? 0 : 1;
+
+        $this->db
+            ->set('isFinalised', $finalized)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'icDate' => $ic_date])
+            ->update('master');
+        return true;
+    }
+
 
     public function finalised($user_id, $icDate)
     {
@@ -176,6 +196,46 @@ class M_master extends CI_Model
 
         return true;
 
+    }
+
+    /**
+     * @param $veto
+     * @param $comment
+     * @param $user_id
+     * @param $ticker
+     * @param $ic_date
+     */
+    public function updateVetoAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+        $this->db
+            ->set('vetoFlag', $vote)
+            ->set('vetoComment', $comment)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+    }
+/**
+     * @param $veto
+     * @param $comment
+     * @param $user_id
+     * @param $ticker
+     * @param $ic_date
+     */
+    public function updateDeepDiveAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+        $this->db
+            ->set('isDeepDive', $vote)
+            ->set('deepDiveComment', $comment)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
+    }
+
+    public function updateFinalise($user_id, $ticker, $ic_date, $finalised)
+    {
+       $this->db
+            ->set('isFinalised', $finalised)
+            ->set('DateModified', date('Y-m-d'))
+            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->update('master');
     }
 
 }

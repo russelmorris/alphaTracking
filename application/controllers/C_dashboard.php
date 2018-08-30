@@ -52,17 +52,20 @@ class C_dashboard extends MY_Controller
         $data['selectedUser'] = json_decode($this->input->post('user_id'));
         $sessionUser = [];
         if (!$data['selectedUser']) {
+
             $sessionUser = $this->session->userdata('user');
             $data['user'] = $sessionUser;
             $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
             if ($data['user']['isAdmin']) {
                 $data['admin_users'] = $this->m_ic->getMembers();
             }
+
             $data['ic_dates'] = $this->m_icdate->getICDates();
+
             $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
-            $data['ic_dashboard'] = (isset($limit)) ? $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate'], $limit) : $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'],
-                $data['selectedDate']);
+
+
+            $data['ic_dashboard'] = $this->m_prospects->getProspectsByDateAndId($sessionUser['memberNo'], $data['selectedDate']);
         } else {
             $data['user'] = $this->m_ic->getUserByID($data['selectedUser']);
             $this->session->set_userdata('admin_subuser', $data['user']);
@@ -70,7 +73,23 @@ class C_dashboard extends MY_Controller
                 $data['selectedDate']);
         }
 
-        $this->load->view('partial/v_dashboard_table', $data);
+        $portfolioCount = $this->m_icdate->getPortfolioCount($data['selectedDate']);
+        $icDashboard = $data['ic_dashboard'];
+        usort($icDashboard,"cmp_humanScore");
+
+        foreach($icDashboard as $key => &$element){
+            if ($key > $portfolioCount) {
+                $element['inPortfolio'] = 0;
+            } else {
+                $element['inPortfolio'] = 1;
+            }
+        }
+        usort($icDashboard,"cmp_masterID");
+
+        $data['ic_dashboard'] = $icDashboard ;
+//        print_r( $data['ic_dashboard']);
+
+         $this->load->view('partial/v_dashboard_table', $data);
     }
 
     public function finalised_value()
@@ -181,6 +200,30 @@ class C_dashboard extends MY_Controller
         );
         echo $newFinalisedValue;
 
+        return;
+    }
+
+    public function updateFinaliseAll()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+
+        $icDate = $this->input->post('ic_date');
+        $user_id = $this->input->post('ic_user');
+        $finalized = $this->input->post('finalized');
+
+        $userData = $this->session->userdata('user');
+
+        if ($userData['isAdmin'] == 0) {
+            $user_id = $userData['memberNo'];
+        }
+        $newFinalisedValue = $this->m_master->setAllFinaliseFlag(
+            $user_id,
+            $icDate,
+            $finalized
+        );
         return;
     }
 

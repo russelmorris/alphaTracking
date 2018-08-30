@@ -17,7 +17,7 @@ $('#upload-prospects').click(function () {
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
     fd.append('ic_date', $('.import_date').val());
     $.ajax({
-        url: "import_prospect",
+        url: "import-prospect",
         type: "post",
         processData: false, // important
         contentType: false, // important
@@ -52,7 +52,7 @@ $('#returns').change(function () {
     fd.append('csnamerf', $.cookie('csrfcookiename')); // since this is your file input
 
     $.ajax({
-        url: "import_returns",
+        url: "import-returns",
         type: "post",
         dataType: 'json',
         processData: false, // important
@@ -84,3 +84,31 @@ $('#query_build').click(function () {
 if($('.query_ic_date').val() == null){
     $('#query_build').prop('disabled', true)
 }
+
+
+$('#create_googletrends_cvs').click(function () {
+    $body = $("body");
+    $body.addClass("loading");
+
+    $.get('create-csv-googletrends').done(function (data) {
+        console.log(data);
+        alert(data);
+        $body.removeClass("loading");
+
+    })
+
+})
+
+
+$('#crate_alexa_cvs').click(function () {
+    $body = $("body");
+    $body.addClass("loading");
+
+    $.get('create-csv-alexa').done(function (data) {
+        console.log(data);
+        alert(data);
+        $body.removeClass("loading");
+
+    })
+
+})

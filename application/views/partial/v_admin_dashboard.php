@@ -1,4 +1,5 @@
 <div id="page-wrapper dashboard">
+    <?php if ($user['isAdmin'] == 1 ){ ?>
     <div class="col-lg-12 col-md-12">
         <h2>Current Admin: <?php echo $user['memberName']; ?></h2>
     </div>
@@ -34,12 +35,27 @@
             <button class="btn btn-primary btn-block mbt-5">Stats Page</button>
         </div>
     </div>
-
+    <div class="col-md-6">
+        <div class="col-md-8 col-md-offset-2">
+            <button id="create_googletrends_cvs" class="btn btn-primary btn-block mbt-5">Create Google CSV files</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-8 col-md-offset-2">
+            <button id="crate_alexa_cvs" class="btn btn-primary btn-block mbt-5">Create Alexa CSV files</button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
+            &nbsp;
+        </div>
+    </div>
     <!-- /.col-lg-6 -->
 
     <!-- /.col-lg-6 -->
 
     <!-- /.row -->
+<?php } ?>
     <div class="col-lg-12 col-md-12">
         <table width="100%"
                class="table table-striped table-bordered table-hover "

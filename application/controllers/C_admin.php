@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_voting m_voting
  * @property  M_ic m_ic
  * @property  M_factors m_factors
- * @property  M_master m_master
+ * @property  M_master m_masterF
  * @property  M_icdate m_icdate
  * @property  M_portfolio m_portfolio
  */
@@ -74,21 +74,23 @@ class C_admin extends MY_Controller
 
 
             foreach ($csv as $key => $value) {
-                $info            = [
-                    'strategyNo'   => 1,
-                    'icDate'       => date($ic_date),
-                    'ticker'       => $value['ticker'],
-                    'RIC'          => $value['ric'],
-                    'name'         => $value['name'],
-                    'country'      => $value['country'],
-                    'sector'       => $value['sector'],
-                    'machineScore' => (float)$value['machineScore'],
-                    'machineRank'  => $value['machineRank'],
-                    'peerRIC1'     => $value['peerRIC1'],
-                    'peerRIC2'     => $value['peerRIC2'],
-                    'peerRIC3'     => $value['peerRIC3'],
-                    'peerRIC4'     => $value['peerRIC4'],
-                    'peerRIC5'     => $value['peerRIC5']
+                $info   = [
+                    'strategyNo'    => 1,
+                    'icDate'        => date($ic_date),
+                    'ticker'        => $value['ticker'],
+                    'sedol '        => $value['sedol'],
+                    'cusip'         => $value['cusip'],
+                    'isin'          => $value['isin'],
+                    'RIC'           => $value['ric'],
+                    'name'          => $value['name'],
+                    'country'       => $value['country'],
+                    'sector'        => $value['sector'],
+                    'machineScore'  => (float)$value['machineScore'],
+                    'machineRank'   => $value['machineRank'],
+                    'machineScore2' => $value['machineScore2'],
+                    'machineRank2'  => $value['machineRank2'],
+                    'machineScore3' => $value['machineScore3'],
+                    'machineRank3'  => $value['machineRank3']
                 ];
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 

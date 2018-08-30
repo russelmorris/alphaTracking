@@ -1,4 +1,18 @@
 <div id="page-wrapper dashboard">
+    <div class="row mt-10">
+        <div class="col col-sm-6">
+            <?php if (!empty($prev)) { ?>
+                <a href="<?php echo base_url('/voting/' . $icdate . '/' . $prev); ?>"
+                   class="btn btn-default">Previous</a>
+            <?php } ?>
+        </div>
+        <div class="col col-sm-6">
+            <?php if (!empty($next)) { ?>
+                <a href="<?php echo base_url('/voting/' . $icdate . '/' . $next); ?>"
+                   class="btn btn-default pull-right">Next</a>
+            <?php } ?>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="col-md-12">
@@ -13,7 +27,7 @@
                     <small>
                         Simply Wall St login:<br>
                         un: portfolio@skyeam.com.au<br>
-                        pw: skyam
+                        pw: skyeam
                     </small>
                 </h4>
                 <input id="user_id" hidden value="<?php echo $sub_user ? $sub_user['memberNo'] : $user['memberNo']; ?>">
@@ -32,126 +46,115 @@
             </div>
         </div>
     </div>
+    <!-- _______________________________________________ Voting Part start _____________________________________________-->
+    <!-- Radio Button Module -->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="rb-box">
-                <!-- Radio Button Module -->
-                <p>1. Business Model (sustainable, high margin, well executed) </p>
-                <?php if ($voting_values[0]['factorNo'] == 1): ?>
-                    <div id="rb-1" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[0]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
+                <?php $listNumber = 0; ?>
+                <?php foreach ($voting_values as $key => $voting_value){ ?>
+                    <?php if ($voting_value['factorNo'] == 5) { ?>
+                        <!--                        Slider Start-->
 
-                <!-- Radio Button Module -->
-                <p>2. Value vs current price</p>
-                <?php if ($voting_values[1]['factorNo'] == 2): ?>
-                    <div id="rb-2" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[1]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                        <p><?php echo ++$listNumber;?>. Overall momentum likely to continue? </p>
+                        <div id="rb-1" class="rb">
+                                <div id="factor5-pass" class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == 0 ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
+                                    echo 'rb-null-element';
+                                } ?>"
+                                     data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
+                                    <span class="rb-spot"><span class="rb-txt rb-txt-na">Pass</span></span>
                                 </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>3. Digital Footprint (growing in web traffic/ app downloads/ trends</p>
-                <?php if ($voting_values[2]['factorNo'] == 3): ?>
-                    <div id="rb-3" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[2]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                               <label id="factor_label_5" class="slider_label_holder">
+                                   <?php echo (($voting_value['factorScore']*10) !== 0) ? $voting_value['factorScore']*10: '';?>
+                               </label>
+                                <div class="slider-holder">
+                                    <input  type="range" min="1" max="100" value="<?php echo $voting_value['factorScore']*10;?>" class="slider" id="factor_5">
                                 </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>4. Upside in capturing unexploited markets (geography or x-selling extra products)</p>
-                <?php if ($voting_values[3]['factorNo'] == 4): ?>
-                    <div id="rb-4" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[3]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
+                        </div>
+
+                        <!--                        slider stop-->
+
+                    <?php } else { ?>
+                        <!--                        Round Buttons start     -->
+                        <p><?php echo ++$listNumber;?>. <?php echo $voting_value['factorDesc'] ?> </p>
+                        <div id="rb-1" class="rb">
+                            <?php for ($i = 0; $i < 11; $i++): ?>
+                                <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
+                                    echo 'rb-null-element';
+                                } ?>"
+                                     data-value="<?php echo $i; ?>" data-factor="<?php echo $voting_value['factorNo'];?>">
+                                    <span class="rb-spot">
+                                        <?php if ($i == 0) { ?>
+                                            <span class="rb-txt rb-txt-na">Pass</span>
+                                        <?php } else { ?>
+                                            <span class="rb-txt"><?php echo $i; ?></span>
+                                        <?php } ?>
+                                    </span>
                                 </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>5. Competitor Analysis</p>
-                <?php if ($voting_values[4]['factorNo'] == 5): ?>
-                    <div id="rb-5" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[4]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <!-- Radio Button Module -->
-                <p>6. Risks</p>
-                <?php if ($voting_values[5]['factorNo'] == 6): ?>
-                    <div id="rb-6" class="rb">
-                        <?php for ($i = 1; $i < 11; $i++): ?>
-                            <div class="rb-tab <?php echo $voting_values[5]['factorScore'] == $i ? 'rb-tab-active' : ''; ?>"
-                                 data-value="<?php echo $i; ?>">
-                                <div class="rb-spot">
-                                    <span class="rb-txt"><?php echo $i; ?></span>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-                <p>7. Veto (optional)</p>
-                <div id="rb-7" class="rb <?php echo $voting_values[0]['vetoFlag'] == 1 ? 'rb-tab-active' : ''; ?>">
-                    <div class="rb-tab " data-value="<?php echo $voting_values[0]['vetoFlag'] == 1 ? '1' : '0'; ?>">
+                            <?php endfor; ?>
+                        </div>
+
+                        <!--round buttons end -->
+                    <?php }?>
+                <?php }?>
+
+                <p><?php echo ++$listNumber;?>. Veto (optional)</p>
+                <div id="veto" class="rb-7 rb <?php echo $voting_values[0]['vetoFlag'] == 1 ? 'rb-tab-active' : ''; ?>">
+                    <div id="veto-data-value" class="rb-tab veto_click" data-value="<?php echo $voting_values[0]['vetoFlag'] == 1 ? '1' : '0'; ?>">
                         <div class="rb-spot">
                             <span class="rb-txt"><?php echo $voting_values[0]['vetoFlag'] == 1 ? 'Yes' : 'No'; ?></span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 tarea <?php echo $voting_values[0]['vetoFlag'] == 1 ? '' : 'hidden'; ?> "
+                        <div class="col-md-12 tarea veto_togle <?php echo $voting_values[0]['vetoFlag'] == 1 ? '' : 'hidden'; ?> "
                              style="padding-top: 2%">
-                            <textarea placeholder="Explain why?" class="form-control">
+                            <p class="sub-header-comment">Comment</p>
+                            <textarea id='textarea-veto' placeholder="Explain wshy?" class="form-control">
                                 <?php echo ! is_null($voting_values[0]['vetoComment']) ?
                                     $voting_values[0]['vetoComment'] : ''; ?>
                             </textarea>
-                            <button id="save_vetoComment" class="btn btn-default btn-sm mt-10">Save Comment</button>
-                            <div id="alert_save_success"
-                                 style="width:25%"
-                                 class="mt-10 alert alert-success alert-dismissible fade in text-center">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <strong>Successfully saved!</strong>
-                            </div>
-                            <div id="alert_save_fail"
-                                 style="width:25%"
-                                 class="mt-10 alert alert-danger alert-dismissible fade in text-center">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <strong>Successfully saved!</strong>
+                            <div class="row">
+                                <div class="col-md-2">
+                                <button id="save_vetoComment" class="btn btn-default btn-sm mt-10">Save Comment</button>
+                                </div>
+                                <div class="col-md-10">
+                                    <p id="veto-save-comment" class=" alert-save  hidden">Successfully saved!</p>
+                                </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
-                <p>8. Finalise?</p>
+
+                <p><?php echo ++$listNumber;?>. Deeper Dive Required? (optional)</p>
+                <div id="deep-dive" class="rb-7 rb <?php echo $voting_values[0]['isDeepDive'] == 1 ? 'rb-tab-active' : ''; ?>">
+                    <div id="deep-dive-data-value" class="rb-tab deep_dive_click" data-value="<?php echo $voting_values[0]['isDeepDive'] == 1 ? '1' : '0'; ?>">
+                        <div class="rb-spot">
+                            <span class="rb-txt"><?php echo $voting_values[0]['isDeepDive'] == 1 ? 'Yes' : 'No'; ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 tarea deep_dive_togle <?php echo $voting_values[0]['isDeepDive'] == 1 ? '' : 'hidden'; ?> "
+                             style="padding-top: 2%">
+                            <p class="sub-header-comment">Comment</p>
+                            <textarea id='textarea-deep-dive' placeholder="Explain wshy?" class="form-control">
+                                <?php echo ! is_null($voting_values[0]['deepDiveComment']) ?
+                                    $voting_values[0]['deepDiveComment'] : ''; ?>
+                            </textarea>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button id="deepDiveComment" class="btn btn-default btn-sm mt-10">Save Comment</button>
+                                </div>
+                                <div class="col-md-10">
+                                    <p id="deep-dive-save-comment" class=" alert-save  hidden">Successfully saved!</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <p><?php echo ++$listNumber;?>. Finalise?</p>
                 <div id="rb-8" class="rb <?php echo $voting_values[0]['isFinalised'] == 1 ? 'rb-tab-active' : ''; ?>">
                     <div class="rb-tab" data-value="<?php echo $voting_values[0]['isFinalised'] == 1 ? '1' : '0'; ?>">
                         <div class="rb-spot">
@@ -159,53 +162,57 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
+        <!-- _______________________________________________ Voting Part end ______________________________________________-->
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="mt-10">
-                <?php if ($infoSheetURLExist == true) {?>
-                    <iframe src="<?php echo base_url($infoSheetURL) ?>" onload="resizeIframe(this)" scrolling="no"></iframe>
-                <?php } else { ?>
-                    <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        No Info Sheet Found
-                    </div>
-                <?php } ?>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="mt-10">
+                    <?php if ($infoSheetURLExist == true) { ?>
+                        <iframe src="<?php echo base_url($infoSheetURL) ?>" onload="resizeIframe(this)"
+                                scrolling="no"></iframe>
+                    <?php } else { ?>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            No Info Sheet Found
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="mt-10">
-                <?php if ($alexaImageURLExist == true) {?>
-                    <img src="<?php echo base_url($alexaImageURL) ;?>" alt="Alexa Data not found" height="100%" width="100%" />
-                <?php } else { ?>
-                    <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        Alexa Data not found
-                    </div>
-                <?php } ?>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="mt-10">
+                    <?php if ($alexaImageURLExist == true) { ?>
+                        <img src="<?php echo base_url($alexaImageURL); ?>" alt="Alexa Data not found" height="100%"
+                             width="100%"/>
+                    <?php } else { ?>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Alexa Data not found
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="mt-10">
-                <?php if ($googleImageURLExist == true) {?>
-                    <img src="<?php echo base_url($googleImageURL) ;?>" alt="Alexa Data not found" height="100%" width="100%" />
-                <?php } else { ?>
-                    <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        Google Trends Data not found
-                    </div>
-                <?php } ?>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-md-8 col-md-offset-2">-->
+<!--                <div class="mt-10">-->
+<!--                    --><?php //if ($googleImageURLExist == true) { ?>
+<!--                        <img src="--><?php //echo base_url($googleImageURL); ?><!--" alt="Alexa Data not found" height="100%"-->
+<!--                             width="100%"/>-->
+<!--                    --><?php //} else { ?>
+<!--                        <div class="alert alert-danger" role="alert">-->
+<!--                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>-->
+<!--                            Google Trends Data not found-->
+<!--                        </div>-->
+<!--                    --><?php //} ?>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
-</div>

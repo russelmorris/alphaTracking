@@ -1,23 +1,32 @@
 function final_value() {
     $('#prospectCount').html('');
     $('#portfolioCount').html('');
-    $.post('finalised_value', {
+    $.post('finalised-value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
         var returnData = JSON.parse(data);
         $('#finalised-label').text(returnData.percent + "% Finalised");
+        $('#finalised-label-value').val(returnData.percent);
         $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
         $('#prospectCount').html(returnData.prospectCount);
         $('#portfolioCount').html(returnData.portfolioCount);
+
+        if (parseInt(returnData.percent) == 100){
+            $('#finalize-all').val(' Unfinalize all');
+        } else {
+            $('#finalize-all').val('Finalize all');
+        }
+
     }).fail(function (err) {
 
     });
 
 }
 
-function updateTicker(ticker, factor, value) {
+function updateTicker(ticker, factor, value, element) {
+
     $.post('update-factor', {
         ticker: ticker,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
@@ -26,12 +35,30 @@ function updateTicker(ticker, factor, value) {
         value: value,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
-
+       if (factor === 5) {
+           $(element).siblings('span:first').html(value*10);
+       } else {
+           $(element).siblings('span:first').html(Math.round(value));
+       }
+        refreshTableData();
     }).fail(function (err) {
 
     });
 };
 
+function refreshTableData() {
+    var oldOrder = table.order();
+    table.destroy();
+    table = $('#dataTables-example').DataTable({
+        retrieve: true,
+        responsive: false,
+        paging: false,
+        autoWidth: false,
+        bAutoWidth: false,
+        order: oldOrder
+
+    });
+}
 function updateVeto(ticker, element) {
     $.post('update-veto', {
         ticker: ticker,
@@ -40,10 +67,13 @@ function updateVeto(ticker, element) {
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
         if (data == '0') {
+            $(element).siblings('span:first').html('0');
             element.innerHTML = '<i class="fa"></i>';
         } else {
+            $(element).siblings('span:first').html('1');
             element.innerHTML = '<i class="fa fa-check"></i>';
         }
+        refreshTableData();
     }).fail(function (err) {
 
     });
@@ -58,19 +88,23 @@ function updateFinalise(ticker, element) {
     }).done(function (data) {
         final_value();
         if (data == 0) {
+            $(element).siblings('span:first').html('0');
             element.innerHTML = '<i class="fa"></i>';
             $(".ticker_" + ticker).prop('disabled', false);
             $('#tr_' + ticker).closest("tr").removeClass("row-finished");
         } else {
+            $(element).siblings('span:first').html('1');
             element.innerHTML = '<i class="fa fa-check"></i>';
             $(".ticker_" + ticker).prop('disabled', true);
             $('#tr_' + ticker).closest("tr").addClass("row-finished");
 
         }
+        refreshTableData();
     }).fail(function (err) {
 
     });
 };
+
 
 function reloadDashboard() {
     $('#dashboard-table-holder').html('' +
@@ -78,8 +112,15 @@ function reloadDashboard() {
         '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>' +
         '<span class="sr-only">Loading...</span>' +
         '</div>');
-    var allow_edit = moment(new Date()).isBefore($('.ic_dates').val());
-    $.post('/dashboard_ajax', {
+
+    var currentDate = new Date();
+    var isDate = new Date($('.ic_dates').val()+' 23:59:59');
+    var allow_edit = false;
+    if(currentDate < isDate){
+        allow_edit = true;
+    }
+
+    $.post('/dashboard-ajax', {
         ic_date: $('.ic_dates').val(),
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         csnamerf: $.cookie('csrfcookiename')
@@ -115,7 +156,6 @@ $(document).ready(function () {
         });
     }
     $('#create-human-score').on('click', function(){
-        console.log('1')
         $body = $("body");
         $body.addClass("loading");
 
@@ -137,6 +177,54 @@ $(document).ready(function () {
 
          });
     })
+
+    $('#finalize-all').on('click', function(){
+        $body = $("body");
+        $body.addClass("loading");
+
+        var icUser = $('.admin_users').val();
+        var icDate = $('#ic_dates').val();
+        var finalized = $('#finalised-label-value').val();
+        $('#finalize-all').attr('disabled', true);
+        $.post('update-finalise-all', {
+            ic_date: icDate,
+            ic_user: icUser,
+            finalized: finalized,
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+           $('#finalize-all').removeAttr('disabled');
+            $body.removeClass("loading");
+            reloadDashboard();
+        }).fail(function (err) {
+            $('#finalize-all').removeAttr('disabled');
+            alert(err);
+            $body.removeClass("loading");
+            reloadDashboard();
+
+        });
+    });
+
+    $('#factorWeightIcMember').change(function(){
+        $('#factorWeightIcUser').val($(this).val());
+        $('#factorWeightIcUser').trigger('change');
+    });
+
+    $('#factorWeightIcUser').change(function(){
+        $.get('/get-factors-weight/'+$(this).val()+'/'+$('#closestIcDate').val(), {})
+            .done(function (data) {
+                factors = JSON.parse(data);
+                var arrayLength = factors.length;
+                for (var i = 0; i < arrayLength; i++) {
+
+                    $("#factor_"+factors[i].factorNo).val(factors[i].factorWeight*10);
+                    $("#factor_label_"+factors[i].factorNo).html(factors[i].factorWeight);
+                    //Do something
+                }
+
+        });
+    });
+    $('#factorWeightIcUser').trigger('change');
+
 });
 
 

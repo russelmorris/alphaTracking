@@ -1,182 +1,125 @@
-$('#alert_save_success').hide();
-$('#alert_save_fail').hide();
-let vote = function () {
-    $('.rb-tab').on('click', function () {
-        if ($(this).parent()[0].id !== 'rb-7' && $(this).parent()[0].id !== 'rb-8') {
-            $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
-            $(this).addClass("rb-tab-active");
-            if ($(this).parent()[0].id === 'rb-1') {
-                $.post('/submit_voting', {
-                    fc1: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
+$(document).ready(function () {
+    $('.ticker_click').on("click", function(elem){
+        $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $(this).parent().find("#factor_label_5").html(" ");
+        $(this).parent().find("#factor_5").val("0");
 
-                })
-            }
-            if ($(this).parent()[0].id === 'rb-2') {
-                $.post('/submit_voting', {
-                    fc2: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                })
+        $(this).addClass('rb-tab-active');
+        $.post('/submit-voting', {
+            ic_date: $('#voting_ic_date').val(),
+            ticker: $('#ticker').val(),
+            user_id: $('#user_id').val(),
+            factor: $(this).attr("data-factor"),
+            vote: $(this).attr("data-value"),
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+        })
+    });
 
-            }
-            if ($(this).parent()[0].id === 'rb-3') {
-                $.post('/submit_voting', {
-                    fc3: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                })
 
-            }
-            if ($(this).parent()[0].id === 'rb-4') {
-                $.post('/submit_voting', {
-                    fc4: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                })
+    $('#factor_5').on('change', function(){
+        $('#factor_label_5').html( Math.round ($(this).val()));
+        $('#factor5-pass').removeClass("rb-tab-active");
+        $.post('/submit-voting', {
+            ic_date: $('#voting_ic_date').val(),
+            ticker: $('#ticker').val(),
+            user_id: $('#user_id').val(),
+            factor: 5,
+            vote: $(this).val()/10,
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+        })
+    });
 
-            }
-            if ($(this).parent()[0].id === 'rb-5') {
-                $.post('/submit_voting', {
-                    fc5: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                })
-            }
-            if ($(this).parent()[0].id === 'rb-6') {
-                $.post('/submit_voting', {
-                    fc6: $(this).attr('data-value'),
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                })
-            }
-        }
-        else if ($(this).parent()[0].id === 'rb-7') {
-            $('#rb-7').toggleClass(function () {
+    $('#save_vetoComment').on('click', function(){
+        $.post('/submit-master-veto', {
+            factor: 'veto',
+            vote: $("#veto-data-value").attr("data-value"),
+            comment: $("#textarea-veto").val(),
+            user_id: $('#user_id').val(),
+            ticker: $('#ticker').val(),
+            ic_date: $('#voting_ic_date').val(),
+            csnamerf: $.cookie('csrfcookiename')
+        }).done(function (data) {
+            $('#veto-save-comment').removeClass('hidden');
+            setTimeout(function () {
+                $('#veto-save-comment').addClass('hidden');
+            }, 3000);
+        });
+
+    });
+
+    $('.veto_click').on("click", function(elem) {
+           $('#veto').toggleClass(function () {
                 $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
                 $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
-
-                $.post('/submit_voting', {
-                    veto: $(this).find(".rb-tab").attr("data-value"),
-                    vetoComment: $(this).find(".rb-tab").attr("data-value") == 1 ? $("textarea").val() : null,
-                    user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
-                    ic_date: $('#voting_ic_date').val(),
-                    csnamerf: $.cookie('csrfcookiename')
-                }).done(function (data) {
-                });
+               $.post('/submit-master-veto', {
+                   factor: 'veto',
+                   vote: $("#veto-data-value").attr("data-value"),
+                   comment: $("#veto-data-value").attr("data-value") ===  1 ? $("#textarea-veto").val() : null,
+                   user_id: $('#user_id').val(),
+                   ticker: $('#ticker').val(),
+                   ic_date: $('#voting_ic_date').val(),
+                   csnamerf: $.cookie('csrfcookiename')
+               }).done(function (data) {
+               });
                 if ($(this).hasClass(".rb-tab-active")) {
                     return "";
                 } else {
                     return "rb-tab-active";
                 }
             });
-            $(".tarea").toggleClass("hidden");
-            save_vetoComment();
-        }
+            $(".veto_togle").toggleClass("hidden");
     });
-};
-let save_vetoComment = function () {
-    $('#save_vetoComment').click(function () {
-        $.post('/submit_voting', {
-            vetoComment: $("textarea").val(),
+
+
+
+
+    $('#deepDiveComment').on('click', function(){
+        $.post('/submit-master-deep-dive', {
+            factor: 'deepDive',
+            vote: $("#deep-dive-data-value").attr("data-value"),
+            comment: $("#textarea-deep-dive").val(),
             user_id: $('#user_id').val(),
             ticker: $('#ticker').val(),
             ic_date: $('#voting_ic_date').val(),
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
-            if (data == 1) {
-                $('#alert_save_success').show();
-                setTimeout(function () {
-                    $('#alert_save_success').hide();
-                }, 1500);
-            }
-            else {
-                $('#alert_save_fail').show();
-                setTimeout(function () {
-                    $('#alert_save_fail').hide();
-                }, 1500);
-            }
+            $('#deep-dive-save-comment').removeClass('hidden');
+            setTimeout(function () {
+                $('#deep-dive-save-comment').addClass('hidden');
+            }, 3000);
         });
     });
 
-}
-$(document).ready(function () {
-    if ($("textarea").val() !== undefined) {
-        $("textarea").val($("textarea").val().trim());
-    }
-    let allow_edit = moment(new Date()).isBefore($('#voting_ic_date').val());
-    if (!allow_edit && !$('#allow_edit_as_admin').val()) {
-        $('.rb-tab').off('click');
-        $("#rb-8").off('click');
-        for (let i = 1; i < 9; i++) {
-            $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
-        }
-        $("textarea").attr('disabled', true);
-        $('#save_vetoComment').prop('disabled', true);
+    $('.deep_dive_click').on("click", function(elem) {
+        $('#deep-dive').toggleClass(function () {
+            $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
+            $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
+            $.post('/submit-master-deep-dive', {
+                factor: 'deepDive',
+                vote:$("#deep-dive-data-value").attr("data-value"),
+                comment: $("#deep-dive-data-value").attr("data-value") == 1 ? $("#textarea-deep-dive").val() : null,
+                user_id: $('#user_id').val(),
+                ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
+                csnamerf: $.cookie('csrfcookiename')
+            }).done(function (data) {
+            });
+            if ($(this).hasClass(".rb-tab-active")) {
+                return "";
+            } else {
+                return "rb-tab-active";
+            }
+        });
+        $(".deep_dive_togle").toggleClass("hidden");
+    });
 
-    }
-    else if ($('#rb-8').find(".rb-tab").attr("data-value") == 1) {
-        for (let i = 1; i < 8; i++) {
-            $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
-        }
-        $("textarea").attr('disabled', true);
-        $('#save_vetoComment').prop('disabled', true);
-    }
-    else {
-        vote();
-        for (let i = 1; i < 8; i++) {
-            $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
-        }
-        $("textarea").attr('disabled', false);
-        $('#save_vetoComment').prop('disabled', false);
-    }
-});
-
-
-//Switcher function:
-$("#rb-8").on('click', function () {
-    $(this).toggleClass(function () {
+    //Switcher function:
+    $("#rb-8").on('click', function () {
         $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
         $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
-        if ($(this).find(".rb-tab").attr("data-value") == 1) {
-            $('.rb-tab').off('click');
-            for (let i = 1; i < 8; i++) {
-                $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
-            }
-            $("textarea").attr('disabled', true);
-            $('#save_vetoComment').prop('disabled', true);
-        }
-        else {
-            vote();
-            for (let i = 1; i < 8; i++) {
-                $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
-            }
-            $("textarea").attr('disabled', false);
-            $('#save_vetoComment').prop('disabled', false);
-            // save_vetoComment();
-
-        }
-        $.post('/submit_voting', {
+        $.post('/submit-master-finalise', {
             finalised: $(this).find(".rb-tab").attr("data-value"),
             user_id: $('#user_id').val(),
             ticker: $('#ticker').val(),
@@ -184,15 +127,37 @@ $("#rb-8").on('click', function () {
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
         });
-        if ($(this).hasClass(".rb-tab-active")) {
-            return "";
+        if ($(this).find(".rb-tab").attr("data-value") == 1) {
+            $(this).addClass("rb-tab-active")
         } else {
-            return "rb-tab-active";
+            $(this).removeClass("rb-tab-active")
         }
+
+        // $(this).toggleClass(function () {
+        //     if ($(this).find(".rb-tab").attr("data-value") == 1) {
+        //         $('.rb-tab').off('click');
+        //         for (let i = 1; i < 8; i++) {
+        //             $('#rb-' + i + '> .rb-tab > .rb-spot').addClass('add-disabled-cursor');
+        //         }
+        //         $("textarea").attr('disabled', true);
+        //         $('#save_vetoComment').prop('disabled', true);
+        //     }
+        //     else {
+        //         vote();
+        //         for (let i = 1; i < 8; i++) {
+        //             $('#rb-' + i + '> .rb-tab > .rb-spot').removeClass('add-disabled-cursor');
+        //         }
+        //         $("textarea").attr('disabled', false);
+        //         $('#save_vetoComment').prop('disabled', false);
+        //
+        //
+        //     }
+        //
+        // });
+
     });
+
 });
-
-
 function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
 }

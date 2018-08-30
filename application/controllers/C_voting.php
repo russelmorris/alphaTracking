@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  Ci_input input
  * @property  M_voting m_voting
  * @property  M_master m_master
+ * @property  M_factors m_factors
  * @property  M_prospects m_prospects
  */
 class C_voting extends MY_Controller
@@ -29,7 +30,7 @@ class C_voting extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['m_voting', 'm_master', 'm_prospects']);
+        $this->load->model(['m_voting', 'm_master', 'm_prospects', 'm_factors']);
     }
 
     public function voting($icDate, $ticker)
@@ -48,85 +49,97 @@ class C_voting extends MY_Controller
         $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
 
 
-        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . $data['voting_values'][0]['prospectTextID'] . ".htm";
-        $data['infoSheetURL']  =  strtolower(str_replace(" ", "", $data['infoSheetURL'] ));
+        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . strtolower(str_replace(" " , '',$data['voting_values'][0]['prospectTextID'])) . ".htm";
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ?  true : false;
 
 
-        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-alexa.jpg";
-        $data['alexaImageURL']  =  strtolower(str_replace(" ", "", $data['alexaImageURL'] ));
+        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-alexa.jpg";
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
 
 
-        $data['googleImageURL'] = "bottomUp/digiFootprint/alexa/{$icDate}/$icDate-".$ticker."-".$data['prospect']['country']."-googletrends.jpg";
-        $data['googleImageURL']  =  strtolower(str_replace(" ", "", $data['googleImageURL'] ));
+        $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
+
+        $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
+        $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
 
         $this->load->template('v_voting', $data);
     }
 
+    /**
+     *
+     */
     public function submit_voting()
     {
         if ( ! $this->input->is_ajax_request()) {
             show_404();
             die();
         }
-        $populate_voting_data            = [
-            'ticker'      => $this->input->post('ticker'),
-            'ic_date'     => $this->input->post('ic_date'),
-            'user_id'     => $this->input->post('user_id'),
-            'fc1'         => $this->input->post('fc1'),
-            'fc2'         => $this->input->post('fc2'),
-            'fc3'         => $this->input->post('fc3'),
-            'fc4'         => $this->input->post('fc4'),
-            'fc5'         => $this->input->post('fc5'),
-            'fc6'         => $this->input->post('fc6'),
-            'veto'        => json_decode($this->input->post('veto')),
-            'vetoComment' => $this->input->post('vetoComment'),
-            'finalised'   => json_decode($this->input->post('finalised')),
-        ];
-        $admin                           = $this->session->userdata('user');
-        $admin_subuser                   = $this->session->userdata('admin_subuser');
-        $populate_voting_data['user_id'] = ($populate_voting_data['user_id'] == $admin['memberNo']) ?
-            $admin['memberNo'] : $admin_subuser['memberNo'];
-        if ( ! is_null($populate_voting_data['ticker']) && ! is_null($populate_voting_data['user_id'])) {
-            if ( ! is_null($populate_voting_data['fc1'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 1, $populate_voting_data['fc1']);
-            }
-            if ( ! is_null($populate_voting_data['fc2'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 2, $populate_voting_data['fc2']);
-            }
-            if ( ! is_null($populate_voting_data['fc3'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 3, $populate_voting_data['fc3']);
-            }
-            if ( ! is_null($populate_voting_data['fc4'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 4, $populate_voting_data['fc4']);
-            }
-            if ( ! is_null($populate_voting_data['fc5'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 5, $populate_voting_data['fc5']);
-            }
-            if ( ! is_null($populate_voting_data['fc6'])) {
-                $this->m_voting->updateFactor($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], 6, $populate_voting_data['fc6']);
-            }
-            if ( ! is_null($populate_voting_data['veto'])) {
-                $this->m_master->setVetoFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date']);
-            }
-            if ( ! is_null($populate_voting_data['vetoComment'])) {
-                echo $this->m_master->setVetoComment($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date'], $populate_voting_data['vetoComment']);
 
-            }
-            if ( ! is_null($populate_voting_data['finalised'])) {
-                $this->m_master->setFinaliseFlag($populate_voting_data['user_id'], $populate_voting_data['ticker'],
-                    $populate_voting_data['ic_date']);
-            }
-        }
+
+        $populate_voting_data = [];
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['user_id'] =  $this->input->post('user_id');
+        $populate_voting_data['factor'] = $this->input->post('factor');
+        $populate_voting_data['vote'] = $this->input->post('vote');
+
+        $this->m_voting->updateFactor(
+            $populate_voting_data['user_id'],
+            $populate_voting_data['ticker'],
+            $populate_voting_data['ic_date'],
+            $populate_voting_data['factor'],
+            $populate_voting_data['vote']
+        );
+    }
+
+    public function submit_master_veto(){
+        $populate_voting_data = [];
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['user_id'] =  $this->input->post('user_id');
+        $populate_voting_data['factor'] = $this->input->post('factor');
+        $populate_voting_data['vote'] = $this->input->post('vote');
+        $populate_voting_data['comment'] = $this->input->post('comment');
+        $this->m_master->updateVetoAndComment(
+            $populate_voting_data['vote'],
+            trim($populate_voting_data['comment']),
+            $populate_voting_data['user_id'],
+            $populate_voting_data['ticker'],
+            $populate_voting_data['ic_date']
+        );
+    }
+
+    public function submit_master_deep_dive(){
+        $populate_voting_data = [];
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['user_id'] =  $this->input->post('user_id');
+        $populate_voting_data['factor'] = $this->input->post('factor');
+        $populate_voting_data['vote'] = $this->input->post('vote');
+        $populate_voting_data['comment'] = $this->input->post('comment');
+
+        $this->m_master->updateDeepDiveAndComment(
+            $populate_voting_data['vote'],
+            trim($populate_voting_data['comment']),
+            $populate_voting_data['user_id'],
+            $populate_voting_data['ticker'],
+            $populate_voting_data['ic_date']
+        );
+    }
+
+    public function submit_master_finalise(){
+        $populate_voting_data = [];
+        $populate_voting_data['ic_date'] = $this->input->post('ic_date');
+        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['user_id'] =  $this->input->post('user_id');
+        $populate_voting_data['finalised'] = $this->input->post('finalised');
+
+        $this->m_master->updateFinalise(
+            $populate_voting_data['user_id'],
+            $populate_voting_data['ticker'],
+            $populate_voting_data['ic_date'],
+            $populate_voting_data['finalised']
+        );
     }
 }
