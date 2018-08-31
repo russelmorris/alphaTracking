@@ -70,7 +70,7 @@ $('#returns').change(function () {
 $('#query_build').click(function () {
     $body = $("body");
     $body.addClass("loading");
-    $.post('build-portfolio', {
+    $.post('/build-portfolio', {
         date: $('.query_ic_date').val(),
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
