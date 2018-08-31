@@ -52,7 +52,7 @@ class C_factors extends CI_Controller
         $this->load->template('v_factor_weights', $data);
 
     }
-//$factorNo, $memberNo, $icDate, $factorWeight
+
     public function submitFactorsWeight() {
         $factors = $this->input->post('factors');
         $memberNo =$this->input->post('ic_user');
@@ -71,7 +71,7 @@ class C_factors extends CI_Controller
     }
 
     public function getFactorWeights($memberNo, $icDate){
-        $factors = $data['factorWeights'] = $this->m_factors->getFactorWeights(
+        $factors = $this->m_factors->getFactorWeights(
             $memberNo,
             $icDate
         );

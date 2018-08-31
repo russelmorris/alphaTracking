@@ -46,7 +46,9 @@
             </td>
             <td class="vcenter">
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
-                    <?php echo $ic['inPortfolio'] == '1' ? "yes": "no"; ?>
+                    <?php echo $ic['inPortfolio'] == '1' ?
+                        '<span class="in-portfolio glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>':
+                        '<span class="out-portfolio glyphicon glyphicon-remove" aria-hidden="true"></span>'; ?>
                 </a>
             </td>
             <td class="vcenter hcenter final final-dis"><span class="hidden"><?php echo $ic['isFinalised']?></span>
@@ -240,9 +242,9 @@
                 <div class="cell_holder">
                     <div class="cell_part mbt-5">
                         <div class="form-group">
-                            <span class="dashboard-slider-5-text"><?php echo $ic['factorScore5']*10; ?></span>
+                            <span class="dashboard-slider-5-text"><?php echo ($ic['factorScore5'] == 0)? '-': $ic['factorScore5']*10; ?></span>
                             <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5,  this.value/10, this)"
-                                   type="range" min="0" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
+                                   type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
                         </div>
                     </div>
                     <div class="cell_part_hr"></div>
