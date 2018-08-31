@@ -74,7 +74,7 @@
             </td>
             <td class="vcenter final click">
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
-                    <?php echo is_null($ic['humanScore']) ? 0 :  round($ic['humanScore'], 2); ?>
+                    <?php echo is_null($ic['humanZScore']) ? 0 :  round($ic['humanZScore'], 2); ?>
                 </a>
             </td>
             <td class="vcenter final click">

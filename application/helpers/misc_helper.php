@@ -104,10 +104,10 @@ function find_latest_date($array)
 
 function cmp_humanScore($a, $b)
 {
-    if ($a["humanScore"] == $b["humanScore"]) {
+    if ($a["humanZScore"] == $b["humanZScore"]) {
         return 0;
     }
-    return ($a["humanScore"] > $b["humanScore"]) ? -1 : 1;
+    return ($a["humanZScore"] > $b["humanZScore"]) ? -1 : 1;
 }
 
 function cmp_masterID($a, $b)
