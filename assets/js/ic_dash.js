@@ -161,7 +161,7 @@ $(document).ready(function () {
 
         $('#create-human-score').attr('disabled', true);
         var icDate = $('#ic_dates').val();
-        $.post('create-human-score', {
+        $.post('/create-human-score', {
             ic_date: icDate,
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
@@ -186,7 +186,7 @@ $(document).ready(function () {
         var icDate = $('#ic_dates').val();
         var finalized = $('#finalised-label-value').val();
         $('#finalize-all').attr('disabled', true);
-        $.post('update-finalise-all', {
+        $.post('/update-finalise-all', {
             ic_date: icDate,
             ic_user: icUser,
             finalized: finalized,
