@@ -25,6 +25,13 @@
                 </a>
             <?php } ?>
         </li>
+        <li>
+            <?php if (($user['isComittee'] == 1 || $user['isAdmin'] == 1 )&& uri_string() != 'add-ic-date') { ?>
+                <a href="<?php echo base_url('add-ic-date') ?>">
+                    <i class="fa fa-tasks fa-fw"></i> Add IC Date
+                </a>
+            <?php } ?>
+        </li>
         <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin-dashboard', 'committee-completion-summary'])) { ?>
             <li>
                 <a href="<?php echo base_url('admin-dashboard') ?>">
@@ -32,6 +39,8 @@
                 </a>
             </li>
         <?php } ?>
+
+
 
         <?php if (uri_string() == 'dashboard') {  ?>
         <li>
