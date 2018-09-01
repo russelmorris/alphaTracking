@@ -73,7 +73,8 @@ $route['finalised-value']  = 'c_dashboard/finalised_value';
 $route['import-prospect']      = 'c_admin/import_prospect';
 $route['import-returns']       = 'c_admin/import_returns';
 
-$route['add-ic-date']   =   'c_ic_dates/icDates';
+$route['ic-dates']   =   'c_ic_dates/icDates';
+$route['add-ic-date']   =   'c_ic_dates/addNewIcDate';
 
 
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
