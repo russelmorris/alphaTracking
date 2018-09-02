@@ -83,7 +83,7 @@ class C_dashboard extends MY_Controller
         usort($icDashboard,"cmp_humanScore");
 
         foreach($icDashboard as $key => &$element){
-            if ($key > $portfolioCount) {
+            if ($key > $portfolioCount-1) {
                 $element['inPortfolio'] = 0;
             } else {
                 $element['inPortfolio'] = 1;
