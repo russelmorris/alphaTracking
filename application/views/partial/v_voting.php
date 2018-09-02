@@ -46,9 +46,12 @@
             </div>
         </div>
     </div>
+
+
     <!-- _______________________________________________ Voting Part start _____________________________________________-->
     <!-- Radio Button Module -->
     <div class="row">
+        <input id="is-finalised" type="text" value="<?php echo $voting_values[0]['isFinalised'];?>">
         <div class="col-md-8 col-md-offset-2">
             <div class="rb-box">
                 <?php $listNumber = 0; ?>
@@ -71,7 +74,8 @@
                             <div class="slider-holder">
                                 <input type="range" min="1" max="100"
                                        value="<?php echo $voting_value['factorScore'] * 10; ?>" class="slider"
-                                       id="factor_5">
+                                       id="factor_5"
+                                    <?php if ($voting_value['isFinalised'] == 1) {echo ' disabled ';} ?>>
                             </div>
                         </div>
 
@@ -115,13 +119,15 @@
                 <p><?php echo ++$listNumber; ?>.Comment</p>
                 <div class="row">
                     <div class="col-md-12 tarea ">
-                        <textarea id='textarea-veto' placeholder="Explain wshy?" class="form-control">
+                        <textarea id='textarea-veto' placeholder="Explain wshy?" class="form-control"
+                            <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>
                                     <?php echo !is_null($voting_values[0]['vetoComment']) ?
                                         $voting_values[0]['vetoComment'] : ''; ?>
                         </textarea>
                         <div class="row">
                             <div class="col-md-2">
-                                <button id="save_vetoComment" class="btn btn-default btn-sm mt-10">Save Comment</button>
+                                <button id="save_vetoComment" class="btn btn-default btn-sm mt-10"
+                                    <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>Save Comment</button>
                             </div>
                             <div class="col-md-10">
                                 <p id="veto-save-comment" class=" alert-save  hidden">Successfully saved!</p>
@@ -143,13 +149,15 @@
                         <div class="col-md-12 tarea deep_dive_togle <?php echo $voting_values[0]['isDeepDive'] == 1 ? '' : 'hidden'; ?> "
                              style="padding-top: 2%">
                             <p class="sub-header-comment">Comment</p>
-                            <textarea id='textarea-deep-dive' placeholder="Explain wshy?" class="form-control">
+                            <textarea id='textarea-deep-dive' placeholder="Explain wshy?" class="form-control"
+                                <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>
                                 <?php echo !is_null($voting_values[0]['deepDiveComment']) ?
                                     $voting_values[0]['deepDiveComment'] : ''; ?>
                             </textarea>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <button id="deepDiveComment" class="btn btn-default btn-sm mt-10">Save Comment
+                                    <button id="deepDiveComment" class="btn btn-default btn-sm mt-10"
+                                        <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>Save Comment
                                     </button>
                                 </div>
                                 <div class="col-md-10">

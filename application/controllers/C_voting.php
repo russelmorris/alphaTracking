@@ -62,7 +62,7 @@ class C_voting extends MY_Controller
 
         $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
         $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
-
+        print_f($data['voting_values']);
         $this->load->template('v_voting', $data);
     }
 
