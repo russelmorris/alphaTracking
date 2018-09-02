@@ -246,7 +246,7 @@ EOT;
 				machineScore,
 				machineRank,
 				humanScore,
-				0 as humanRank,
+				humanRank,
 				humanScore as finalScore,
 				0 as finalRank,
 				DATE_ADD(icDate, INTERVAL 
