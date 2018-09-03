@@ -82,7 +82,7 @@ function find_next_ic_date($array)
     if ($closestDate !== null) {
         return $closestDate->format('Y-m-d');
     } else {
-        return false;
+        return end($array);
     }
 }
 
