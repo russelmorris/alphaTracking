@@ -18,7 +18,7 @@ class M_ic extends CI_Model
     public function getMembers()
     {
         $ic_dates                  = $this->m_icdate->getIcDates();
-        $closest_icDate_from_today = find_closest_date(array_column($ic_dates, 'icDate'));
+        $closest_icDate_from_today = find_next_ic_date(array_column($ic_dates, 'icDate'));
 
         $query = $this->db
             ->select("*")

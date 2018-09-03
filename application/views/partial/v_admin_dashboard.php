@@ -57,13 +57,14 @@
     <!-- /.row -->
 <?php } ?>
     <div class="col-lg-12 col-md-12">
+        <?php echo $closest_icDate_from_today; ?>
         <table width="100%"
                class="table table-striped table-bordered table-hover "
                style="background: #FFFFFF"
                id="dataTables-example">
             <thead>
             <tr>
-                <th colspan="5" class="text-center">Summary of IC members</th>
+                <th colspan="5" class="text-center">Summary of IC members ( for icDate: <?php echo $closest_icDate_from_today; ?>)</th>
             </tr>
             <tr>
                 <th class="text-center">#</th>
