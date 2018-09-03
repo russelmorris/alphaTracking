@@ -36,8 +36,10 @@ class C_admin extends MY_Controller
         $data['admin']                     = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['users']                     = $this->m_ic->getMembers();
         $data['ic_dates']                  = $this->m_icdate->getIcDates();
-        $data['closest_icDate_from_today'] = find_closest_date(array_column($data['ic_dates'], 'icDate'));
+        $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
         $this->load->template('v_admin_dashboard', $data);
+
+
     }
 
     public function import_prospect()

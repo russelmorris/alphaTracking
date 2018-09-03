@@ -105,7 +105,10 @@ function find_latest_date($array)
 function cmp_humanScore($a, $b)
 {
     if ($a["humanZScore"] == $b["humanZScore"]) {
-        return 0;
+        if($a["machineRank"] == $b["machineRank"]) {
+            return 0;
+        }
+        return ($a["machineRank"] < $b["machineRank"]) ? -1 : 1;
     }
     return ($a["humanZScore"] > $b["humanZScore"]) ? -1 : 1;
 }
