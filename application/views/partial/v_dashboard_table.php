@@ -270,7 +270,8 @@
         responsive: false,
         paging: false,
         autoWidth: false,
-        bAutoWidth: false
+        bAutoWidth: false,
+        order: [[ <?php echo $orderBy;?>, 'asc' ]]
 
     });
     $('.slider_5').on('change', function(){

@@ -54,6 +54,7 @@ class C_dashboard extends MY_Controller
         $data = [];
 
         $data['selectedDate'] = $this->input->post('ic_date');
+        $data['orderBy'] = $this->input->post('orderBy');
         $data['selectedUser'] = json_decode($this->input->post('user_id'));
         $sessionUser = [];
         if (!$data['selectedUser']) {

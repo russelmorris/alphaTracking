@@ -106,7 +106,7 @@ function updateFinalise(ticker, element) {
 };
 
 
-function reloadDashboard() {
+function reloadDashboard( orderBy = 0) {
     $('#dashboard-table-holder').html('' +
         '<div colspan="15" class="text-center">' +
         '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>' +
@@ -122,6 +122,7 @@ function reloadDashboard() {
 
     $.post('/dashboard-ajax', {
         ic_date: $('.ic_dates').val(),
+        orderBy: orderBy,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -168,7 +169,7 @@ $(document).ready(function () {
             $('#create-human-score').removeAttr('disabled');
             alert(data);
             $body.removeClass("loading");
-            reloadDashboard();
+            reloadDashboard(9);
         }).fail(function (err) {
             $('#create-human-score').removeAttr('disabled');
             alert(err);
