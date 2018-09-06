@@ -37,6 +37,25 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="<?php echo base_url() ?>vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo base_url() ?>vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="<?php echo base_url() ?>vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo base_url() ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url() ?>vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo base_url() ?>vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="<?php echo base_url() ?>vendor/jquery/jquery.cookie.js"></script>
+    <script src="<?php echo base_url() ?>vendor/jquery/moment.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <![endif]-->
 
 </head>

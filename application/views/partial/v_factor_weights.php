@@ -93,6 +93,7 @@
                     factor_value: $('#factor_<?php echo $factorWeight['factorNo'];?>').val()/10
             });
        <?php } ?>
+
        $.post('/submit-factors-weight', {
            factors: factors,
            ic_date: $('#closestIcDate').val(),
