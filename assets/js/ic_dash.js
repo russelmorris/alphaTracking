@@ -134,6 +134,7 @@ function reloadDashboard( orderBy = 0) {
             $('.business-model').prop('disabled', true);
             $('.business-valuation').prop('disabled', true);
             $('.digital-footprint').prop('disabled', true);
+            $('.slider_5').prop('disabled', true);
             $('.uplift').prop('disabled', true);
             $('.competitor-analysis').prop('disabled', true);
             $('.risk').prop('disabled', true);
