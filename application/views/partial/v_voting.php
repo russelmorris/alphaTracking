@@ -51,7 +51,8 @@
     <!-- _______________________________________________ Voting Part start _____________________________________________-->
     <!-- Radio Button Module -->
     <div class="row">
-        <input id="is-finalised" type="text" value="<?php echo $voting_values[0]['isFinalised'];?>">
+        <input id="is-finalised" type="hidden" value="<?php echo $voting_values[0]['isFinalised'];?>">
+        <input id="allow-edit" type="hidden" value="<?php echo $allowEdit;?>">
         <div class="col-md-8 col-md-offset-2">
             <div class="rb-box">
                 <?php $listNumber = 0; ?>
@@ -75,7 +76,7 @@
                                 <input type="range" min="1" max="100"
                                        value="<?php echo $voting_value['factorScore'] * 10; ?>" class="slider"
                                        id="factor_5"
-                                    <?php if ($voting_value['isFinalised'] == 1) {echo ' disabled ';} ?>>
+                                    <?php if ($voting_value['isFinalised'] == 1 || $allowEdit !== 1) {echo ' disabled ';} ?>>
                             </div>
                         </div>
 

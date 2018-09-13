@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('.ticker_click').on("click", function(elem){
-        if($('#is-finalised').val() !== '1'){
+        if($('#is-finalised').val() !== '1' && $('#allow-edit').val() === '1'){
             $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
             $(this).parent().find("#factor_label_5").html(" ");
             $(this).parent().find("#factor_5").val("0");
@@ -20,7 +20,7 @@ $(document).ready(function () {
 
 
     $('#factor_5').on('change', function(){
-        if($('#is-finalised').val() !== '1') {
+        if($('#is-finalised').val() !== '1'  && $('#allow-edit').val() === '1') {
             $('#factor_label_5').html(Math.round($(this).val()));
             $('#factor5-pass').removeClass("rb-tab-active");
             $.post('/submit-voting', {
@@ -36,7 +36,7 @@ $(document).ready(function () {
     });
 
     $('#save_vetoComment').on('click', function(){
-        if($('#is-finalised').val() !== '1') {
+        if($('#is-finalised').val() !== '1'  && $('#allow-edit').val() === '1') {
             $.post('/submit-master-veto', {
                 factor: 'veto',
                 vote: $("#veto-data-value").attr("data-value"),
@@ -56,7 +56,7 @@ $(document).ready(function () {
     });
 
     $('.veto_click').on("click", function(elem) {
-        if($('#is-finalised').val() !== '1') {
+        if($('#is-finalised').val() !== '1'  && $('#allow-edit').val() === '1') {
             $('#veto').toggleClass(function () {
                 $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
                 $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
@@ -84,7 +84,7 @@ $(document).ready(function () {
 
 
     $('#deepDiveComment').on('click', function(){
-        if($('#is-finalised').val() !== '1') {
+        if($('#is-finalised').val() !== '1'  && $('#allow-edit').val() === '1') {
             $.post('/submit-master-deep-dive', {
                 factor: 'deepDive',
                 vote: $("#deep-dive-data-value").attr("data-value"),
@@ -103,7 +103,7 @@ $(document).ready(function () {
     });
 
     $('.deep_dive_click').on("click", function(elem) {
-        if($('#is-finalised').val() !== '1') {
+        if($('#is-finalised').val() !== '1'  && $('#allow-edit').val() === '1') {
             $('#deep-dive').toggleClass(function () {
                 $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
                 $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
@@ -129,22 +129,24 @@ $(document).ready(function () {
 
     //Switcher function:
     $("#rb-8").on('click', function () {
-        $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
-        $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
-        $.post('/submit-master-finalise', {
-            finalised: $(this).find(".rb-tab").attr("data-value"),
-            user_id: $('#user_id').val(),
-            ticker: $('#ticker').val(),
-            ic_date: $('#voting_ic_date').val(),
-            csnamerf: $.cookie('csrfcookiename')
-        }).done(function (data) {
-        });
-        if ($(this).find(".rb-tab").attr("data-value") == 1) {
-            $(this).addClass("rb-tab-active")
-        } else {
-            $(this).removeClass("rb-tab-active")
+        if( $('#allow-edit').val() === '1') {
+            $(this).find('span').text($(this).find('span').text() === 'No' ? 'Yes' : 'No');
+            $(this).find(".rb-tab").attr("data-value", $(this).find(".rb-tab").attr("data-value") == 1 ? 0 : 1);
+            $.post('/submit-master-finalise', {
+                finalised: $(this).find(".rb-tab").attr("data-value"),
+                user_id: $('#user_id').val(),
+                ticker: $('#ticker').val(),
+                ic_date: $('#voting_ic_date').val(),
+                csnamerf: $.cookie('csrfcookiename')
+            }).done(function (data) {
+            });
+            if ($(this).find(".rb-tab").attr("data-value") == 1) {
+                $(this).addClass("rb-tab-active")
+            } else {
+                $(this).removeClass("rb-tab-active")
+            }
+            location.reload();
         }
-        location.reload();
     });
 
 });
