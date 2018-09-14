@@ -26,7 +26,7 @@
             <?php } ?>
         </li>
         <li>
-            <?php if (($user['isComittee'] == 1 || $user['isAdmin'] == 1 )&& uri_string() != 'ic-dates') { ?>
+            <?php if (($user['isAdmin'] == 1 )&& uri_string() != 'ic-dates') { ?>
                 <a href="<?php echo base_url('ic-dates') ?>">
                     <i class="fa fa-tasks fa-fw"></i>IC Dates
                 </a>
