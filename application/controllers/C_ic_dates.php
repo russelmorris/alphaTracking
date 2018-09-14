@@ -18,7 +18,8 @@ class C_ic_dates extends CI_Controller
         $this->load->model([
             'm_admin',
             'm_ic',
-            'm_icdate'
+            'm_icdate',
+            'm_factors'
         ]);
 
     }
@@ -46,7 +47,16 @@ class C_ic_dates extends CI_Controller
             );
 
             $this->db->insert('icdate',$data);
+
+            $data['users']  = $this->m_ic->getMembers();
+
+            foreach ($data['users'] as $user){
+                $data['factors'] = $this->m_factors->createFactors($user['memberNo'], $this->input->post('icDateDatePicker'));
+            }
+
             redirect("ic-dates", 'refresh');
+
+
         }
         $data['csrf'] = array(
             'name' => $this->security->get_csrf_token_name(),
