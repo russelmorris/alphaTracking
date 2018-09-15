@@ -32,6 +32,13 @@
                 </a>
             <?php } ?>
         </li>
+        <li>
+            <?php if (($user['isAdmin'] == 1 )&& uri_string() != 'members') { ?>
+                <a href="<?php echo base_url('members') ?>">
+                    <i class="fa fa-tasks fa-fw"></i>Members
+                </a>
+            <?php } ?>
+        </li>
         <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin-dashboard', 'committee-completion-summary'])) { ?>
             <li>
                 <a href="<?php echo base_url('admin-dashboard') ?>">

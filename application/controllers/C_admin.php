@@ -33,12 +33,15 @@ class C_admin extends MY_Controller
     public function dashboard()
     {
         $data['user']                      = $this->session->userdata('user');
+        if($data['user']['isAdmin'] == 1){
         $data['admin']                     = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['users']                     = $this->m_ic->getMembers();
         $data['ic_dates']                  = $this->m_icdate->getIcDates();
         $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
         $this->load->template('v_admin_dashboard', $data);
-
+        }else{
+            redirect('dashboard');
+        }
 
     }
 
