@@ -135,6 +135,7 @@ EOT;
                     ->where('icDate',$ic_date )
                     ->where('memberNo',$member['memberNo'] )
                     ->order_by('humanZScore', 'desc')
+                    ->order_by('machineRank', 'asc')
                     ->from('master')
                     ->get();
             $masterOrdered = $query->result_array();

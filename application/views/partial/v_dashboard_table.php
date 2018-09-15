@@ -45,6 +45,7 @@
             <td class="vcenter final"><?php echo $index + 1; ?>
             </td>
             <td class="vcenter">
+                <span style="display: none;"><?php echo $ic['inPortfolio'];?></span>
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
                     <?php echo $ic['inPortfolio'] == '1' ?
                         '<span class="in-portfolio glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>':
@@ -74,7 +75,7 @@
             </td>
             <td class="vcenter final click">
                 <a href="<?php echo base_url("voting/" . $ic['icDate'] . "/" . $ic['ticker']); ?>">
-                    <?php echo is_null($ic['humanScore']) ? 0 :  round($ic['humanScore'], 2); ?>
+                    <?php echo is_null($ic['humanZScore']) ? 0 :  round($ic['humanZScore'], 2); ?>
                 </a>
             </td>
             <td class="vcenter final click">
@@ -244,7 +245,10 @@
                         <div class="form-group">
                             <span class="dashboard-slider-5-text"><?php echo ($ic['factorScore5'] == 0)? '-': $ic['factorScore5']*10; ?></span>
                             <input onchange="updateTicker('<?php echo $ic['ticker']; ?>', 5,  this.value/10, this)"
-                                   type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5" >
+                                   type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5 ticker_<?php echo $ic['ticker']; ?>"
+                                <?php if ($ic['isFinalised'] == 1) {
+                                    echo ' disabled ';
+                                } ?>>
                         </div>
                     </div>
                     <div class="cell_part_hr"></div>
@@ -266,7 +270,8 @@
         responsive: false,
         paging: false,
         autoWidth: false,
-        bAutoWidth: false
+        bAutoWidth: false,
+        order: [[ <?php echo $orderBy;?>, 'asc' ]]
 
     });
     $('.slider_5').on('change', function(){

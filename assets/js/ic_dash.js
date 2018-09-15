@@ -106,7 +106,7 @@ function updateFinalise(ticker, element) {
 };
 
 
-function reloadDashboard() {
+function reloadDashboard( orderBy = 0) {
     $('#dashboard-table-holder').html('' +
         '<div colspan="15" class="text-center">' +
         '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>' +
@@ -122,6 +122,7 @@ function reloadDashboard() {
 
     $.post('/dashboard-ajax', {
         ic_date: $('.ic_dates').val(),
+        orderBy: orderBy,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         csnamerf: $.cookie('csrfcookiename')
     }).done(function (data) {
@@ -133,6 +134,7 @@ function reloadDashboard() {
             $('.business-model').prop('disabled', true);
             $('.business-valuation').prop('disabled', true);
             $('.digital-footprint').prop('disabled', true);
+            $('.slider_5').prop('disabled', true);
             $('.uplift').prop('disabled', true);
             $('.competitor-analysis').prop('disabled', true);
             $('.risk').prop('disabled', true);
@@ -161,14 +163,14 @@ $(document).ready(function () {
 
         $('#create-human-score').attr('disabled', true);
         var icDate = $('#ic_dates').val();
-        $.post('create-human-score', {
+        $.post('/create-human-score', {
             ic_date: icDate,
             csnamerf: $.cookie('csrfcookiename')
         }).done(function (data) {
             $('#create-human-score').removeAttr('disabled');
             alert(data);
             $body.removeClass("loading");
-            reloadDashboard();
+            reloadDashboard(9);
         }).fail(function (err) {
             $('#create-human-score').removeAttr('disabled');
             alert(err);
@@ -186,7 +188,7 @@ $(document).ready(function () {
         var icDate = $('#ic_dates').val();
         var finalized = $('#finalised-label-value').val();
         $('#finalize-all').attr('disabled', true);
-        $.post('update-finalise-all', {
+        $.post('/update-finalise-all', {
             ic_date: icDate,
             ic_user: icUser,
             finalized: finalized,

@@ -14,7 +14,7 @@ class M_portfolio extends CI_Model
     public function buildPortfolioMasterStep1($ic_date)
     {
         $sql = <<<EOT
-        delete from portfolio_temp2
+        delete from portfolio_temp2 where 1=1
 EOT;
         $this->db->query($sql);
 
@@ -162,6 +162,8 @@ EOT;
         $this->db->query($sql);
     }
 
+
+
     public function buildPortfolioMasterStep3($ic_date)
     {
         $sql = <<<EOT
@@ -192,6 +194,19 @@ EOT;
 		ALTER TABLE portfolio_temp1 auto_increment = 1
 EOT;
         $this->db->query($sql);
+
+
+            $sql = <<<EOT
+        SELECT icd.icDate,  icd.portfolioCount
+            FROM icdate icd
+            where icd.icDate = '{$ic_date}';
+EOT;
+            $query = $this->db->query($sql);
+
+            $result = $query->result();
+
+            $analysisDate = $result[0]->icDate;
+            $portfolioCount = $result[0]->portfolioCount;
 
 
         $sql = <<<EOT
@@ -231,7 +246,7 @@ EOT;
 				machineScore,
 				machineRank,
 				humanScore,
-				0 as humanRank,
+				humanRank,
 				humanScore as finalScore,
 				0 as finalRank,
 				DATE_ADD(icDate, INTERVAL 
@@ -245,15 +260,15 @@ EOT;
 		
 			FROM
 				`master`
-		
 			WHERE
 				`master`.isActive = 1 AND
 				ifnull(vetoFlag,0) = 0 AND
-				memberNo = {$member['memberNo']}
+				memberNo = {$member['memberNo']} AND
+				icDate = '{$analysisDate}'
 			ORDER BY
 				humanScore DESC, machineRank asc
 				
-				limit 29
+				limit {$portfolioCount}
 EOT;
             $this->db->query($sql);
 

@@ -63,6 +63,15 @@ class C_voting extends MY_Controller
         $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
         $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
 
+        if($data['admin'] !== false) {
+            $data['allowEdit'] = 1;
+        } elseif($data['voting_values'][0]['isFinalised'] == 0){
+            if(strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 ') ) {
+                $data['allowEdit'] = 1;
+            } else {
+                $data['allowEdit'] = 0;
+            }
+        }
         $this->load->template('v_voting', $data);
     }
 

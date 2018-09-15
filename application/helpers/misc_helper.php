@@ -82,7 +82,7 @@ function find_next_ic_date($array)
     if ($closestDate !== null) {
         return $closestDate->format('Y-m-d');
     } else {
-        return false;
+        return end($array);
     }
 }
 
@@ -104,10 +104,13 @@ function find_latest_date($array)
 
 function cmp_humanScore($a, $b)
 {
-    if ($a["humanScore"] == $b["humanScore"]) {
-        return 0;
+    if ($a["humanZScore"] == $b["humanZScore"]) {
+        if($a["machineRank"] == $b["machineRank"]) {
+            return 0;
+        }
+        return ($a["machineRank"] < $b["machineRank"]) ? -1 : 1;
     }
-    return ($a["humanScore"] > $b["humanScore"]) ? -1 : 1;
+    return ($a["humanZScore"] > $b["humanZScore"]) ? -1 : 1;
 }
 
 function cmp_masterID($a, $b)

@@ -58,7 +58,7 @@
 
             <?php if ($user['isAdmin']): ?>
                 <div class="form-group">
-                    <label>Users <?php echo $selectedMemberNo ; ?></label>
+                    <label>Users</label>
                     <select class="form-control admin_users">
                         <?php foreach ($admin_users as $value): ?>
                                 <option <?php if($selectedMemberNo == $value['memberNo']) {echo 'selected';}?> value="<?php echo $value['memberNo']; ?>">
