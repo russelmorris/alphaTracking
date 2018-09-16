@@ -57,7 +57,6 @@
     <!-- /.row -->
 <?php } ?>
     <div class="col-lg-12 col-md-12">
-        <?php echo $closest_icDate_from_today; ?>
         <table width="100%"
                class="table table-striped table-bordered table-hover "
                style="background: #FFFFFF"
