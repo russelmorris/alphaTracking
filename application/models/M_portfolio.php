@@ -57,6 +57,7 @@ EOT;
             `master`.`name`,
             `master`.country,
             `master`.sector,
+            `master`.tag,
             sum(if(`master`.vetoFlag,1,0)) as vetoCount,
             `master`.machineScore,
             `master`.machineRank,
@@ -88,6 +89,7 @@ EOT;
             `master`.`name`,
             `master`.country,
             `master`.sector,
+            `master`.tag,
             `master`.machineScore,
             `master`.machineRank,
             `master`.strategyNo
@@ -141,6 +143,7 @@ EOT;
                 `name`,
                 country,
                 sector,
+                tag,
                 vetoCount,
                 machineScore,
                 machineRank,
@@ -221,6 +224,7 @@ EOT;
 					`name`,
 					country,
 					sector,
+					tag,
 					vetoCount,
 					machineScore,
 					machineRank,
@@ -242,6 +246,7 @@ EOT;
 				`name`,
 				country,
 				sector,
+				tag,
 				vetoFlag as vetoCount,
 				machineScore,
 				machineRank,
@@ -256,7 +261,7 @@ EOT;
 				DATE_ADD(icDate, INTERVAL 
                 IF(DAYNAME(icDate)  = 'Saturday', 2, 
                         IF(DAYNAME(icDate)  = 'Friday', 3, 1)
-                                ) DAY) as actualExecDate							
+                                ) DAY) as actualExecDate									
 		
 			FROM
 				`master`
@@ -291,6 +296,7 @@ EOT;
 					`name`,
 					country,
 					sector,
+					tag,
 					vetoCount,
 					machineScore,
 					machineRank,
@@ -312,6 +318,7 @@ EOT;
 					`name`,
 					country,
 					sector,
+					tag,
 					vetoCount,
 					machineScore,
 					machineRank,
