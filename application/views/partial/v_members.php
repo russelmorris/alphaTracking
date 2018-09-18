@@ -30,9 +30,18 @@
                     <td><?php echo $user['bWeight']; ?></td>
                     <td><?php echo $user['email']; ?></td>
                     <td><?php echo $user['password']; ?></td>
-                    <td><?php echo $user['isActive']; ?></td>
-                    <td><?php echo $user['isAdmin']; ?></td>
-                    <td><?php echo $user['isComittee']; ?></td>
+                    <td><?php echo $user['isActive'] == '1' ?
+                            '<span class="in-portfolio glyphicon glyphicon glyphicon-ok"></span>':
+                            '<span class="out-portfolio glyphicon glyphicon-remove"></span>';?>
+                    </td>
+                    <td><?php echo $user['isAdmin']== '1' ?
+                            '<span class="in-portfolio glyphicon glyphicon glyphicon-ok"></span>':
+                            '<span class="out-portfolio glyphicon glyphicon-remove"></span>';?>
+                    </td>
+                    <td><?php echo $user['isComittee']== '1' ?
+                            '<span class="in-portfolio glyphicon glyphicon glyphicon-ok"></span>':
+                            '<span class="out-portfolio glyphicon glyphicon-remove"></span>';?>
+                    </td>
                 </tr>
             <?php
             } ?>

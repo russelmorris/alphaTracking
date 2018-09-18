@@ -76,7 +76,7 @@ $route['import-returns']       = 'c_admin/import_returns';
 $route['ic-dates']   =   'c_ic_dates/icDates';
 $route['add-ic-date']   =   'c_ic_dates/addNewIcDate';
 
-$route['members'] = 'c_members/Members';
+$route['members'] = 'c_members/members';
 $route['add-member'] = 'c_members/addMember';
 
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
