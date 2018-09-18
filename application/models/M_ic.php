@@ -81,6 +81,34 @@ class M_ic extends CI_Model
         return $return;
     }
 
+    public function getMemberByMemberNo($memberNo){
+        $return = false;
+        $user   = $this->db
+            ->select('*')
+            ->where('memberNo', $memberNo)
+            ->from('ic')
+            ->get()
+            ->result_array();
+
+        if (count($user) > 0) {
+            $return = $user[0];
+        }
+
+        return $return;
+    }
+
+    public function updateMember($memberNo,$userData){
+        $return = false;
+        $user   = $this->db
+                ->set($userData)
+                ->where('memberNo',$memberNo)
+                ->update('ic');
+
+
+        return $return;
+
+    }
+
     public function finalised_overall($user_id, $icDate)
     {
 

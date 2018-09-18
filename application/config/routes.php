@@ -79,6 +79,9 @@ $route['add-ic-date']   =   'c_ic_dates/addNewIcDate';
 $route['members'] = 'c_members/members';
 $route['add-member'] = 'c_members/addMember';
 
+$route['members/(:num)/edit'] = 'c_members/editMember/$1';
+$route['members/(:num)/delete'] = 'c_members/deleteMember/$1';
+
 $route['voting/(:any)/(:any)'] = 'c_voting/voting/$1/$2';
 $route['submit-voting']        = 'c_voting/submit_voting';
 $route['submit-master-veto']        = 'c_voting/submit_master_veto';

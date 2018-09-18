@@ -19,6 +19,7 @@
                 <th class="text-center">Is Active</th>
                 <th class="text-center">Is Admin</th>
                 <th class="text-center">Is Comittee</th>
+                <th class="text-center">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +42,10 @@
                     <td><?php echo $user['isComittee']== '1' ?
                             '<span class="in-portfolio glyphicon glyphicon glyphicon-ok"></span>':
                             '<span class="out-portfolio glyphicon glyphicon-remove"></span>';?>
+                    </td>
+                    <td>
+                            <a class="btn btn-warning text-left mx-1" href="<?php echo base_url('members/' . $user['memberNo'] .'/edit') ?>"> Edit</a>
+                            <a class="btn btn-danger mx-1" href="<?php echo base_url('delete/. $user[\'memberNo\'])') ?>">Delete</a>
                     </td>
                 </tr>
             <?php

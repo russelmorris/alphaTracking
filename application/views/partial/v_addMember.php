@@ -3,8 +3,12 @@
         <div class="col-md-12">
             <h1>Add new Member</h1>
         </div>
+    </div>
+    <div class="row">
         <form class="form-horizontal" method="post">
             <input type="hidden" name="<?=$csrf['name'];?>" value="<?=$csrf['hash'];?>" />
+            <?php echo validation_errors('<div class="alert alert-danger">','</div>');?>
+
             <div class="form-group  ">
                 <label class="col-sm-4 control-label">strategy No</label>
                 <div class=" col-sm-4">
