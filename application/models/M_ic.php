@@ -58,8 +58,10 @@ class M_ic extends CI_Model
         }
         return $query;
     }
-    public function addMember($userData){
-        $this->db->insert('ic',$userData);
+    public function addMember($userData) {
+        $this->db->insert('ic', $userData);
+        
+        return $this->db->insert_id();
     }
 
     public function getUserByID($id = 0)

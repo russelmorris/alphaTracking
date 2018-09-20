@@ -18,6 +18,8 @@ class C_members extends CI_Controller
         $this->load->model([
             'm_admin',
             'm_ic',
+            'm_factors',
+            'm_icdate'
         ]);
     }
 
@@ -63,10 +65,16 @@ class C_members extends CI_Controller
                     'isComittee' => $isComittee,
                 );
 
-                $data['addMember'] = $this->m_ic->addMember($userData);
+                $data['memberId'] = $this->m_ic->addMember($userData);
+
+                $data['ic_dates'] = $this->m_icdate->getICDates();
+                $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
+
+
+                if (!$this->m_factors->createFactors($data['memberId'], $data['closest_icDate_from_today'])) {
+                    echo 'Someting is wrong when we creaete factor weights';
+                }
                 redirect('members');
-
-
             }
         }
         $data['csrf'] = array(
@@ -76,7 +84,8 @@ class C_members extends CI_Controller
         $this->load->template('v_addMember', $data);
 
     }
-    public function editMember($memberNo){
+
+    public function editMember($memberNo) {
         $data = [];
         $data['user'] = $this->session->userdata('user');
         if ($data['user']['isAdmin'] != 1) {
@@ -108,7 +117,8 @@ class C_members extends CI_Controller
                     'isComittee' => $isComittee,
                 );
 
-                $this->m_ic->updateMember($memberNo,$userData);
+                $this->m_ic->updateMember($memberNo, $userData);
+                
                 redirect('members');
             }
         }
@@ -120,12 +130,11 @@ class C_members extends CI_Controller
         $this->load->template('v_editMember', $data);
     }
 
-    public function formValidation(){
+    public function formValidation() {
         $this->load->library('form_validation');
-
         $this->form_validation->set_rules('memberName', 'Member Name', 'required');
         $this->form_validation->set_rules('bWeight', 'bWeight', 'required');
-        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('email', 'email', 'required|is_unique[ic.email]');
         $this->form_validation->set_rules('password', 'password', 'required');
 
     }

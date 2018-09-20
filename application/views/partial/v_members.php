@@ -44,13 +44,11 @@
                             '<span class="out-portfolio glyphicon glyphicon-remove"></span>';?>
                     </td>
                     <td>
-                            <a class="btn btn-warning text-left mx-1" href="<?php echo base_url('members/' . $user['memberNo'] .'/edit') ?>"> Edit</a>
-                            <a class="btn btn-danger mx-1" href="<?php echo base_url('delete/. $user[\'memberNo\'])') ?>">Delete</a>
-                    </td>
+                            <a class="btn btn-warning text-left mx-1" href="<?php echo base_url('members/' . $user['memberNo'] .'/edit') ?>"> Edit </a>
+                     </td>
                 </tr>
             <?php
             } ?>
-
             </tbody>
         </table>
     </div>
