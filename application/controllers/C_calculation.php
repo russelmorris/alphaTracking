@@ -40,13 +40,14 @@ class C_calculation extends MY_Controller
         }
 
         $members = $this->m_ic->getMembers();
+
         $this->m_calculation->writeToFactorStats($icDate);
         $this->m_calculation->updateFactoryStats();
         $this->m_calculation->updateVotingWithZScore();
-        $this->m_calculation->writeTempAggZScore();
+        $this->m_calculation->writeTempAggZScore($icDate);
         $this->m_calculation->updateMasterWithHumanScores();
         $this->m_calculation->updateMasterWithHumanRank($icDate, $members);
-        $this->m_calculation->updateMasterWithHumanScore();
+        $this->m_calculation->updateMasterWithHumanScore($icDate);
 
         echo 'Human Score has been created';
         return;
