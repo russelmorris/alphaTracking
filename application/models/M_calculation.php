@@ -72,21 +72,16 @@ EOT;
     {
         $sql = <<<EOT
        update voting as v
-INNER JOIN factorstats ON factorstats.factorNo = v.factorNo AND factorstats.icDate = v.icDate AND factorstats.memberNo = v.memberNo
-set v.zScore = if (factorstats.factorStDev >0,(factorScore - factorstats.factorMean)/factorstats.factorStDev,null);
+          INNER JOIN factorstats ON factorstats.factorNo = v.factorNo AND factorstats.icDate = v.icDate AND factorstats.memberNo = v.memberNo
+          set v.zScore = if (factorstats.factorStDev >0,(factorScore - factorstats.factorMean)/factorstats.factorStDev,null);
 
 EOT;
         $this->db->query($sql);
         return true;
     }
 
-    public function writeTempAggZScore()
+    public function writeTempAggZScore($icDate)
     {
-        $sql = <<<EOT
-       set @icdate = (select currentICdate from currentICdate);
-EOT;
-        $this->db->query($sql);
-
         $sql = <<<EOT
        drop table if exists tempAggZScore;
 EOT;
@@ -107,7 +102,7 @@ EOT;
             INNER JOIN factorWeights ON voting.strategyNo = factorWeights.strategyNo AND voting.icDate = factorWeights.icDate AND voting.memberNo = factorWeights.memberNo AND voting.factorNo = factorWeights.factorNo
             
             where
-              voting.icDate = @icdate
+              voting.icDate = '$icDate'
             GROUP BY
               voting.masterID;
 EOT;
@@ -149,22 +144,21 @@ EOT;
         return true;
     }
 
-    public function  updateMasterWithHumanScore ()
+    public function  updateMasterWithHumanScore ($icDate)
     {
-        $sql = <<<EOT
-        set @icdate = (select currentICdate from currentICdate);
-EOT;
-        $this->db->query($sql);
+        // get number of prospects for tht IC date
+        $query = $this->db->select('prospectID')
+            ->where ('icdate', $icDate)
+            ->from ('prospects')
+            ->get();
+        $prospectCount = $query->num_rows();
 
-        $sql = <<<EOT
-        set @prospectCount = (select count(prospectID) from prospects where icdate = @icdate);
-EOT;
-        $this->db->query($sql);
 
         $sql = <<<EOT
         update `master` as m
-            set m.humanScore = (1 - humanRank/@prospectCount),
-             m.bWeightedHumanScore = (1 - humanRank/@prospectCount) * bWeight;
+            set m.humanScore = (1 - m.humanRank/$prospectCount),
+             m.bWeightedHumanScore = (1 - m.humanRank/$prospectCount) * m.bWeight
+             where m.icDate = '$icDate';
 EOT;
         $this->db->query($sql);
         return true;
