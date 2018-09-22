@@ -34,7 +34,7 @@ class M_master extends CI_Model
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
-            "isActive"       => 1
+            "isActive"       => array_key_exists('isActive', $member )? $member['isActive'] :  1
         ];
 
         //check if we have already inserted

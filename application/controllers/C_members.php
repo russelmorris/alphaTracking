@@ -7,6 +7,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_auth m_auth
  * @property  M_ic m_ic
  * @property  M_icdate m_icdate
+ * @property  M_prospects m_prospects
+ * @property  M_factors m_factors
+ * @property  M_master m_master
+ * @property  M_voting m_voting
  * @property  CI_Security security
  */
 class C_members extends CI_Controller
@@ -19,7 +23,10 @@ class C_members extends CI_Controller
             'm_admin',
             'm_ic',
             'm_factors',
-            'm_icdate'
+            'm_icdate',
+            'm_prospects',
+            'm_master',
+            'm_voting'
         ]);
     }
 
@@ -70,10 +77,53 @@ class C_members extends CI_Controller
                 $data['ic_dates'] = $this->m_icdate->getICDates();
                 $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
 
+                if($userData['isComittee'] == 1) {
+                    if (!$this->m_factors->createFactors($data['memberId'], $data['closest_icDate_from_today'])) {
+                        echo 'Someting is wrong when we creaete factor weights';
+                    }
 
-                if (!$this->m_factors->createFactors($data['memberId'], $data['closest_icDate_from_today'])) {
-                    echo 'Someting is wrong when we creaete factor weights';
+                    echo $data['memberId'];
+                    $prospects = $this->m_prospects->getProspectsByDate($data['closest_icDate_from_today']);
+
+                    print_f($prospects);
+
+
+                    foreach ($prospects as $prospect) {
+                        $info = [
+                            'strategyNo' => 1,
+                            'icDate' => $data['closest_icDate_from_today'],
+                            'ticker' => $prospect['ticker'],
+                            'country' => $prospect['country'],
+                            'RIC' => $prospect['RIC'],
+                            'name' => $prospect['name'],
+                            'sector' => $prospect['sector'],
+                            'machineScore' => $prospect['machineScore'],
+                            'machineRank' => $prospect['machineRank'],
+                            'machineScore2' => $prospect['machineScore2'],
+                            'machineRank2' => $prospect['machineRank2'],
+                            'machineScore3' => $prospect['machineScore3'],
+                            'machineRank3' => $prospect['machineRank3']
+                        ];
+                        $member = [
+                            'memberNo' => $data['memberId'],
+                            'memberName' => $userData['memberName'],
+                            'bWeight' => $userData['bWeight'],
+                            'isActive' => $userData['isActive'],
+                        ];
+
+                        print_f($member);
+
+                        $factors = $this->m_factors->getAllFactors();
+
+                        $masterId = $this->m_master->insertProspect($info, $member);
+                        if ($masterId > 0) {
+                            foreach ($factors as $factor) {
+                                $this->m_voting->insertProspect($info, $masterId, $member, $factor);
+                            }
+                        }
+                    }
                 }
+
                 redirect('members');
             }
         }
@@ -96,7 +146,7 @@ class C_members extends CI_Controller
         $data['users'] = $this->m_ic->getAllMembers();
         $data['member'] = $this->m_ic->getMemberByMemberNo($memberNo);
 
-        $this->formValidation();
+        $this->editFormValidation();
 
 
         if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -118,7 +168,7 @@ class C_members extends CI_Controller
                 );
 
                 $this->m_ic->updateMember($memberNo, $userData);
-                
+
                 redirect('members');
             }
         }
@@ -137,6 +187,14 @@ class C_members extends CI_Controller
         $this->form_validation->set_rules('email', 'email', 'required|is_unique[ic.email]');
         $this->form_validation->set_rules('password', 'password', 'required');
 
+    }
+
+    public function editFormValidation(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('memberName', 'Member Name', 'required');
+        $this->form_validation->set_rules('bWeight', 'bWeight', 'required');
+        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
     }
 
 }
