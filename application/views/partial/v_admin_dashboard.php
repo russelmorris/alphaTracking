@@ -191,7 +191,7 @@
                     <label>For IC date</label>
                     <select class="form-control query_ic_date">
                         <?php foreach ($ic_dates as $value): ?>
-                            <?php if (strtotime($value['icDate']) >= strtotime('today')): ?>
+                            <?php if (strtotime($value['icDate'].' 23:59:59 + 5 days') >= strtotime('today')): ?>
                                 <option value="<?php echo $value['icDate']; ?>">
                                     <?php echo $value['icDate']; ?></option>
                             <?php endif; ?>
