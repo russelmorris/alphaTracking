@@ -11,13 +11,13 @@ class M_icdate extends CI_Model
         parent::__construct();
     }
 
-    public function getIcDates()
+    public function getIcDates($order = 'ASC')
     {
         $query = $this->db
             ->select("*")
             ->where ('strategyNo', 1)
             ->from('icdate')
-            ->order_by('icDate', 'ASC')
+            ->order_by('icDate', $order)
             ->get();
         return $query->result_array();
     }

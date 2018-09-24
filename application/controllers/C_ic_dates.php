@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_ic m_ic
  * @property  M_icdate m_icdate
  * @property  CI_Security security
+ * @property  M_current_ic_date m_current_ic_date
  */
 class C_ic_dates extends CI_Controller
 {
@@ -19,7 +20,8 @@ class C_ic_dates extends CI_Controller
             'm_admin',
             'm_ic',
             'm_icdate',
-            'm_factors'
+            'm_factors',
+            'm_current_ic_date'
         ]);
 
     }
@@ -28,11 +30,12 @@ class C_ic_dates extends CI_Controller
     {
 
         $data['user'] = $this->session->userdata('user');
+        $data['currentICDate'] = $this->m_current_ic_date->getCurrentIcDate();
 
         if ($data['user']['isAdmin'] == 1) {
             $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
             $data['users'] = $this->m_ic->getMembers();
-            $data['ic_dates'] = $this->m_icdate->getIcDates();
+            $data['ic_dates'] = $this->m_icdate->getIcDates($order = 'DESC');
             $this->load->template('v_ic_dates', $data);
         } else {
             redirect('dashboard');
@@ -76,6 +79,18 @@ class C_ic_dates extends CI_Controller
             $data['ic_dates'] = $this->m_icdate->getIcDates();
 
             $this->load->template('v_add_new_ic_date', $data);
+        } else {
+            redirect('dashboard');
+        }
+    }
+
+    public function updateCurrentIcDate() {
+        $data['user'] = $this->session->userdata('user');
+        if ($data['user']['isAdmin'] == 1) {
+            if ($this->input->server('REQUEST_METHOD') == 'POST') {
+                $data['users'] = $this->m_current_ic_date->updateCurrentIcDate($this->input->post('currentIcDate'));
+                redirect("ic-dates", 'refresh');
+            }
         } else {
             redirect('dashboard');
         }

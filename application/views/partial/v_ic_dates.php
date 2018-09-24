@@ -10,10 +10,10 @@
                 <label for="current-ic-date"><h4>Current ICDate:</h4> </label>
                 <select class="form-control" id="current-ic-date">
                     <?php foreach ($ic_dates as $ic_date) { ?>
-                        <option><?php echo $ic_date['icDate'] ?></option>
+                        <option <?php if($currentICDate === $ic_date['icDate']){ echo ' selected ';} ?>><?php echo $ic_date['icDate'] ?></option>
                     <?php } ?>
                 </select>
-                <button class="btn btn-primary" type="button"> Set Curenet date</button>
+                <button class="btn btn-primary" type="button" id="set-current-ic-date"> Set Current IC Date</button>
             </div>
         </div>
         <div class="col-md-6 no-padding pull-right">
@@ -35,7 +35,7 @@
             </thead>
             <tbody>
             <?php foreach ($ic_dates as $ic_date) { ?>
-                <tr>
+                <tr <?php if($currentICDate === $ic_date['icDate']){ echo 'class="current-ic-date"';} ?> >
                     <td><?php echo $ic_date['icDate']; ?></td>
                     <td><?php echo $ic_date['strategyNo']; ?></td>
                     <td><?php echo $ic_date['planExecDate']; ?></td>
@@ -50,3 +50,18 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#set-current-ic-date').on('click', function(){
+            $('#set-current-ic-date').prop('disabled', true);
+            $.post('/update-current-ic-date', {
+                currentIcDate: $('#current-ic-date').val(),
+                csnamerf: $.cookie('csrfcookiename')
+            }).done(function (data) {
+                location.reload();
+            })
+        })
+    })
+</script>
