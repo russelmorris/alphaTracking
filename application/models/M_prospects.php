@@ -46,6 +46,7 @@ class M_prospects extends CI_Model
             'processed'       => 1,
             'SWSurl_test'     => $data['SWSurl_test'],
             'SWSurl'          => $data['SWSurl'],
+            'tag'             => $data['tag'],
 
 
         ];
@@ -84,6 +85,7 @@ class M_prospects extends CI_Model
                 ->set('SWSurl', $prospectData['SWSurl'])
                 ->set('SWSurl_test', $prospectData['SWSurl_test'])
                 ->set('processed', $prospectData['processed'])
+                ->set('tag', $prospectData['tag'])
                 ->where('strategyNo', 1)
                 ->where('ticker', $data['ticker'])
                 ->where('country', $data['country'])
