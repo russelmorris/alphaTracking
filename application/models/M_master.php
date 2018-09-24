@@ -27,10 +27,11 @@ class M_master extends CI_Model
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
             "machineRank"    => $data['machineRank'],
-            "machineScore2"   => $data['machineScore2'],
-            "machineRank2"    => $data['machineRank2'],
-            "machineScore3"   => $data['machineScore3'],
-            "machineRank3"    => $data['machineRank3'],
+            "machineScore2"  => $data['machineScore2'],
+            "machineRank2"   => $data['machineRank2'],
+            "machineScore3"  => $data['machineScore3'],
+            "machineRank3"   => $data['machineRank3'],
+            "tag"            => $data['tag'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
@@ -77,6 +78,7 @@ class M_master extends CI_Model
                 ->set("memberName", $prospectData['memberName'])
                 ->set("bWeight", $prospectData['bWeight'])
                 ->set("isActive", $prospectData['isActive'])
+                ->set("tag", $prospectData['rag'])
                 ->where('masterID', $masterID)
                 ->update('master');
         }
