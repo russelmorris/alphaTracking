@@ -8,7 +8,7 @@ $(document).ready(function () {
             $(this).addClass('rb-tab-active');
             $.post('/submit-voting', {
                 ic_date: $('#voting_ic_date').val(),
-                ticker: $('#ticker').val(),
+                masterID: $('#masterID').val(),
                 user_id: $('#user_id').val(),
                 factor: $(this).attr("data-factor"),
                 vote: $(this).attr("data-value"),
@@ -25,7 +25,7 @@ $(document).ready(function () {
             $('#factor5-pass').removeClass("rb-tab-active");
             $.post('/submit-voting', {
                 ic_date: $('#voting_ic_date').val(),
-                ticker: $('#ticker').val(),
+                masterID: $('#masterID').val(),
                 user_id: $('#user_id').val(),
                 factor: 5,
                 vote: $(this).val() / 10,
@@ -42,7 +42,7 @@ $(document).ready(function () {
                 vote: $("#veto-data-value").attr("data-value"),
                 comment: $("#textarea-veto").val(),
                 user_id: $('#user_id').val(),
-                ticker: $('#ticker').val(),
+                masterID: $('#masterID').val(),
                 ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
@@ -65,7 +65,7 @@ $(document).ready(function () {
                     vote: $("#veto-data-value").attr("data-value"),
                     comment: $("#veto-data-value").attr("data-value") === 1 ? $("#textarea-veto").val() : null,
                     user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
+                    masterID: $('#masterID').val(),
                     ic_date: $('#voting_ic_date').val(),
                     csnamerf: $.cookie('csrfcookiename')
                 }).done(function (data) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
                 vote: $("#deep-dive-data-value").attr("data-value"),
                 comment: $("#textarea-deep-dive").val(),
                 user_id: $('#user_id').val(),
-                ticker: $('#ticker').val(),
+                masterID: $('#masterID').val(),
                 ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {
@@ -112,7 +112,7 @@ $(document).ready(function () {
                     vote: $("#deep-dive-data-value").attr("data-value"),
                     comment: $("#deep-dive-data-value").attr("data-value") == 1 ? $("#textarea-deep-dive").val() : null,
                     user_id: $('#user_id').val(),
-                    ticker: $('#ticker').val(),
+                    masterID: $('#masterID').val(),
                     ic_date: $('#voting_ic_date').val(),
                     csnamerf: $.cookie('csrfcookiename')
                 }).done(function (data) {
@@ -135,7 +135,7 @@ $(document).ready(function () {
             $.post('/submit-master-finalise', {
                 finalised: $(this).find(".rb-tab").attr("data-value"),
                 user_id: $('#user_id').val(),
-                ticker: $('#ticker').val(),
+                masterID: $('#masterID').val(),
                 ic_date: $('#voting_ic_date').val(),
                 csnamerf: $.cookie('csrfcookiename')
             }).done(function (data) {

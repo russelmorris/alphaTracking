@@ -58,7 +58,7 @@ class M_voting extends CI_Model
      * @param $factorNo
      * @param $factorVal
      */
-    public function updateFactor($user_id, $ticker, $ic_date, $factorNo, $factorVal)
+    public function updateFactor($user_id, $masterID, $ic_date, $factorNo, $factorVal)
     {
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
@@ -66,7 +66,7 @@ class M_voting extends CI_Model
             ->where([
                 'strategyNo' => 1,
                 'memberNo'   => $user_id,
-                'ticker'     => $ticker,
+                'masterID'     => $masterID,
                 'icDate'     => $ic_date,
                 'factorNo'   => $factorNo
             ])
@@ -95,7 +95,7 @@ class M_voting extends CI_Model
         return $return;
     }
 
-    public function getLatestVotingValues($user_id, $ticker, $ic_date)
+    public function getLatestVotingValues($user_id, $prospect, $ic_date)
     {
         $return = false;
         $values = $this->db->select('f.factorOrder')
@@ -113,12 +113,13 @@ class M_voting extends CI_Model
                            ->select('m.DateModified')
                            ->select('m.country')
                            ->from('voting v')
-                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate',
+                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate  AND v.masterID = m.masterID',
                                'inner')
                             ->join('factors f', 'v.factorNo = f.factorNo',
                                 'inner')
                            ->where('v.memberNo', $user_id)
-                           ->where('v.ticker', $ticker)
+                           ->where('v.ticker', $prospect['ticker'])
+                           ->where('m.RIC', $prospect['RIC'])
                            ->where('v.icDate', $ic_date)
                            ->where('f.includeDashboard', 1)
                            ->order_by('factorOrder', 'ASC')

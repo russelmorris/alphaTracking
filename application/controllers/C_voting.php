@@ -33,18 +33,20 @@ class C_voting extends MY_Controller
         $this->load->model(['m_voting', 'm_master', 'm_prospects', 'm_factors']);
     }
 
-    public function voting($icDate, $ticker)
+    public function voting($icDate, $masterID)
     {
         $data                  = [];
         $data['icdate']        = $icDate;
-        $data['ticker']        = $ticker;
-        $data['prospect']      = $this->m_prospects->getProspectByDateAndTicker($data['icdate'], $data['ticker']);
+        $data['masterID']        = $masterID;
+        $data['prospect']      = $this->m_prospects->getProspectByMasterID($data['masterID']);
         $data['user']          = $this->session->userdata('user');
         $data['sub_user']      = $this->session->userdata('admin_subuser') ?
             $this->session->userdata('admin_subuser') : false;
+
         $data['voting_values'] = $this->m_voting->getLatestVotingValues(
             $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
-            $ticker, $icDate);
+            $data['prospect'], $icDate);
+
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
 
@@ -53,23 +55,31 @@ class C_voting extends MY_Controller
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ?  true : false;
 
 
-        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-alexa.jpg";
+        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/".$icDate."/".$icDate."-".strtolower(str_replace(" ", "",$data['prospect']['ticker']."-".$data['prospect']['country']))."-alexa.jpg";
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ?  true : false;
 
 
-        $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$ticker."-".$data['prospect']['country']))."-googletrends.jpg";
+        $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-".strtolower(str_replace(" ", "",$data['prospect']['ticker']."-".$data['prospect']['country']))."-googletrends.jpg";
         $data['googleImageURLExist'] = file_exists($data['googleImageURL'])?  true : false;
 
-        $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
-        $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker($data['icdate'], $data['prospect']['prospectID']);
+        $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker(
+            $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
+            $data['icdate'], $data['prospect']['prospectID']);
 
-        if($data['admin'] !== false) {
+        $data['next'] = $this->m_prospects->getNextProspectByDateAndTicker(
+            $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
+            $data['icdate'], $data['prospect']['prospectID']);
+
+        $data['allowEdit'] = 0;
+        if ($data['admin'] !== false) {
             $data['allowEdit'] = 1;
-        } elseif($data['voting_values'][0]['isFinalised'] == 0){
-            if(strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 ') ) {
-                $data['allowEdit'] = 1;
-            } else {
+        } elseif (strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 ')) {
+            $data['allowEdit'] = 1;
+        } else {
+            if ($data['voting_values'][0]['isFinalised'] == 0) {
                 $data['allowEdit'] = 0;
+            } else {
+                $data['allowEdit'] = 1;
             }
         }
         $this->load->template('v_voting', $data);
@@ -88,14 +98,14 @@ class C_voting extends MY_Controller
 
         $populate_voting_data = [];
         $populate_voting_data['ic_date'] = $this->input->post('ic_date');
-        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['masterID'] = $this->input->post('masterID');
         $populate_voting_data['user_id'] =  $this->input->post('user_id');
         $populate_voting_data['factor'] = $this->input->post('factor');
         $populate_voting_data['vote'] = $this->input->post('vote');
 
         $this->m_voting->updateFactor(
             $populate_voting_data['user_id'],
-            $populate_voting_data['ticker'],
+            $populate_voting_data['masterID'],
             $populate_voting_data['ic_date'],
             $populate_voting_data['factor'],
             $populate_voting_data['vote']
@@ -105,7 +115,7 @@ class C_voting extends MY_Controller
     public function submit_master_veto(){
         $populate_voting_data = [];
         $populate_voting_data['ic_date'] = $this->input->post('ic_date');
-        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['masterID'] = $this->input->post('masterID');
         $populate_voting_data['user_id'] =  $this->input->post('user_id');
         $populate_voting_data['factor'] = $this->input->post('factor');
         $populate_voting_data['vote'] = $this->input->post('vote');
@@ -114,7 +124,7 @@ class C_voting extends MY_Controller
             $populate_voting_data['vote'],
             trim($populate_voting_data['comment']),
             $populate_voting_data['user_id'],
-            $populate_voting_data['ticker'],
+            $populate_voting_data['masterID'],
             $populate_voting_data['ic_date']
         );
     }
@@ -122,7 +132,7 @@ class C_voting extends MY_Controller
     public function submit_master_deep_dive(){
         $populate_voting_data = [];
         $populate_voting_data['ic_date'] = $this->input->post('ic_date');
-        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['masterID'] = $this->input->post('masterID');
         $populate_voting_data['user_id'] =  $this->input->post('user_id');
         $populate_voting_data['factor'] = $this->input->post('factor');
         $populate_voting_data['vote'] = $this->input->post('vote');
@@ -132,7 +142,7 @@ class C_voting extends MY_Controller
             $populate_voting_data['vote'],
             trim($populate_voting_data['comment']),
             $populate_voting_data['user_id'],
-            $populate_voting_data['ticker'],
+            $populate_voting_data['masterID'],
             $populate_voting_data['ic_date']
         );
     }
@@ -140,13 +150,13 @@ class C_voting extends MY_Controller
     public function submit_master_finalise(){
         $populate_voting_data = [];
         $populate_voting_data['ic_date'] = $this->input->post('ic_date');
-        $populate_voting_data['ticker'] = $this->input->post('ticker');
+        $populate_voting_data['masterID'] = $this->input->post('masterID');
         $populate_voting_data['user_id'] =  $this->input->post('user_id');
         $populate_voting_data['finalised'] = $this->input->post('finalised');
 
         $this->m_master->updateFinalise(
             $populate_voting_data['user_id'],
-            $populate_voting_data['ticker'],
+            $populate_voting_data['masterID'],
             $populate_voting_data['ic_date'],
             $populate_voting_data['finalised']
         );
