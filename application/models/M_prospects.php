@@ -272,10 +272,44 @@ class M_prospects extends CI_Model
         return $return;
     }
 
-    public function getPreviousProspectByDateAndTicker($icDate = '', $prospectId)
+    public function getProspectByMasterID($masterID)
     {
         $return = [];
-        $this->db->select('ticker');
+
+        $masterRecord = $this->db->select('*')
+                ->where('masterID', $masterID)
+                ->from('master')
+                ->get()
+                ->result_array();
+        if (count($masterRecord) > 0 ){
+
+            $masterRecord = $masterRecord[0];
+        } else {
+            return [];
+        }
+
+
+        $this->db->select('*');
+        $this->db->from('prospects p');
+
+        $this->db->where('p.strategyNo', 1);
+        $this->db->where('p.icDate', $masterRecord['icDate']);
+        $this->db->where('p.ticker', $masterRecord['ticker']);
+        $this->db->where('p.RIC', $masterRecord['RIC']);
+        $result = $this->db->get()->result_array();
+        if (count($result) > 0) {
+            $return = $result[0];
+        }
+
+        return $return;
+    }
+
+
+
+    public function getPreviousProspectByDateAndTicker($userId, $icDate = '', $prospectId)
+    {
+        $return = [];
+        $this->db->select('ticker, RIC');
         $this->db->from('prospects p');
 
         $this->db->where('p.strategyNo', 1);
@@ -283,17 +317,26 @@ class M_prospects extends CI_Model
         $this->db->where('p.prospectId < ', $prospectId);
         $this->db->limit(1);
         $this->db->order_by('p.prospectId', 'desc');
-        $result = $this->db->get()->result_array();
-        if (count($result) > 0) {
-            $return = $result[0]['ticker'];
+        $prospect = $this->db->get()->result_array();
+        if (count($prospect) > 0) {
+            $masterRecord = $this->db->select('*')
+                ->where('ticker', $prospect[0]['ticker'])
+                ->where('RIC', $prospect[0]['RIC'])
+                ->where('icDate', $icDate)
+                ->where('memberNo', $userId)
+                ->from('master')
+                ->get()
+                ->result_array();
+            if (count($masterRecord) > 0 ){
+                $return = $masterRecord[0]['masterID'];
+            }
         }
-
         return $return;
     }
-    public function getNextProspectByDateAndTicker($icDate = '', $prospectId)
+    public function getNextProspectByDateAndTicker($userId, $icDate = '', $prospectId)
     {
         $return = [];
-        $this->db->select('ticker');
+        $this->db->select('ticker, RIC');
         $this->db->from('prospects p');
 
         $this->db->where('p.strategyNo', 1);
@@ -301,9 +344,19 @@ class M_prospects extends CI_Model
         $this->db->where('p.prospectId > ', $prospectId);
         $this->db->limit(1);
         $this->db->order_by('p.prospectId', 'asc');
-        $result = $this->db->get()->result_array();
-        if (count($result) > 0) {
-            $return = $result[0]['ticker'];
+        $prospect = $this->db->get()->result_array();
+        if (count($prospect) > 0) {
+            $masterRecord = $this->db->select('*')
+                ->where('ticker', $prospect[0]['ticker'])
+                ->where('RIC', $prospect[0]['RIC'])
+                ->where('icDate', $icDate)
+                ->where('memberNo', $userId)
+                ->from('master')
+                ->get()
+                ->result_array();
+            if (count($masterRecord) > 0 ){
+                $return = $masterRecord[0]['masterID'];
+            }
         }
 
         return $return;

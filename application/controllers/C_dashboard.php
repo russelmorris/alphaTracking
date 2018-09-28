@@ -150,7 +150,7 @@ class C_dashboard extends MY_Controller
 
         $this->m_voting->updateFactor(
             $memberNo,
-            $postData['ticker'],
+            $postData['masterID'],
             $postData['ic_date'],
             $postData['factor'],
             $postData['value']
@@ -177,7 +177,7 @@ class C_dashboard extends MY_Controller
 
         $newVetoValue = $this->m_master->setVetoFlag(
             $memberNo,
-            $postData['ticker'],
+            $postData['masterID'],
             $postData['ic_date']
         );
         echo $newVetoValue;
@@ -201,7 +201,7 @@ class C_dashboard extends MY_Controller
         }
         $newFinalisedValue = $this->m_master->setFinaliseFlag(
             $memberNo,
-            $postData['ticker'],
+            $postData['masterID'],
             $postData['ic_date']
         );
         echo $newFinalisedValue;
