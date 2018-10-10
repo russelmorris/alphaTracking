@@ -25,10 +25,10 @@ function final_value() {
 
 }
 
-function updateTicker(ticker, factor, value, element) {
+function updateTicker(masterID, factor, value, element) {
 
     $.post('/update-factor', {
-        ticker: ticker,
+        masterID: masterID,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         factor: factor,
@@ -59,9 +59,9 @@ function refreshTableData() {
 
     });
 }
-function updateVeto(ticker, element) {
+function updateVeto(masterID, element) {
     $.post('/update-veto', {
-        ticker: ticker,
+        masterID: masterID,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')
@@ -79,9 +79,9 @@ function updateVeto(ticker, element) {
     });
 };
 
-function updateFinalise(ticker, element) {
+function updateFinalise(masterID, element) {
     $.post('/update-finalise', {
-        ticker: ticker,
+        masterID: masterID,
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
         csnamerf: $.cookie('csrfcookiename')

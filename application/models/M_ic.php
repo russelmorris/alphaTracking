@@ -38,6 +38,32 @@ class M_ic extends CI_Model
         return $query;
     }
 
+    public function getAllMembers()
+    {
+        $ic_dates                  = $this->m_icdate->getIcDates();
+        $closest_icDate_from_today = find_next_ic_date(array_column($ic_dates, 'icDate'));
+
+        $query = $this->db
+            ->select("*")
+            ->where('strategyNo', 1)
+            ->from('ic')
+            ->get()
+            ->result_array();
+
+
+        foreach ($query as $index => $value) {
+            $query[$index]['finalise_overall'] = number_format($this->finalised_overall($value['memberNo'], $closest_icDate_from_today),
+                2, '.', '');
+            $query[$index]['last_edited']      = $this->last_edited($value['memberNo']);
+        }
+        return $query;
+    }
+    public function addMember($userData) {
+        $this->db->insert('ic', $userData);
+        
+        return $this->db->insert_id();
+    }
+
     public function getUserByID($id = 0)
     {
         $return = false;
@@ -55,6 +81,34 @@ class M_ic extends CI_Model
         }
 
         return $return;
+    }
+
+    public function getMemberByMemberNo($memberNo){
+        $return = false;
+        $user   = $this->db
+            ->select('*')
+            ->where('memberNo', $memberNo)
+            ->from('ic')
+            ->get()
+            ->result_array();
+
+        if (count($user) > 0) {
+            $return = $user[0];
+        }
+
+        return $return;
+    }
+
+    public function updateMember($memberNo,$userData){
+        $return = false;
+        $user   = $this->db
+                ->set($userData)
+                ->where('memberNo',$memberNo)
+                ->update('ic');
+
+
+        return $return;
+
     }
 
     public function finalised_overall($user_id, $icDate)

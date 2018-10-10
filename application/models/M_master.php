@@ -27,14 +27,15 @@ class M_master extends CI_Model
             "sector"         => $data['sector'],
             "machineScore"   => $data['machineScore'],
             "machineRank"    => $data['machineRank'],
-            "machineScore2"   => $data['machineScore2'],
-            "machineRank2"    => $data['machineRank2'],
-            "machineScore3"   => $data['machineScore3'],
-            "machineRank3"    => $data['machineRank3'],
+            "machineScore2"  => $data['machineScore2'],
+            "machineRank2"   => $data['machineRank2'],
+            "machineScore3"  => $data['machineScore3'],
+            "machineRank3"   => $data['machineRank3'],
+            "tag"            => $data['tag'],
             "memberNo"       => $member['memberNo'],
             "memberName"     => $member['memberName'],
             "bWeight"        => $member['bWeight'],
-            "isActive"       => 1
+            "isActive"       => array_key_exists('isActive', $member )? $member['isActive'] :  1
         ];
 
         //check if we have already inserted
@@ -77,6 +78,7 @@ class M_master extends CI_Model
                 ->set("memberName", $prospectData['memberName'])
                 ->set("bWeight", $prospectData['bWeight'])
                 ->set("isActive", $prospectData['isActive'])
+                ->set("tag", $prospectData['rag'])
                 ->where('masterID', $masterID)
                 ->update('master');
         }
@@ -84,12 +86,12 @@ class M_master extends CI_Model
         return $masterID;
     }
 
-    public function setVetoFlag($user_id, $ticker, $ic_date)
+    public function setVetoFlag($user_id, $masterID, $ic_date)
     {
         $setVetoFlagValue = 0;
         $oldVetoFlag      = $this->db->select('vetoFlag')
                                      ->where('memberNo', $user_id)
-                                     ->where('ticker', $ticker)
+                                     ->where('masterID', $masterID)
                                      ->where('icDate', $ic_date)
                                      ->where('strategyNo', 1)
                                      ->from('master')
@@ -99,7 +101,7 @@ class M_master extends CI_Model
             $this->db
                 ->set('vetoFlag', $setVetoFlagValue)
                 ->set('DateModified', date('Y-m-d'))
-                ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+                ->where(['memberNo' => $user_id, 'masterID' => $masterID, 'icDate' => $ic_date])
                 ->update('master');
         }
 
@@ -117,13 +119,13 @@ class M_master extends CI_Model
     }
 
 
-    public function setFinaliseFlag($user_id, $ticker, $ic_date)
+    public function setFinaliseFlag($user_id, $masterID, $ic_date)
     {
         $setFinaliseValue = 0;
         $oldVetoFlag      = $this->db->select('isFinalised')
                                      ->where('strategyNo', 1)
                                      ->where('memberNo', $user_id)
-                                     ->where('ticker', $ticker)
+                                     ->where('masterID', $masterID)
                                      ->where('icDate', $ic_date)
                                      ->from('master')
                                      ->get()->result_array();
@@ -132,7 +134,7 @@ class M_master extends CI_Model
             $this->db
                 ->set('isFinalised', $setFinaliseValue)
                 ->set('DateModified', date('Y-m-d'))
-                ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+                ->where(['memberNo' => $user_id, 'masterID' => $masterID, 'icDate' => $ic_date])
                 ->update('master');
         }
 
@@ -205,12 +207,12 @@ class M_master extends CI_Model
      * @param $ticker
      * @param $ic_date
      */
-    public function updateVetoAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+    public function updateVetoAndComment($vote, $comment, $user_id, $masterID, $ic_date ){
         $this->db
             ->set('vetoFlag', $vote)
             ->set('vetoComment', $comment)
             ->set('DateModified', date('Y-m-d'))
-            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->where(['memberNo' => $user_id, 'masterID' => $masterID, 'icDate' => $ic_date])
             ->update('master');
     }
 /**
@@ -220,21 +222,21 @@ class M_master extends CI_Model
      * @param $ticker
      * @param $ic_date
      */
-    public function updateDeepDiveAndComment($vote, $comment, $user_id, $ticker, $ic_date ){
+    public function updateDeepDiveAndComment($vote, $comment, $user_id, $masterID, $ic_date ){
         $this->db
             ->set('isDeepDive', $vote)
             ->set('deepDiveComment', $comment)
             ->set('DateModified', date('Y-m-d'))
-            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->where(['memberNo' => $user_id, 'masterID' => $masterID, 'icDate' => $ic_date])
             ->update('master');
     }
 
-    public function updateFinalise($user_id, $ticker, $ic_date, $finalised)
+    public function updateFinalise($user_id, $masterID, $ic_date, $finalised)
     {
        $this->db
             ->set('isFinalised', $finalised)
             ->set('DateModified', date('Y-m-d'))
-            ->where(['memberNo' => $user_id, 'ticker' => $ticker, 'icDate' => $ic_date])
+            ->where(['memberNo' => $user_id, 'masterID' => $masterID, 'icDate' => $ic_date])
             ->update('master');
     }
 

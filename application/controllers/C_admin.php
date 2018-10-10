@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_factors m_factors
  * @property  M_master m_masterF
  * @property  M_icdate m_icdate
+ * @property  M_master m_master
  * @property  M_portfolio m_portfolio
  */
 class C_admin extends MY_Controller
@@ -33,12 +34,15 @@ class C_admin extends MY_Controller
     public function dashboard()
     {
         $data['user']                      = $this->session->userdata('user');
+        if($data['user']['isAdmin'] == 1){
         $data['admin']                     = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['users']                     = $this->m_ic->getMembers();
         $data['ic_dates']                  = $this->m_icdate->getIcDates();
         $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
         $this->load->template('v_admin_dashboard', $data);
-
+        }else{
+            redirect('dashboard');
+        }
 
     }
 
@@ -92,7 +96,8 @@ class C_admin extends MY_Controller
                     'machineScore2' => $value['machineScore2'],
                     'machineRank2'  => $value['machineRank2'],
                     'machineScore3' => $value['machineScore3'],
-                    'machineRank3'  => $value['machineRank3']
+                    'machineRank3'  => $value['machineRank3'],
+                    'tag'           => $value['tag'],
                 ];
                 $prospectCreated = $this->m_prospects->insert_prospects_from_csv($info);
 

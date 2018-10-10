@@ -15,27 +15,34 @@
     <ul class="nav navbar-top-links navbar-right">
         <li>
                 <a href="<?php echo base_url('factor-weights') ?>">
-                    <i class="fa fa-tasks fa-fw"></i> Factor Weights
+                    <i class="fa fa-balance-scale fa-fw"></i> Factor Weights
                 </a>
         </li>
         <li>
             <?php if (($user['isComittee'] == 1 || $user['isAdmin'] == 1 )&& uri_string() != 'dashboard') { ?>
                 <a href="<?php echo base_url('dashboard') ?>">
-                    <i class="fa fa-tasks fa-fw"></i> IC Dashboard
+                    <i class="fa fa-desktop fa-fw"></i> IC Dashboard
                 </a>
             <?php } ?>
         </li>
         <li>
             <?php if (($user['isAdmin'] == 1 )&& uri_string() != 'ic-dates') { ?>
                 <a href="<?php echo base_url('ic-dates') ?>">
-                    <i class="fa fa-tasks fa-fw"></i>IC Dates
+                    <i class="fa fa-calendar fa-fw"></i>IC Dates
+                </a>
+            <?php } ?>
+        </li>
+        <li>
+            <?php if (($user['isAdmin'] == 1 )&& uri_string() != 'members') { ?>
+                <a href="<?php echo base_url('members') ?>">
+                    <i class="fa fa-users fa-fw"></i>Members
                 </a>
             <?php } ?>
         </li>
         <?php if ($user['isAdmin'] == 1 && !in_array(uri_string(), ['admin-dashboard', 'committee-completion-summary'])) { ?>
             <li>
                 <a href="<?php echo base_url('admin-dashboard') ?>">
-                    <i class="fa fa-tasks fa-fw"></i> IC Admin Dashboard
+                    <i class="fa fa-th-large fa-fw"></i> IC Admin Dashboard
                 </a>
             </li>
         <?php } ?>
