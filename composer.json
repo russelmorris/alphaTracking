@@ -5,17 +5,11 @@
 	"homepage": "https://disrupterfund.com.au",
 	"require": {
 		"php": ">=5.4",
-		"twbs/bootstrap": "3.3.7"
+		"twbs/bootstrap": "3.3.7",
+		"twig/twig": "~1.0"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*",
 		"phpunit/phpunit": "4.* || 5.*"
-	},
-	"scripts": {
-		"post-package-install": [
-			"vendor/twbs::postPackageInstall",
-			"ln -s ../vendor/twbs/bootstrap/dist/js  ./assets/js",
-			"ln -s ../vendor/twbs/bootstrap/dist/css  ./assets/css"
-		]
 	}
 }

@@ -45,4 +45,11 @@ class C_example extends MY_Controller
         $this->load->template('v_pivot_table', $data);
     }
 
+    public function twigTemplate(){
+        $data = [
+            "title" => 'Test'
+        ];
+        $this->load->twigView('v_twig_template', $data);
+    }
+
 }

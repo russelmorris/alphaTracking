@@ -109,3 +109,4 @@ $route['create-csv-alexa'] = 'c_create_csv/createAlexa';
 
 
 $route['example-pivot-table'] = 'c_example/pivotTable';
+$route['example-twig-template'] = 'c_example/twigTemplate';
