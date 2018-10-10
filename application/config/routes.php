@@ -107,3 +107,5 @@ $route['create-human-score'] = 'c_calculation/create_human_score';
 $route['create-csv-googletrends'] = 'c_create_csv/createGoogletrends';
 $route['create-csv-alexa'] = 'c_create_csv/createAlexa';
 
+
+$route['example-pivot-table'] = 'c_example/pivotTable';
