@@ -25,12 +25,23 @@ class C_example extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model([
+            'm_admin',
+            'm_ic',
+            'm_factors',
+            'm_icdate',
+            'm_prospects',
+            'm_master',
+            'm_voting'
+        ]);
     }
 
     public function pivotTable(){
+        $this->load->helper('string');
         $data = [];
         $data['user']                      = $this->session->userdata('user');
         $data['admin']                     = ( ! $data['user']['isAdmin']) ? false : $data['user'];
+        $data['members'] = $this->m_ic->getMembers();
         $this->load->template('v_pivot_table', $data);
     }
 
