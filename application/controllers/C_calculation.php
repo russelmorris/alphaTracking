@@ -20,7 +20,6 @@ class C_calculation extends MY_Controller
 
     public function create_human_score()
     {
-        sleep(5);
         $icDate = $this->input->post('ic_date', '');
         $currentDateTimestamp = strtotime(date('Y-m-d'));
         $icDateTimestamp = strtotime($icDate);

@@ -90,12 +90,12 @@ $route['submit-master-deep-dive']        = 'c_voting/submit_master_deep_dive';
 $route['submit-master-finalise']        = 'c_voting/submit_master_finalise';
 
 
-$route['factor-weights']        = 'c_factors/factorWeights';
-$route['factor-weights/(:any)']        = 'c_factors/factorWeights/$1';
+//$route['factor-weights']        = 'c_factors/factorWeights';
+//$route['factor-weights/(:any)']        = 'c_factors/factorWeights/$1';
 
 
-$route['submit-factors-weight']        = 'c_factors/submitFactorsWeight';
-$route['get-factors-weight/(:any)/(:any)']        = 'c_factors/getFactorWeights/$1/$2';
+//$route['submit-factors-weight']        = 'c_factors/submitFactorsWeight';
+//$route['get-factors-weight/(:any)/(:any)']        = 'c_factors/getFactorWeights/$1/$2';
 
 
 

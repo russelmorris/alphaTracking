@@ -13,11 +13,11 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
-        <li>
-                <a href="<?php echo base_url('factor-weights') ?>">
+       <!-- <li>
+                <a href="<?php /*echo base_url('factor-weights') */?>">
                     <i class="fa fa-balance-scale fa-fw"></i> Factor Weights
                 </a>
-        </li>
+        </li>-->
         <li>
             <?php if (($user['isComittee'] == 1 || $user['isAdmin'] == 1 )&& uri_string() != 'dashboard') { ?>
                 <a href="<?php echo base_url('dashboard') ?>">

@@ -4,7 +4,7 @@
  * @property  CI_Model model
  * @property  CI_db db
  */
-class M_current_ic_date extends CI_Model
+class M_current_icdate extends CI_Model
 {
     public function __construct()
     {

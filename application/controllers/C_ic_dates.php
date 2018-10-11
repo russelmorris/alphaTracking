@@ -4,11 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @property  CI_Session session
  * @property  CI_Input input
+ * @property  CI_db db
  * @property  M_auth m_auth
  * @property  M_ic m_ic
  * @property  M_icdate m_icdate
  * @property  CI_Security security
- * @property  M_current_ic_date m_current_ic_date
+ * @property  M_current_icdate m_current_icdate
  */
 class C_ic_dates extends CI_Controller
 {
@@ -21,7 +22,7 @@ class C_ic_dates extends CI_Controller
             'm_ic',
             'm_icdate',
             'm_factors',
-            'm_current_ic_date'
+            'm_current_icdate'
         ]);
 
     }
@@ -30,7 +31,7 @@ class C_ic_dates extends CI_Controller
     {
 
         $data['user'] = $this->session->userdata('user');
-        $data['currentICDate'] = $this->m_current_ic_date->getCurrentIcDate();
+        $data['currentICDate'] = $this->m_current_icdate->getCurrentIcDate();
 
         if ($data['user']['isAdmin'] == 1) {
             $data['admin'] = (!$data['user']['isAdmin']) ? false : $data['user'];
@@ -60,10 +61,10 @@ class C_ic_dates extends CI_Controller
                 $this->db->insert('icdate', $data);
 
                 $data['users'] = $this->m_ic->getMembers();
-
-                foreach ($data['users'] as $user) {
-                    $data['factors'] = $this->m_factors->createFactors($user['memberNo'], $this->input->post('icDateDatePicker'));
-                }
+//
+//                foreach ($data['users'] as $user) {
+//                    $data['factors'] = $this->m_factors->createFactors($user['memberNo'], $this->input->post('icDateDatePicker'));
+//                }
 
                 redirect("ic-dates", 'refresh');
 
@@ -88,7 +89,7 @@ class C_ic_dates extends CI_Controller
         $data['user'] = $this->session->userdata('user');
         if ($data['user']['isAdmin'] == 1) {
             if ($this->input->server('REQUEST_METHOD') == 'POST') {
-                $data['users'] = $this->m_current_ic_date->updateCurrentIcDate($this->input->post('currentIcDate'));
+                $data['users'] = $this->m_current_icdate->updateCurrentIcDate($this->input->post('currentIcDate'));
                 redirect("ic-dates", 'refresh');
             }
         } else {
