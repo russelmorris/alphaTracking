@@ -47,6 +47,9 @@ class C_voting extends MY_Controller
             $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
             $data['prospect'], $icDate);
 
+//        print_f($data['voting_values']);
+
+
         $data['admin']         = ( ! $data['user']['isAdmin']) ? false : $data['user'];
         $data['dateModified']  = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
 

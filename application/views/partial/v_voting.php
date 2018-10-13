@@ -49,140 +49,30 @@
     </div>
 
 
-    <!-- _______________________________________________ Voting Part start _____________________________________________-->
-    <!-- Radio Button Module -->
+<!--     _______________________________________________ Voting Part start _____________________________________________-->
+<!--     Radio Button Module-->
     <div class="row">
         <input id="is-finalised" type="hidden" value="<?php echo $voting_values[0]['isFinalised'];?>">
         <input id="allow-edit" type="hidden" value="<?php echo $allowEdit;?>">
         <div class="col-md-8 col-md-offset-2">
-            <div class="rb-box">
-                <?php $listNumber = 0; ?>
-                <?php foreach ($voting_values as $key => $voting_value) { ?>
-                    <?php if ($voting_value['factorNo'] == 5) { ?>
-                        <!--                        Slider Start-->
-
-                        <p><?php echo ++$listNumber; ?>. Overall momentum likely to continue? </p>
-                        <div id="rb-1" class="rb">
-                            <div id="factor5-pass"
-                                 class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == 0 ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
-                                     echo 'rb-null-element';
-                                 } ?>"
-                                 data-value="<?php echo 0; ?>" data-factor="<?php echo $voting_value['factorNo']; ?>">
-                                <span class="rb-spot"><span class="rb-txt rb-txt-na">Pass</span></span>
-                            </div>
-                            <label id="factor_label_5" class="slider_label_holder">
-                                <?php echo (($voting_value['factorScore'] * 10) !== 0) ? $voting_value['factorScore'] * 10 : ''; ?>
-                            </label>
-                            <div class="slider-holder">
-                                <input type="range" min="1" max="100"
-                                       value="<?php echo $voting_value['factorScore'] * 10; ?>" class="slider"
-                                       id="factor_5"
-                                    <?php if ($voting_value['isFinalised'] == 1 || $allowEdit !== 1) {echo ' disabled ';} ?>>
-                            </div>
-                        </div>
-
-                        <!--                        slider stop-->
-
-                    <?php } else { ?>
-                        <!--                        Round Buttons start     -->
-                        <p><?php echo ++$listNumber; ?>. <?php echo $voting_value['factorDesc'] ?> </p>
-                        <div id="rb-1" class="rb">
-                            <?php for ($i = 0; $i < 11; $i++): ?>
-                                <div class="ticker_click rb-tab <?php echo $voting_value['factorScore'] == $i ? 'rb-tab-active' : ''; ?> <?php if ($i == 0) {
-                                    echo 'rb-null-element';
-                                } ?>"
-                                     data-value="<?php echo $i; ?>"
-                                     data-factor="<?php echo $voting_value['factorNo']; ?>">
-                                    <span class="rb-spot">
-                                        <?php if ($i == 0) { ?>
-                                            <span class="rb-txt rb-txt-na">Pass</span>
-                                        <?php } else { ?>
-                                            <span class="rb-txt"><?php echo $i; ?></span>
-                                        <?php } ?>
-                                    </span>
-                                </div>
-                            <?php endfor; ?>
-                        </div>
-
-                        <!--round buttons end -->
-                    <?php } ?>
-                <?php } ?>
-
-                <p><?php echo ++$listNumber; ?>. Veto (optional)</p>
-                <div id="veto" class="rb-7 rb <?php echo $voting_values[0]['vetoFlag'] == 1 ? 'rb-tab-active' : ''; ?>">
-                    <div id="veto-data-value" class="rb-tab veto_click"
-                         data-value="<?php echo $voting_values[0]['vetoFlag'] == 1 ? '1' : '0'; ?>">
-                        <div class="rb-spot">
-                            <span class="rb-txt"><?php echo $voting_values[0]['vetoFlag'] == 1 ? 'Yes' : 'No'; ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <p><?php echo ++$listNumber; ?>.Comment</p>
-                <div class="row">
-                    <div class="col-md-12 tarea ">
-                        <textarea id='textarea-veto' placeholder="Explain wshy?" class="form-control"
-                            <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>
-                                    <?php echo !is_null($voting_values[0]['vetoComment']) ?
-                                        $voting_values[0]['vetoComment'] : ''; ?>
-                        </textarea>
+            <div class="container rb-box">
+                {% for key,voting_value in voting_values %} {
+                    {% if voting_value.factorSlider == 1 %}
                         <div class="row">
-                            <div class="col-md-2">
-                                <button id="save_vetoComment" class="btn btn-default btn-sm mt-10"
-                                    <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>Save Comment</button>
-                            </div>
-                            <div class="col-md-10">
-                                <p id="veto-save-comment" class=" alert-save  hidden">Successfully saved!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <p><?php echo ++$listNumber; ?>. Deeper Dive Required? (optional)</p>
-                <div id="deep-dive"
-                     class="rb-7 rb <?php echo $voting_values[0]['isDeepDive'] == 1 ? 'rb-tab-active' : ''; ?>">
-                    <div id="deep-dive-data-value" class="rb-tab deep_dive_click"
-                         data-value="<?php echo $voting_values[0]['isDeepDive'] == 1 ? '1' : '0'; ?>">
-                        <div class="rb-spot">
-                            <span class="rb-txt"><?php echo $voting_values[0]['isDeepDive'] == 1 ? 'Yes' : 'No'; ?></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 tarea deep_dive_togle <?php echo $voting_values[0]['isDeepDive'] == 1 ? '' : 'hidden'; ?> "
-                             style="padding-top: 2%">
-                            <p class="sub-header-comment">Comment</p>
-                            <textarea id='textarea-deep-dive' placeholder="Explain wshy?" class="form-control"
-                                <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>
-                                <?php echo !is_null($voting_values[0]['deepDiveComment']) ?
-                                    $voting_values[0]['deepDiveComment'] : ''; ?>
-                            </textarea>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <button id="deepDiveComment" class="btn btn-default btn-sm mt-10"
-                                        <?php if ($voting_values[0]['isFinalised'] == 1) {echo ' disabled ';} ?>>Save Comment
-                                    </button>
-                                </div>
-                                <div class="col-md-10">
-                                    <p id="deep-dive-save-comment" class=" alert-save  hidden">Successfully
-                                        saved!</p>
+                            <div class="col col-sm-12">
+                                <div class="text-center">Will significant upwards price momentum continue for 2-3 months?</div>
+                                <div class="slider-holder">
+                                    <input type="range" min="1" max="100"
+                                           value="{{ voting_value.factorScore * 10 }}" class="slider"
+                                           {% if voting_value.isFinalised== 1 || allowEdit !== 1 %}
+                                           disabled
+                                           {% endif %}
+                                    >
                                 </div>
                             </div>
-
                         </div>
-                    </div>
-                </div>
-
-                <p><?php echo ++$listNumber; ?>. Finalise?</p>
-                <div id="rb-8"
-                     class="rb <?php echo $voting_values[0]['isFinalised'] == 1 ? 'rb-tab-active' : ''; ?>">
-                    <div class="rb-tab"
-                         data-value="<?php echo $voting_values[0]['isFinalised'] == 1 ? '1' : '0'; ?>">
-                        <div class="rb-spot">
-                            <span class="rb-txt"><?php echo $voting_values[0]['isFinalised'] == 1 ? 'Yes' : 'No'; ?></span>
-                        </div>
-                    </div>
-                </div>
-
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <!-- _______________________________________________ Voting Part end ______________________________________________-->
