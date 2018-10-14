@@ -21,6 +21,25 @@ class MY_Loader extends CI_Loader {
         return true;
 	}
 
+    public function twigTemplate($templateName, $vars = array(), $return = false)
+    {
+        if($return) {
+            $content = $this->view( "include/v_header", $vars, $return);
+            $content .= $this->view( "include/v_navigation", $vars, $return);
+            $content .= $this->twigView( "partial/" . $templateName, $vars, $return);
+            $content .= $this->view( "include/v_footer", $vars, $return);
+
+            return $content;
+        }else {
+
+            $this->view( "include/v_header", $vars);
+            $this->view( "include/v_navigation", $vars, $return);
+            $this->twigView( "partial/" . $templateName, $vars);
+            $this->view( "include/v_footer", $vars);
+        }
+        return true;
+    }
+
 //    public function singleView($templateName, $vars = array(), $return = false)
 //    {
 //

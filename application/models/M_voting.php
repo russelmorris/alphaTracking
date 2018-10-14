@@ -106,6 +106,7 @@ class M_voting extends CI_Model
             ->select('f.factorOrder')
             ->select('f.factorDesc')
             ->select('f.factorSlider')
+            ->select('f.factorDashboardName')
             ->select('m.prospectTextID')
             ->select('m.vetoFlag')
             ->select('m.vetoComment')

@@ -73,7 +73,7 @@
              <td class="no-padding">
                 <div class="cell_holder">
                     <div class="cell_part mbt-5">
-                        <div class="form-group">
+                        <div class="form-group col-sm-12">
                             <span class="dashboard-slider-5-text"><?php echo ($ic['factorScore5'] == 0)? '-': $ic['factorScore5']*10; ?></span>
                             <input onchange="updateTicker('<?php echo $ic['masterID']; ?>', 5,  this.value/10, this)"
                                    type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5 ticker_<?php echo $ic['ticker']; ?>"

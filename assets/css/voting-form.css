@@ -1,6 +1,6 @@
 /* Containers */
 .rb-box {
-    padding: 1.3em;
+    padding: 30px;
     background: white;
     border-radius: 0.75em;
 }
@@ -109,4 +109,21 @@ iframe {
 
 .padding-2{
     padding: 2%;
+}
+#voting-page{
+    padding: 0 15px;
+}
+.slider-value-holder{
+    width: 30px;
+}
+.slider-info-text{
+    font-weight: bold;
+    font-size: 18px;
+}
+.comment-text-area{
+    width: 100%;
+    margin-left: 20px;
+}
+.prev-next-holder{
+    margin-top: 15px;
 }
