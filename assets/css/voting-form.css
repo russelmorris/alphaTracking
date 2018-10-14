@@ -153,15 +153,15 @@ iframe {
 
 }
 .radio-voting-do-not-like {
-    transform: translate(-125%, -70%);
+    transform: translate(0%, 40%);
 }
 
 .radio-voting-pass {
-    transform: translate(-50%, -70%);
+    transform: translate(0%, 40%);
 }
 
 .radio-voting-like {
-    transform: translate(-60%, -70%);
+    transform: translate(0%, 40%);
 }
 .radio-voting-finalize {
     transform: translate(60%, 20%);
@@ -170,23 +170,45 @@ iframe {
     padding-bottom: 20px;
 }
 
-
+.radio-do-not-like{
+    text-align: right !important;
+}
+.radio-like{
+    text-align: left !important;
+}
 .save-comment{
     padding-left: 20px;
     padding-bottom: 20px;
 }
 
 
-.voted-ticker-holder label{
-    padding-left: 40px;
+.voted-ticker-holder  .radio-inline {
+    padding-left: 0px !important;
 
 }
 .voted-ticker-holder > div{
     text-align: center;
 }
-
+.hide-on-xs{
+    display: inline-block;
+}
+.show-on-xs{
+    display: none;
+}
 @media (max-width: 768px) {
     .voted-ticker-holder > div{
-        text-align: left ;
+        text-align: left !important ;
+    }
+    .radio-do-not-like{
+        text-align: left !important;
+    }
+    .radio-like{
+        text-align: left !important;
+    }
+    .hide-on-xs{
+        display: none;
+    }
+    .show-on-xs{
+        display: inline-block;
     }
 }

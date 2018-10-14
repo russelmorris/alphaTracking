@@ -87,30 +87,37 @@
                                 </div>
                             </div>
                             <div class="row text-center voted-ticker-holder">
-                                <div class="col col-xs-12">
-                                    <label class="radio-inline">
-                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value="0"
+                                <div class="col col-xs-12 col-sm-4 radio-do-not-like">
+                                    <label for="factor_id_{{voting_value.factorNo}}_0" class="radio-inline hide-on-xs">Don’t like it</label>
+                                        <input class="ticker_click radio-voting radio-voting-do-not-like" type="radio" name="factor_{{voting_value.factorNo}}"
+                                               id="factor_id_{{voting_value.factorNo}}_0" value="0"
                                                data-value="0" data-factor="{{ voting_value.factorNo }}"
                                                {% if allowEdit != '1' %} disabled {%endif%}
                                                {% if voting_value.factorScore == 0 %} checked {%endif%}>
-                                       Don’t like it
-                                    </label>
-                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>
-                                    <label class="radio-inline">
-                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value=""
+                                    <label for="factor_id_{{voting_value.factorNo}}_0" class="radio-inline show-on-xs">Don’t like it</label>
+
+                                </div>
+                                <div class="col col-xs-12 col-sm-4 pull-left">
+<!--                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>-->
+
+                                        <input class="ticker_click radio-voting radio-voting-pass" type="radio" name="factor_{{voting_value.factorNo}}"
+                                               id="factor_id_{{voting_value.factorNo}}_null" value=""
                                                data-value="" data-factor="{{ voting_value.factorNo }}"
                                                {% if allowEdit != '1' %} disabled {%endif%}
                                                {% if voting_value.factorScore == '' %} checked {%endif%}>
-                                        Pass
-                                    </label>
-                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>
-                                    <label class="radio-inline">
-                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value="10"
+                                    <label class="radio-inline" for="factor_id_{{voting_value.factorNo}}_null">Pass</label>
+
+                                </div>
+                                <div class="col col-xs-12 col-sm-4 radio-like">
+<!--                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>-->
+
+                                        <input class="ticker_click radio-voting radio-voting-like" type="radio" name="factor_{{voting_value.factorNo}}"
+                                               id="factor_id_{{voting_value.factorNo}}_10" value="10"
                                                data-value="10" data-factor="{{ voting_value.factorNo }}"
                                                {% if allowEdit != '1' %} disabled {%endif%}
                                                {% if voting_value.factorScore == 10 %} checked {%endif%}>
-                                        Like it
-                                    </label>
+                                    <label class="radio-inline" for="factor_id_{{voting_value.factorNo}}_10">Like it</label>
+
                                 </div>
                             </div>
                         {% endif %}

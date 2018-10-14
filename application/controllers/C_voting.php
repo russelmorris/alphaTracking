@@ -100,6 +100,8 @@ class C_voting extends MY_Controller
         if($data['enableFinalised'] == 0){
             $data['allowEdit'] = 0;
         }
+//        $data['enableFinalised']= 1;
+//        $data['allowEdit'] = 1;
         $this->load->twigTemplate('v_voting', $data);
     }
 
