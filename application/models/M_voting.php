@@ -62,7 +62,7 @@ class M_voting extends CI_Model
     {
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
-            ->set('factorScore', $factorVal == 0 ? null : $factorVal )
+            ->set('factorScore', $factorVal === '' ? null : $factorVal )
             ->where([
                 'strategyNo' => 1,
                 'memberNo'   => $user_id,
@@ -97,34 +97,40 @@ class M_voting extends CI_Model
 
     public function getLatestVotingValues($user_id, $prospect, $ic_date)
     {
+//        print_f($user_id);
+//        print_f($prospect);
+//        print_f($ic_date);
+
         $return = false;
-        $values = $this->db->select('f.factorOrder')
-                           ->select('f.factorDesc')
-                           ->select('v.factorNo')
-                           ->select('v.factorScore')
-                           ->select('v.factorDesc')
-                           ->select('v.factorDesc')
-                           ->select('m.prospectTextID')
-                           ->select('m.vetoFlag')
-                           ->select('m.vetoComment')
-                           ->select('m.isDeepDive')
-                           ->select('m.deepDiveComment')
-                           ->select('m.isFinalised')
-                           ->select('m.DateModified')
-                           ->select('m.country')
-                           ->from('voting v')
-                           ->join('master m', 'v.memberNo = m.memberNo AND v.ticker = m.ticker AND v.icDate = m.icDate  AND v.masterID = m.masterID',
-                               'inner')
-                            ->join('factors f', 'v.factorNo = f.factorNo',
-                                'inner')
-                           ->where('v.memberNo', $user_id)
-                           ->where('v.ticker', $prospect['ticker'])
-                           ->where('m.RIC', $prospect['RIC'])
-                           ->where('v.icDate', $ic_date)
-                           ->where('f.includeDashboard', 1)
-                           ->order_by('factorOrder', 'ASC')
-                           ->get()
-                           ->result_array();
+        $values = $this->db
+            ->select('f.factorOrder')
+            ->select('f.factorDesc')
+            ->select('f.factorSlider')
+            ->select('f.factorDashboardName')
+            ->select('m.prospectTextID')
+            ->select('m.vetoFlag')
+            ->select('m.vetoComment')
+            ->select('m.isFinalised')
+            ->select('m.DateModified')
+            ->select('v.factorNo')
+            ->select('v.factorScore')
+            ->select('v.factorDesc')
+            ->select('v.factorDesc')
+            ->select('m.country')
+            ->select('m.isFinalised')
+            ->from('prospects p')
+            ->join('master m', 'p.icDate = m.icDate AND p.RIC = m.RIC',
+               'inner')
+            ->join('voting v', 'v.masterID = m.masterID',
+                'inner')
+            ->join('factors f', 'f.factorNo = v.factorNo',
+                'inner')
+            ->where('p.icDate', $ic_date)
+            ->where('p.RIC', $prospect['RIC'])
+            ->where('v.memberNo', $user_id)
+            ->order_by('f.factorOrder', 'ASC')
+            ->get()
+            ->result_array();
 
         if (count($values) > 0) {
             $return = $values;

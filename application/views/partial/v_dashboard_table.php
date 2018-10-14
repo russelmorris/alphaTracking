@@ -20,20 +20,7 @@
             <i class="fa fa-info-circle"></i></th>
         <th data-toggle="tooltip" data-placement="top" class="text-center" title="Human Rank">HR
             <i class="fa fa-info-circle"></i></th>
-        <th>&nbsp;</th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Veto">Veto
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business model">Model
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Growth sustainability going forward">Growth
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Business valuation">Valuation
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Digital Footprint">Footprint
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Risks">Risks
-            <i class="fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-placement="top" class="text-center" title="Overall growth likely to continue?">Going up?
+        <th data-toggle="tooltip" data-placement="top" class="text-center" WIDTH="30%" title="Overall growth likely to continue?">Going up?
             <i class="fa fa-info-circle"></i></th>
     </tr>
     </thead>
@@ -83,166 +70,10 @@
                     <?php echo is_null($ic['humanRank']) ? 0 :  round($ic['humanRank'], 2); ?>
                 </a>
             </td>
-            <td class="no-padding final click">
-                <div class="cell_holder">
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10">This</p>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10">Prev</p>
-                    </div>
-                </div>
-            </td>
-            <td class="vcenter hcenter no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part"><span class="hidden"><?php echo $ic['vetoFlag']?></span>
-                        <button class="btn btn-default btn-circle veto ticker_<?php echo $ic['ticker']; ?>"
-                                onclick="updateVeto('<?php echo $ic['masterID']; ?>', this)"
-                            <?php if ($ic['isFinalised'] == 1) {
-                                echo ' disabled ';
-                            } ?> >
-                            <i class="fa <?php echo $ic['vetoFlag'] ? "fa-check" : '' ?>"></i>
-                        </button>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part"></div>
-                </div>
-            </td>
-            <td class="no-padding">
+             <td class="no-padding">
                 <div class="cell_holder">
                     <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <span class="hidden"><?php echo $ic['factorScore1']; ?></span>
-                            <select class="form-control business-model ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['masterID']; ?>', 1, this.value, this)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 0; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore1'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld1']) ? round($ic['factorScoreOld1']) : 'N/A' ; ?></p>
-                    </div>
-                </div>
-            </td>
-
-
-            <td class="no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <span class="hidden"><?php echo $ic['factorScore4']; ?></span>
-                            <select class="form-control business-valuation ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['masterID']; ?>', 4, this.value, this)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 0; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore4'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld4']) ? round($ic['factorScoreOld4']): 'N/A'; ?></p>
-                    </div>
-                </div>
-            </td>
-
-
-
-            <td class="no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <span class="hidden"><?php echo $ic['factorScore2']; ?></span>
-                            <select class="form-control business-valuation ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['masterID']; ?>', 2, this.value, this)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 0; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore2'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld2']) ? round($ic['factorScoreOld2']): 'N/A'; ?></p>
-                    </div>
-                </div>
-            </td>
-            <td class="no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <span class="hidden"><?php echo $ic['factorScore3']; ?></span>
-                            <select class="form-control digital-footprint ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['masterID']; ?>', 3, this.value, this)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 0; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore3'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld3']) ? round($ic['factorScoreOld3']): 'N/A'; ?></p>
-                    </div>
-                </div>
-            </td>
-            <td class="no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
-                            <span class="hidden"><?php echo $ic['factorScore6']; ?></span>
-                            <select class="form-control risk ticker_<?php echo $ic['ticker']; ?>"
-                                    onchange="updateTicker('<?php echo $ic['masterID']; ?>', 6, this.value, this)"
-                                <?php if ($ic['isFinalised'] == 1) {
-                                    echo ' disabled ';
-                                } ?>
-                            >
-                                <?php for ($i = 0; $i <= 10; $i++): ?>
-                                    <option value="<?php echo $i; ?>" <?php if ($ic['factorScore6'] == $i) {
-                                        echo ' selected ';
-                                    } ?>><?php echo ($i == 0)? '-': $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld6']) ? round($ic['factorScoreOld6']): 'N/A'; ?></p>
-                    </div>
-                </div>
-            </td>
-            <td class="no-padding">
-                <div class="cell_holder">
-                    <div class="cell_part mbt-5">
-                        <div class="form-group">
+                        <div class="form-group col-sm-12">
                             <span class="dashboard-slider-5-text"><?php echo ($ic['factorScore5'] == 0)? '-': $ic['factorScore5']*10; ?></span>
                             <input onchange="updateTicker('<?php echo $ic['masterID']; ?>', 5,  this.value/10, this)"
                                    type="range" min="1" max="100" value="<?php echo $ic['factorScore5']*10;?>" class="slider slider_5 ticker_<?php echo $ic['ticker']; ?>"
@@ -250,10 +81,6 @@
                                     echo ' disabled ';
                                 } ?>>
                         </div>
-                    </div>
-                    <div class="cell_part_hr"></div>
-                    <div class="cell_part">
-                        <p class="mb-10 mt-10"><?php echo !empty($ic['factorScoreOld5'])? round( intval($ic['factorScoreOld5'])*10): 'N/A'; ?></p>
                     </div>
                 </div>
             </td>

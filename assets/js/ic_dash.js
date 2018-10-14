@@ -59,25 +59,6 @@ function refreshTableData() {
 
     });
 }
-function updateVeto(masterID, element) {
-    $.post('/update-veto', {
-        masterID: masterID,
-        user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
-        ic_date: $('.ic_dates').val(),
-        csnamerf: $.cookie('csrfcookiename')
-    }).done(function (data) {
-        if (data == '0') {
-            $(element).siblings('span:first').html('0');
-            element.innerHTML = '<i class="fa"></i>';
-        } else {
-            $(element).siblings('span:first').html('1');
-            element.innerHTML = '<i class="fa fa-check"></i>';
-        }
-        refreshTableData();
-    }).fail(function (err) {
-
-    });
-};
 
 function updateFinalise(masterID, element) {
     $.post('/update-finalise', {
