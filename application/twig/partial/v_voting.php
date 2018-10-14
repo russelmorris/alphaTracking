@@ -54,12 +54,13 @@
                                         months?</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="text" value="{{ voting_value.factorScore * 10 }}" class="slider-value-holder">
+                            <div class="row slider-holder">
+                                <div class="col col-xs-4  col-xs-offset-4 col-md-2 col-md-offset-5">
+                                    <input type="text" value="{{ voting_value.factorScore * 10 }}"
+                                           class="form-control input-lg text-center">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row slider-holder">
                                 <div class="col">
                                     <input type="range" min="1" max="100"
                                            {% if voting_value.isFinalised== '1' or allowEdit != '1' %}
@@ -74,10 +75,10 @@
                                     <span class="pull-right">100 – likely/ significant<br> share price growth</span>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col text-center">
                                     <img src="/assets/images/arrow_up.png"/>
-                                    <p class="slider-info-text">…breakdown of factors influencing slider</p>
+                                    <p class="slider-info-text break-down">…breakdown of factors influencing slider</p>
                                 </div>
                             </div>
                         {% else %}
@@ -86,16 +87,21 @@
                                     <p class="slider-info-text">{{voting_value.factorDashboardName}}</p>
                                 </div>
                             </div>
-                            <div class="row text-center">
-                                <div class="col">
-                                    <label class="radio-inline ml-15">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Don’t like it
+                            <div class="row text-center voted-ticker-holder">
+                                <div class="col col-sm-12">
+                                    <label class="radio-inline">
+                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio1" value="option1">
+                                       Don’t like it
                                     </label>
-                                    <label class="radio-inline ml-15">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Pass
+                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>
+                                    <label class="radio-inline">
+                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio2" value="option2">
+                                        Pass
                                     </label>
-                                    <label class="radio-inline ml-15">
-                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Like it
+                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>
+                                    <label class="radio-inline">
+                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio3" value="option3">
+                                        Like it
                                     </label>
                                 </div>
                             </div>
@@ -103,12 +109,28 @@
                     {% endfor %}
                         <div class="row">
                             <div class="col">
-                                <p class="slider-info-text">8. Comment</p>
+                                <p class="slider-info-text">8. Comment </p>
                             </div>
                         </div>
+
                         <div class="row text-center">
+                            <div class="col comment-text-area-holder">
+                               <textarea cols="4" class="comment-text-area">{{ voting_values[0]['deepDiveComment'] }}</textarea>
+                            </div>
+                            <div class="col col-sm-12 text-left save-comment">
+                                <button id="deepDiveComment" class="btn btn-default btn-sm"
+                                    {% if voting_values[0]['isFinalised'] == '1' %}  {% endif %}>Save Comment
+                                </button>
+                                <span class="alert-save  hidden">Successfully saved!</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
                             <div class="col">
-                               <textarea cols="4" class="comment-text-area">testset</textarea>
+                                <p class="slider-info-text">9. Finalise?
+                                    <input class="radio-voting radio-voting-finalize" type="radio" name="finalize" id="inlineRadio3" value="option3">
+                                </p>
                             </div>
                         </div>
         </div>

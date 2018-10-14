@@ -86,17 +86,13 @@ iframe {
 }
 
 .alert-save{
-    color: white;
-    font-weight: bold;
+    color: #00CC00;
+    font-weight: normal;
     padding-top: 15px;
 }
 .slider-holder{
-    display: inline-block;
-    position: relative;
-    left: 50%;
-    transform: translate(-51%, 30%);;
-    width: 75% !important;
-
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 .slider_label_holder{
     color: white;
@@ -113,17 +109,79 @@ iframe {
 #voting-page{
     padding: 0 15px;
 }
-.slider-value-holder{
-    width: 30px;
+.slider-holder{
+    padding-top: 30px;
 }
 .slider-info-text{
     font-weight: bold;
     font-size: 18px;
 }
+.break-down{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.comment-text-area-holder{
+    margin-left: 20px;
+    margin-right: 20px;
+}
 .comment-text-area{
     width: 100%;
-    margin-left: 20px;
+
 }
 .prev-next-holder{
     margin-top: 15px;
+}
+
+.radio-voting {
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    left: 50%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    cursor: pointer;
+    transition: ease 0.5s;
+}
+.radio-voting-text{
+ display: inline-block;
+
+}
+.radio-voting-do-not-like {
+    transform: translate(-125%, -70%);
+}
+
+.radio-voting-pass {
+    transform: translate(-50%, -70%);
+}
+
+.radio-voting-like {
+    transform: translate(-60%, -70%);
+}
+.radio-voting-finalize {
+    transform: translate(60%, 20%);
+}
+.voted-ticker-holder{
+    padding-bottom: 20px;
+}
+
+
+.save-comment{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+
+.voted-ticker-holder label{
+    padding-left: 40px;
+
+}
+.voted-ticker-holder > div{
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .voted-ticker-holder > div{
+        text-align: left ;
+    }
 }
