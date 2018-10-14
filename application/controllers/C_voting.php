@@ -87,7 +87,8 @@ class C_voting extends MY_Controller
         }
         $data['allowEdit'] = 0;
         $data['enableFinalised'] = (strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 '))? 1 : 0;
-        if ($data['admin']) {
+        if ($data['user']['isAdmin'] == '1') {
+            $data['enableFinalised'] = 1;
             if ($data['voting_values'][0]['isFinalised'] == 1) {
                 $data['allowEdit'] = 0;
             } else {
@@ -103,9 +104,6 @@ class C_voting extends MY_Controller
         if($data['enableFinalised'] == 0){
             $data['allowEdit'] = 0;
         }
-//        $data['enableFinalised']= 1;
-//        $data['allowEdit'] = 1;
-
         $this->load->twigTemplate('v_voting', $data);
     }
 
