@@ -56,51 +56,59 @@
                             </div>
                             <div class="row slider-holder">
                                 <div class="col col-xs-4  col-xs-offset-4 col-md-2 col-md-offset-5">
-                                    <input type="text" value="{{ voting_value.factorScore * 10 }}"
-                                           class="form-control input-lg text-center">
+                                    <label id="factor_label_5" class="form-control input-lg text-center">{{ voting_value.factorScore * 10 }}</label>
                                 </div>
                             </div>
                             <div class="row slider-holder">
-                                <div class="col">
-                                    <input type="range" min="1" max="100"
-                                           {% if voting_value.isFinalised== '1' or allowEdit != '1' %}
+                                <div class="col col-xs-12">
+                                    <input title="slider" type="range" min="1" max="100" id="factor_5"
+                                           {% if voting_valu.isFinalised== '1' or allowEdit != '1' %}
                                     disabled
                                     {% endif %}
                                     value="{{ voting_value.factorScore * 10 }}" class="slider">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col col-xs-12">
                                     <span class="pull-left">0 – not likely/ insignificant/ <br>negative share price growth</span>
                                     <span class="pull-right">100 – likely/ significant<br> share price growth</span>
                                 </div>
                             </div>
                             <div class="row ">
-                                <div class="col text-center">
+                                <div class="col col-xs-12 text-center">
                                     <img src="/assets/images/arrow_up.png"/>
                                     <p class="slider-info-text break-down">…breakdown of factors influencing slider</p>
                                 </div>
                             </div>
                         {% else %}
                             <div class="row">
-                                <div class="col">
+                                <div class="col col-xs-12">
                                     <p class="slider-info-text">{{voting_value.factorDashboardName}}</p>
                                 </div>
                             </div>
                             <div class="row text-center voted-ticker-holder">
-                                <div class="col col-sm-12">
+                                <div class="col col-xs-12">
                                     <label class="radio-inline">
-                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio1" value="option1">
+                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value="0"
+                                               data-value="0" data-factor="{{ voting_value.factorNo }}"
+                                               {% if allowEdit != '1' %} disabled {%endif%}
+                                               {% if voting_value.factorScore == 0 %} checked {%endif%}>
                                        Don’t like it
                                     </label>
                                     <div class="clear hidden-sm hidden-md hidden-lg"></div>
                                     <label class="radio-inline">
-                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio2" value="option2">
+                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value=""
+                                               data-value="" data-factor="{{ voting_value.factorNo }}"
+                                               {% if allowEdit != '1' %} disabled {%endif%}
+                                               {% if voting_value.factorScore == '' %} checked {%endif%}>
                                         Pass
                                     </label>
                                     <div class="clear hidden-sm hidden-md hidden-lg"></div>
                                     <label class="radio-inline">
-                                        <input class="" type="radio" name="factor_{{voting_value.factorNo}}" id="inlineRadio3" value="option3">
+                                        <input class="ticker_click" type="radio" name="factor_{{voting_value.factorNo}}" value="10"
+                                               data-value="10" data-factor="{{ voting_value.factorNo }}"
+                                               {% if allowEdit != '1' %} disabled {%endif%}
+                                               {% if voting_value.factorScore == 10 %} checked {%endif%}>
                                         Like it
                                     </label>
                                 </div>
@@ -108,28 +116,32 @@
                         {% endif %}
                     {% endfor %}
                         <div class="row">
-                            <div class="col">
+                            <div class="col col-xs-12">
                                 <p class="slider-info-text">8. Comment </p>
                             </div>
                         </div>
 
                         <div class="row text-center">
-                            <div class="col comment-text-area-holder">
-                               <textarea cols="4" class="comment-text-area">{{ voting_values[0]['deepDiveComment'] }}</textarea>
+                            <div class="col  comment-text-area-holder">
+                               <textarea cols="4"  id='textarea-veto' {% if allowEdit != '1' %} disabled {%endif%}
+                                         class="comment-text-area">{{ voting_values[0]['vetoComment'] }}</textarea>
                             </div>
                             <div class="col col-sm-12 text-left save-comment">
-                                <button id="deepDiveComment" class="btn btn-default btn-sm"
-                                    {% if voting_values[0]['isFinalised'] == '1' %}  {% endif %}>Save Comment
+                                <button id="save_vetoComment" class="btn btn-default btn-sm"
+                                        {% if allowEdit != '1' %} disabled {%endif%}>Save Comment
                                 </button>
-                                <span class="alert-save  hidden">Successfully saved!</span>
+                                <span id="veto-save-comment" class="alert-save  hidden">Successfully saved!</span>
                             </div>
                         </div>
 
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col col-xs-12">
                                 <p class="slider-info-text">9. Finalise?
-                                    <input class="radio-voting radio-voting-finalize" type="radio" name="finalize" id="inlineRadio3" value="option3">
+                                    <input class="radio-voting radio-voting-finalize" type="checkbox" name="finalise" id="voting-finalised"
+                                           {% if voting_values[0]['isFinalised'] == 1 %} checked {%endif%}
+                                          {% if enableFinalised == 0 %} disabled {%endif%}
+                                    >
                                 </p>
                             </div>
                         </div>

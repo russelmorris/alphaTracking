@@ -62,7 +62,7 @@ class M_voting extends CI_Model
     {
         $this->db
             ->set('dateModified', date("Y-m-d H:i:s"))
-            ->set('factorScore', $factorVal == 0 ? null : $factorVal )
+            ->set('factorScore', $factorVal === '' ? null : $factorVal )
             ->where([
                 'strategyNo' => 1,
                 'memberNo'   => $user_id,
@@ -110,8 +110,6 @@ class M_voting extends CI_Model
             ->select('m.prospectTextID')
             ->select('m.vetoFlag')
             ->select('m.vetoComment')
-            ->select('m.isDeepDive')
-            ->select('m.deepDiveComment')
             ->select('m.isFinalised')
             ->select('m.DateModified')
             ->select('v.factorNo')
@@ -119,6 +117,7 @@ class M_voting extends CI_Model
             ->select('v.factorDesc')
             ->select('v.factorDesc')
             ->select('m.country')
+            ->select('m.isFinalised')
             ->from('prospects p')
             ->join('master m', 'p.icDate = m.icDate AND p.RIC = m.RIC',
                'inner')

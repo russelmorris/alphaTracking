@@ -142,7 +142,12 @@ iframe {
     border-radius: 100%;
     cursor: pointer;
     transition: ease 0.5s;
+
 }
+.radio-voting-holder{
+   padding-left: 40px;
+}
+
 .radio-voting-text{
  display: inline-block;
 

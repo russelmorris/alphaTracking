@@ -83,16 +83,22 @@ class C_voting extends MY_Controller
             $data['nextUrl'] = '';
         }
         $data['allowEdit'] = 0;
-        if ($data['admin'] !== false) {
-            $data['allowEdit'] = 1;
-        } elseif (strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 ')) {
-            $data['allowEdit'] = 1;
-        } else {
-            if ($data['voting_values'][0]['isFinalised'] == 0) {
+        $data['enableFinalised'] = (strtotime(date("Y-m-d") . ' 23:59.59 ') <= strtotime($data['icdate'] . ' 23:59.59 '))? 1 : 0;
+        if ($data['admin']) {
+            if ($data['voting_values'][0]['isFinalised'] == 1) {
                 $data['allowEdit'] = 0;
             } else {
                 $data['allowEdit'] = 1;
             }
+        } else {
+            if ($data['voting_values'][0]['isFinalised'] == 1) {
+                $data['allowEdit'] = 0;
+            } else {
+                    $data['allowEdit'] = 1;
+            }
+        }
+        if($data['enableFinalised'] == 0){
+            $data['allowEdit'] = 0;
         }
         $this->load->twigTemplate('v_voting', $data);
     }
