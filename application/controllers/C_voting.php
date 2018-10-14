@@ -55,14 +55,17 @@ class C_voting extends MY_Controller
 
 
         $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . strtolower(str_replace(" ", '', $data['voting_values'][0]['prospectTextID'])) . ".htm";
+        $data['infoSheetURL'] = base_url($data['infoSheetURL']);
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ? true : false;
 
 
         $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/" . $icDate . "/" . $icDate . "-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-alexa.jpg";
+        $data['alexaImageURL'] = base_url($data['alexaImageURL']);
         $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ? true : false;
 
 
         $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-googletrends.jpg";
+        $data['googleImageURL'] = base_url($data['googleImageURL']);
         $data['googleImageURLExist'] = file_exists($data['googleImageURL']) ? true : false;
 
         $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker(
@@ -102,6 +105,7 @@ class C_voting extends MY_Controller
         }
 //        $data['enableFinalised']= 1;
 //        $data['allowEdit'] = 1;
+
         $this->load->twigTemplate('v_voting', $data);
     }
 

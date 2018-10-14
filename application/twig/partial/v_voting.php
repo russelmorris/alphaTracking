@@ -95,11 +95,8 @@
                                                {% if allowEdit != '1' %} disabled {%endif%}
                                                {% if voting_value.factorScore == 0 %} checked {%endif%}>
                                     <label for="factor_id_{{voting_value.factorNo}}_0" class="radio-inline show-on-xs">Don’t like it</label>
-
                                 </div>
                                 <div class="col col-xs-12 col-sm-4 pull-left">
-<!--                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>-->
-
                                         <input class="ticker_click radio-voting radio-voting-pass" type="radio" name="factor_{{voting_value.factorNo}}"
                                                id="factor_id_{{voting_value.factorNo}}_null" value=""
                                                data-value="" data-factor="{{ voting_value.factorNo }}"
@@ -109,8 +106,6 @@
 
                                 </div>
                                 <div class="col col-xs-12 col-sm-4 radio-like">
-<!--                                    <div class="clear hidden-sm hidden-md hidden-lg"></div>-->
-
                                         <input class="ticker_click radio-voting radio-voting-like" type="radio" name="factor_{{voting_value.factorNo}}"
                                                id="factor_id_{{voting_value.factorNo}}_10" value="10"
                                                data-value="10" data-factor="{{ voting_value.factorNo }}"
@@ -159,7 +154,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="mt-10">
                     {% if infoSheetURLExist %}
-                    <iframe src="<?php echo base_url($infoSheetURL) ?>" onload="resizeIframe(this)"
+                    <iframe src="{{ infoSheetURL }}" onload="resizeIframe(this)"
                             scrolling="no"></iframe>
                     {% endif %}
                 </div>
@@ -171,7 +166,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="mt-10">
                     {% if alexaImageURLExist %}
-                    <img src="<?php echo base_url($alexaImageURL); ?>" alt="Alexa Data not found" height="100%"
+                    <img src="{{ alexaImageURL }}" alt="Alexa Data not found" height="100%"
                          width="100%"/>
                     {% endif %}
                 </div>
