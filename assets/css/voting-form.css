@@ -195,6 +195,10 @@ iframe {
 .show-on-xs{
     display: none;
 }
+.slider-axes-values{
+    font-weight: bold;
+    font-size: 24px;
+}
 @media (max-width: 768px) {
     .voted-ticker-holder > div{
         text-align: left !important ;
