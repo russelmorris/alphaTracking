@@ -49,8 +49,8 @@
     </div>
 
 
-    <!-- _______________________________________________ Voting Part start _____________________________________________-->
-    <!-- Radio Button Module -->
+<!--     _______________________________________________ Voting Part start _____________________________________________-->
+<!--     Radio Button Module-->
     <div class="row">
         <input id="is-finalised" type="hidden" value="<?php echo $voting_values[0]['isFinalised'];?>">
         <input id="allow-edit" type="hidden" value="<?php echo $allowEdit;?>">

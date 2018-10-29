@@ -1,7 +1,5 @@
 </div>
 </div>
-<!-- /#wrapper -->
-<div class="modal-overload"><!-- Place at bottom of page --></div>
 
 
 <!-- Custom Theme JavaScript -->

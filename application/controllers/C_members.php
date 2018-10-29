@@ -78,14 +78,11 @@ class C_members extends CI_Controller
                 $data['closest_icDate_from_today'] = find_next_ic_date(array_column($data['ic_dates'], 'icDate'));
 
                 if($userData['isComittee'] == 1) {
-                    if (!$this->m_factors->createFactors($data['memberId'], $data['closest_icDate_from_today'])) {
+                    /*if (!$this->m_factors->createFactors($data['memberId'], $data['closest_icDate_from_today'])) {
                         echo 'Someting is wrong when we creaete factor weights';
-                    }
+                    }*/
 
-                    echo $data['memberId'];
                     $prospects = $this->m_prospects->getProspectsByDate($data['closest_icDate_from_today']);
-
-                    print_f($prospects);
 
 
                     foreach ($prospects as $prospect) {
@@ -111,7 +108,6 @@ class C_members extends CI_Controller
                             'isActive' => $userData['isActive'],
                         ];
 
-                        print_f($member);
 
                         $factors = $this->m_factors->getAllFactors();
 

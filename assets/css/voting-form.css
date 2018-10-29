@@ -1,7 +1,7 @@
 /* Containers */
 .rb-box {
-    padding: 1.3em;
-    background: #333f58;
+    padding: 30px;
+    background: white;
     border-radius: 0.75em;
 }
 
@@ -86,17 +86,13 @@ iframe {
 }
 
 .alert-save{
-    color: white;
-    font-weight: bold;
+    color: #00CC00;
+    font-weight: normal;
     padding-top: 15px;
 }
 .slider-holder{
-    display: inline-block;
-    position: relative;
-    left: 50%;
-    transform: translate(-51%, 30%);;
-    width: 75% !important;
-
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 .slider_label_holder{
     color: white;
@@ -109,4 +105,114 @@ iframe {
 
 .padding-2{
     padding: 2%;
+}
+#voting-page{
+    padding: 0 15px;
+}
+.slider-holder{
+    padding-top: 30px;
+}
+.slider-info-text{
+    font-weight: bold;
+    font-size: 18px;
+}
+.break-down{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.comment-text-area-holder{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.comment-text-area{
+    width: 100%;
+
+}
+.prev-next-holder{
+    margin-top: 15px;
+}
+
+.radio-voting {
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    left: 50%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    cursor: pointer;
+    transition: ease 0.5s;
+
+}
+.radio-voting-holder{
+   padding-left: 40px;
+}
+
+.radio-voting-text{
+ display: inline-block;
+
+}
+.radio-voting-do-not-like {
+    transform: translate(0%, 40%);
+}
+
+.radio-voting-pass {
+    transform: translate(0%, 40%);
+}
+
+.radio-voting-like {
+    transform: translate(0%, 40%);
+}
+.radio-voting-finalize {
+    transform: translate(60%, 20%);
+}
+.voted-ticker-holder{
+    padding-bottom: 20px;
+}
+
+.radio-do-not-like{
+    text-align: right !important;
+}
+.radio-like{
+    text-align: left !important;
+}
+.save-comment{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+
+.voted-ticker-holder  .radio-inline {
+    padding-left: 0px !important;
+
+}
+.voted-ticker-holder > div{
+    text-align: center;
+}
+.hide-on-xs{
+    display: inline-block;
+}
+.show-on-xs{
+    display: none;
+}
+.slider-axes-values{
+    font-weight: bold;
+    font-size: 24px;
+}
+@media (max-width: 768px) {
+    .voted-ticker-holder > div{
+        text-align: left !important ;
+    }
+    .radio-do-not-like{
+        text-align: left !important;
+    }
+    .radio-like{
+        text-align: left !important;
+    }
+    .hide-on-xs{
+        display: none;
+    }
+    .show-on-xs{
+        display: inline-block;
+    }
 }
