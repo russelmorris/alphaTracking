@@ -40,6 +40,7 @@
             <input id="is-finalised" type="hidden" value="{{ voting_values[0]['isFinalised'] }}">
             <input id="allow-edit" type="hidden" value="{{ allowEdit }}">
             <div class="col-sm-12 rb-box">
+                {% set indexNumber = 0 %}
                 {% for key,voting_value in voting_values %}
                 {% if voting_value.factorSlider == 1 %}
                 <div class=" row text-center">
@@ -65,8 +66,8 @@
                 </div>
                 <div class="row">
                     <div class="col col-xs-12">
-                        <span class="pull-left">0 – not likely/ insignificant/ <br>negative share price growth</span>
-                        <span class="pull-right">100 – likely/ significant<br> share price growth</span>
+                        <span class="pull-left"><span class="slider-axes-values">0</span> – not likely/ insignificant/ <br>negative share price growth</span>
+                        <span class="pull-right"><span class="slider-axes-values">100</span>  – likely/ significant<br> share price growth</span>
                     </div>
                 </div>
                 <div class="row ">
@@ -76,9 +77,10 @@
                     </div>
                 </div>
                 {% else %}
+                {% set indexNumber = indexNumber + 1 %}
                 <div class="row">
                     <div class="col col-xs-12">
-                        <p class="slider-info-text">{{voting_value.factorDashboardName}}</p>
+                        <p class="slider-info-text">{{ indexNumber }}. {{voting_value.factorDashboardName}}</p>
                     </div>
                 </div>
                 <div class="row text-center voted-ticker-holder">
@@ -117,9 +119,10 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+                {% set indexNumber = indexNumber + 1 %}
                 <div class="row">
                     <div class="col col-xs-12">
-                        <p class="slider-info-text">8. Comment </p>
+                        <p class="slider-info-text">{{ indexNumber }}. Comment </p>
                     </div>
                 </div>
 
@@ -136,10 +139,10 @@
                     </div>
                 </div>
 
-
+                {% set indexNumber = indexNumber + 1 %}
                 <div class="row">
                     <div class="col col-xs-12">
-                        <p class="slider-info-text">9. Finalise?
+                        <p class="slider-info-text">{{ indexNumber }}. Finalise?
                             <input class="radio-voting radio-voting-finalize" type="checkbox" name="finalise"
                                    id="voting-finalised"
                                    {% if voting_values[0]['isFinalised'] == 1 %} checked {%endif%}

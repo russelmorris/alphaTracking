@@ -102,38 +102,61 @@ class M_voting extends CI_Model
 //        print_f($ic_date);
 
         $return = false;
-        $values = $this->db
+        $factors = $this->db
+            ->select('f.factorNo')
             ->select('f.factorOrder')
             ->select('f.factorDesc')
             ->select('f.factorSlider')
             ->select('f.factorDashboardName')
+            ->order_by('f.factorOrder', 'ASC')
+            ->from('factors f')
+            ->where('f.isActive', 1)
+            ->get()
+            ->result_array();
+
+
+        $master = $this->db
+            ->select('m.masterID')
             ->select('m.prospectTextID')
             ->select('m.vetoFlag')
             ->select('m.vetoComment')
             ->select('m.isFinalised')
             ->select('m.DateModified')
-            ->select('v.factorNo')
-            ->select('v.factorScore')
-            ->select('v.factorDesc')
-            ->select('v.factorDesc')
             ->select('m.country')
             ->select('m.isFinalised')
             ->from('prospects p')
-            ->join('master m', 'p.icDate = m.icDate AND p.RIC = m.RIC',
-               'inner')
-            ->join('voting v', 'v.masterID = m.masterID',
-                'inner')
-            ->join('factors f', 'f.factorNo = v.factorNo',
-                'inner')
+            ->join('master m', 'p.icDate = m.icDate AND p.RIC = m.RIC', 'inner')
             ->where('p.icDate', $ic_date)
             ->where('p.RIC', $prospect['RIC'])
-            ->where('v.memberNo', $user_id)
-            ->order_by('f.factorOrder', 'ASC')
+            ->where('m.memberNo', $user_id)
             ->get()
             ->result_array();
 
-        if (count($values) > 0) {
-            $return = $values;
+        foreach($factors as $factor){
+
+            $voting = $this->db
+                ->select( $factor['factorNo'].' as "factorNo"')
+                ->select('v.factorScore')
+                ->select('v.factorDesc')
+                ->from('voting v')
+                ->where('v.masterID', $master[0]['masterID'])
+                ->where('v.factorNo', $factor['factorNo'])
+                ->get()
+                ->result_array();
+
+            if (count($voting) == 0) {
+                $voting[0] = array(
+                    "factorNo" => $factor['factorNo'],
+                    "factorScore" => null,
+                    "factorExist" => 0
+                );
+            } else {
+                $voting[0]["factorExist"] = 1;
+            }
+            $mergedArray = array_merge($factor, $master[0], $voting[0]);
+
+            $return[] = $mergedArray;
+
         }
 
         return $return;
