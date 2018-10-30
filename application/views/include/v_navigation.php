@@ -46,7 +46,13 @@
                 </a>
             </li>
         <?php } ?>
-
+        <li>
+            <?php if (($user['isAdmin'] == 1 )) { ?>
+                <a href="<?php echo base_url('portfolio-view') ?>">
+                    <i class="fa fa-th fa-fw"></i>Portfolio View
+                </a>
+            <?php } ?>
+        </li>
 
 
         <?php if (uri_string() == 'dashboard') {  ?>

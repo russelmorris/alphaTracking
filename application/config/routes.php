@@ -90,6 +90,9 @@ $route['submit-master-deep-dive']        = 'c_voting/submit_master_deep_dive';
 $route['submit-master-finalise']        = 'c_voting/submit_master_finalise';
 
 
+$route['portfolio-view']        = 'c_portfolio/portfolio_view';
+
+
 //$route['factor-weights']        = 'c_factors/factorWeights';
 //$route['factor-weights/(:any)']        = 'c_factors/factorWeights/$1';
 
