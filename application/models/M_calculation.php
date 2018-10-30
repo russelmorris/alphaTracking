@@ -94,12 +94,12 @@ EOT;
                 voting.memberName,
                 voting.icDate,
                 voting.ticker,
-                sum(voting.zScore * factorWeights.factorWeight) / sum(case when voting.zScore is not null then factorWeights.factorWeight else 0 end) as aggZScore,
+                sum(voting.zScore * factors.factorWeight) / sum(case when voting.zScore is not null then factors.factorWeight else 0 end) as aggZScore,
                 voting.masterID,
                 voting.strategyNo
             FROM
                 voting
-            INNER JOIN factorWeights ON voting.strategyNo = factorWeights.strategyNo AND voting.icDate = factorWeights.icDate AND voting.memberNo = factorWeights.memberNo AND voting.factorNo = factorWeights.factorNo
+            INNER JOIN factors ON voting.strategyNo = factors.strategyNo AND voting.factorNo = factors.factorNo
             
             where
               voting.icDate = '$icDate'
@@ -110,13 +110,14 @@ EOT;
         return true;
     }
 
-    public function updateMasterWithHumanScores()
+    public function updateMasterWithHumanScores($icDate)
     {
         $sql = <<<EOT
        update `master` as m
             INNER JOIN tempAggZScore ON tempAggZScore.masterID = m.masterID
-            set m.humanZScore = if(m.vetoFlag = 1,-100,tempAggZScore.aggZScore)
-            where m.isActive = 1;
+            INNER JOIN ic ON ic.memberNo = m.memberNo
+            set m.humanZScore = tempAggZScore.aggZScore, m.bWeight = ic.bWeight
+            where m.isActive = 1 and m.icDate = '$icDate';
 		
 EOT;
         $this->db->query($sql);
@@ -158,7 +159,7 @@ EOT;
         update `master` as m
             set m.humanScore = (1 - m.humanRank/$prospectCount),
              m.bWeightedHumanScore = (1 - m.humanRank/$prospectCount) * m.bWeight
-             where m.icDate = '$icDate';
+             where m.isActive = 1 and m.icDate = '$icDate';
 EOT;
         $this->db->query($sql);
         return true;

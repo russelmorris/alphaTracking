@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @property  M_calculation m_calculation
  * @property  M_icdate m_icdate
+ * @property  M_ic m_ic
+ * @property  M_teams m_teams
  * @property  M_portfolio m_portfolio
  */
 class C_calculation extends MY_Controller
@@ -14,6 +16,8 @@ class C_calculation extends MY_Controller
         $this->load->model([
             'm_calculation',
             'm_icdate',
+            'm_ic',
+            'm_teams',
             'm_portfolio'
         ]);
     }
@@ -44,7 +48,7 @@ class C_calculation extends MY_Controller
         $this->m_calculation->updateFactoryStats();
         $this->m_calculation->updateVotingWithZScore();
         $this->m_calculation->writeTempAggZScore($icDate);
-        $this->m_calculation->updateMasterWithHumanScores();
+        $this->m_calculation->updateMasterWithHumanScores($icDate);
         $this->m_calculation->updateMasterWithHumanRank($icDate, $members);
         $this->m_calculation->updateMasterWithHumanScore($icDate);
 
@@ -60,11 +64,14 @@ class C_calculation extends MY_Controller
         }
         $ic_date = $this->input->post('date');
         $members = $this->m_ic->getMembers();
+        $teams = $this->m_teams->getTeams();
 
-        $this->m_portfolio->buildPortfolioMasterStep1($ic_date);
-        $this->m_portfolio->buildPortfolioMasterStep2($ic_date);
-        $this->m_portfolio->buildPortfolioMasterStep3($ic_date);
-        $this->m_portfolio->buildPortfolioMasterALL($ic_date, $members);
+//        $this->m_portfolio->buildPortfolioMasterStep1($ic_date);
+//        $this->m_portfolio->buildPortfolioMasterStep2($ic_date);
+//        $this->m_portfolio->buildPortfolioMasterStep3($ic_date);
+//        $this->m_portfolio->buildPortfolioMasterALL($ic_date, $members);
+        $this->m_portfolio->buildICPortfolioAll($ic_date, $members);
+        $this->m_portfolio->buildTeamsPortfoliosLoop($ic_date, $teams);
         echo 'Portfolio has been built';
         return;
     }
