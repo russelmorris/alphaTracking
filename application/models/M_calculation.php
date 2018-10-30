@@ -99,7 +99,7 @@ EOT;
                 voting.strategyNo
             FROM
                 voting
-            INNER JOIN factors ON voting.strategyNo = factors.strategyNo AND voting.factorNo = factorWeights.factorNo
+            INNER JOIN factors ON voting.strategyNo = factors.strategyNo AND voting.factorNo = factors.factorNo
             
             where
               voting.icDate = '$icDate'
