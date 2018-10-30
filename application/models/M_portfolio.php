@@ -337,4 +337,385 @@ EOT;
         }
 
     }
+
+    public function buildTeamsPortfoliosLoop($ic_date, $teams)
+    {
+
+        $sql = <<<EOT
+        SELECT icd.icDate,  icd.portfolioCount
+            FROM icdate icd
+            where icd.icDate = '{$ic_date}';
+EOT;
+        $query = $this->db->query($sql);
+
+        $result = $query->result();
+
+        $analysisDate = $result[0]->icDate;
+        $portfolioCount = $result[0]->portfolioCount;
+
+
+
+        $sql = <<<EOT
+        SELECT count(RIC) as prospectCount 
+            FROM prospects
+            where prospects.icDate = '{$ic_date}';
+EOT;
+        $query = $this->db->query($sql);
+
+        $result = $query->result();
+
+        $prospectCount = $result[0]->prospectCount;
+
+        foreach ($teams as $team) {
+
+            $sql = <<<EOT
+            DELETE FROM portfolio_temp1 WHERE 1=1
+EOT;
+            $this->db->query($sql);
+
+
+            $sql = <<<EOT
+		ALTER TABLE portfolio_temp1 auto_increment = 1
+EOT;
+            $this->db->query($sql);
+
+
+            $sql = <<<EOT
+			INSERT INTO portfolio_temp1  (
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machine1Weight,
+					machine2Weight,
+					machine3Weight,
+					humanWeight,
+					machineScore,
+					machineRank,
+					m1RankScore,
+					machineScore2,
+					machineRank2,
+					m2RankScore,
+					machineScore3,
+					machineRank3,
+					m3RankScore,
+					humanScore,
+					humanRank,
+					finalScore,
+					finalRank,
+					planExecDate,
+					actualExecDate
+		)
+		SELECT
+				`master`.strategyNo,
+                teams.teamName as memberName,
+                teams.teamID as memberNo,
+                `master`.prospectTextID,
+                `master`.icDate,
+                `master`.ticker,
+                `master`.RIC,
+                `master`.`name`,
+                `master`.country,
+                `master`.sector,
+                `master`.tag,
+                sum(if(`master`.vetoFlag,1,0)) as vetoCount,
+                teams.machine1Weight,
+                teams.machine2Weight,
+                teams.machine3Weight,
+                teams.humanWeight,
+                `master`.machineScore,
+                `master`.machineRank,
+                ({$prospectCount} - `master`.machineRank) / {$prospectCount} as m1RankScore,
+                `master`.machineScore2,
+                `master`.machineRank2,
+                ({$prospectCount} - `master`.machineRank2) / {$prospectCount} as m2RankScore,
+                `master`.machineScore3,
+                `master`.machineRank3,
+                ({$prospectCount} - `master`.machineRank3) / {$prospectCount} as m3RankScore,
+                Sum(`master`.humanScore * teamMembers.bWeight) / sum(teamMembers.bWeight) as humanScore,
+                0 as humanRank,
+                ((ifnull(teams.machine1Weight * ({$prospectCount} -`master`.machineRank)/{$prospectCount},0)
+                  + ifnull(teams.machine2Weight * ({$prospectCount} -`master`.machineRank2) /{$prospectCount},0)
+                    + ifnull(teams.machine3Weight * ({$prospectCount} -`master`.machineRank3) /{$prospectCount},0)
+                    + ifnull(teams.humanWeight * Sum(`master`.humanScore * teamMembers.bWeight)/sum(teamMembers.bWeight),0)) / (machine1Weight + machine2Weight + machine3Weight + humanWeight)) as finalScore,
+                0 as finalRank,
+                
+                DATE_ADD(icDate, INTERVAL 
+                                IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                                        IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                                ) DAY) as planExecDate,
+                DATE_ADD(icDate, INTERVAL 
+                                IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                                        IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                                ) DAY) as actualExecDate																
+                
+                        
+			FROM
+                (teams inner join teamMembers on teams.teamID = teamMembers.teamID)
+                inner join `master` on (`master`.memberNo  = teamMembers.memberNo)
+			  
+			WHERE
+				`master`.isActive = 1 
+				AND icDate = '{$analysisDate}' 
+				AND (teams.teamID = {$team['teamID']})
+			GROUP BY
+                `master`.icDate,
+                `master`.prospectTextID,
+                `master`.ticker,
+                `master`.RIC,
+                `master`.`name`,
+                `master`.country,
+                `master`.sector,
+                `master`.machineScore,
+                `master`.machineRank,
+                `master`.strategyNo,
+                teams.teamName
+            order by finalScore desc, machineRank asc
+			limit {$portfolioCount}
+EOT;
+            $this->db->query($sql);
+
+
+            $sql = <<<EOT
+            DELETE FROM  portfolio WHERE icDate = '{$ic_date}' and memberNo = {$team['teamID']}
+EOT;
+            $this->db->query($sql);
+
+            $sql = <<<EOT
+			INSERT INTO portfolio
+			(
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machine1Weight,
+					machine2Weight,
+					machine3Weight,
+					humanWeight,
+					machineScore,
+					machineRank,
+					m1RankScore,
+					machineScore2,
+					machineRank2,
+					m2RankScore,
+					machineScore3,
+					machineRank3,
+					m3RankScore,
+					humanScore,
+					humanRank,
+					finalScore,
+					finalRank,
+					planExecDate,
+					actualExecDate
+			)
+				SELECT
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machine1Weight,
+					machine2Weight,
+					machine3Weight,
+					humanWeight,
+					machineScore,
+					machineRank,
+					m1RankScore,
+					machineScore2,
+					machineRank2,
+					m2RankScore,
+					machineScore3,
+					machineRank3,
+					m3RankScore,
+					humanScore,
+					humanRank,
+					finalScore,
+					finalRank,
+					planExecDate,
+					actualExecDate
+				
+				FROM 
+					portfolio_temp1
+EOT;
+            $this->db->query($sql);
+
+        }
+
+    }
+
+    public function buildICPortfolioAll($ic_date, $members)
+    {
+
+        $sql = <<<EOT
+        SELECT icd.icDate,  icd.portfolioCount
+            FROM icdate icd
+            where icd.icDate = '{$ic_date}';
+EOT;
+        $query = $this->db->query($sql);
+
+        $result = $query->result();
+
+        $analysisDate = $result[0]->icDate;
+        $portfolioCount = $result[0]->portfolioCount;
+
+        foreach ($members as $member) {
+
+            $sql = <<<EOT
+            DELETE FROM portfolio_temp1 WHERE 1=1
+EOT;
+            $this->db->query($sql);
+
+            $sql = <<<EOT
+		ALTER TABLE portfolio_temp1 auto_increment = 1
+EOT;
+            $this->db->query($sql);
+
+            $sql = <<<EOT
+			INSERT INTO portfolio_temp1  (
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machineScore,
+					machineRank,
+					humanScore,
+					humanRank,
+					finalScore,
+					finalRank,
+					planExecDate,
+					actualExecDate
+		)
+		SELECT
+				strategyNo,
+				memberName,
+				memberNo,
+				prospectTextID,
+				icDate,
+				ticker,
+				RIC,
+				`name`,
+				country,
+				sector,
+				tag,
+				vetoFlag as vetoCount,
+				machineScore,
+				machineRank,
+				humanScore,
+				0 as humanRank,
+				humanScore as finalScore,
+				0 as finalRank,
+				DATE_ADD(icDate, INTERVAL 
+                    IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                            IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                    ) DAY) as planExecDate,
+				DATE_ADD(icDate, INTERVAL 
+                    IF(DAYNAME(icDate)  = 'Saturday', 2, 
+                            IF(DAYNAME(icDate)  = 'Friday', 3, 1)
+                                    ) DAY) as actualExecDate									
+		
+			FROM
+				`master`
+			WHERE
+				`master`.isActive = 1 AND
+				ifnull(vetoFlag,0) = 0 AND
+				memberNo = {$member['memberNo']} AND
+				icDate = '{$analysisDate}'
+			ORDER BY
+				humanScore DESC, machineRank asc
+				
+				limit {$portfolioCount}
+EOT;
+            $this->db->query($sql);
+
+
+            $sql = <<<EOT
+            DELETE FROM  portfolio WHERE icDate = '{$ic_date}' and memberNo = {$member['memberNo']}
+EOT;
+            $this->db->query($sql);
+
+            $sql = <<<EOT
+			INSERT INTO portfolio
+			(
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machineScore,
+					machineRank,
+					humanRank,
+					humanScore,
+					finalRank,
+					finalScore,
+					planExecDate,
+					actualExecDate
+			)
+				SELECT
+					strategyNo,
+					memberName,
+					memberNo,
+					prospectTextID,
+					icDate,
+					ticker,
+					RIC,
+					`name`,
+					country,
+					sector,
+					tag,
+					vetoCount,
+					machineScore,
+					machineRank,
+					finalRank as humanRank,
+					humanScore,
+					finalRank,
+					finalScore,
+					planExecDate,
+					actualExecDate
+				
+				FROM 
+					portfolio_temp1
+EOT;
+            $this->db->query($sql);
+
+        }
+
+    }
 }
