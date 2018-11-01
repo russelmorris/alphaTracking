@@ -13,62 +13,105 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-6">
-            <label id="finalised-label"></label>
-            <div class="progress">
-                <div id="finalised-value"
-                     class="progress-bar"
-                     role="progressbar"
-                     aria-valuenow="0"
-                     aria-valuemin="0"
-                     aria-valuemax="100"
-                     style="width: 0%">
-                    <span class="sr-only"></span>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                <label id="finalised-label"></label>
+                <div class="progress">
+                    <div id="finalised-value"
+                         class="progress-bar"
+                         role="progressbar"
+                         aria-valuenow="0"
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="width: 0%">
+                        <span class="sr-only"></span>
+                    </div>
+
+                </div>
+                <input type="hidden" id="finalised-label-value" value="0">
+                </div>
+                <div class="col-sm-12">
+                    <input type="button" class="btn btn-default" id="create-human-score" value="Create Human Score"/><br><br>
+                    <input type="button" class="btn btn-default" id="finalize-all" value="Finalize all"/><br><br>
                 </div>
 
             </div>
-            <input type="hidden" id="finalised-label-value" value="0">
+
+        </div>
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="text-center">
+                            Your estimate for global mkt
+                        <br>returns 5 Nov to 3 Dec 2018
+                    </td>
+                    <td class="text-center">
+                        Your virtual allocation to
+                        <br><strong>your</strong> portfolio below Vs Cash
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-center">
+                            (0.5%)
+                        </div>
+                        <div>
+                            <input type="range" min="1" max="100" value="50" class="slider">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                64% cash
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                36% equities
+                            </div>
+                        </div>
+                        <div>
+                            <input type="range" min="1" max="100" value="64" class="slider">
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
         <!-- /.col-lg-6 -->
-        <div class="col-sm-offset-3 col-sm-3">
-            <div class="form-group">
-                <label>For IC date</label>
-                <select id="ic_dates" class="form-control ic_dates">
-                    <?php foreach ($ic_dates as $value): ?>
-                        <?php if (new DateTime($closest_icDate_from_today) == new DateTime($value['icDate'])): ?>
-                            <option selected value="<?php echo $value['icDate']; ?>">
-                                <?php echo $value['icDate']; ?></option>
-                        <?php else: ?>
-                            <option value="<?php echo $value['icDate']; ?>">
-                                <?php echo $value['icDate']; ?></option>
-                        <?php endif; ?>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>For IC date</label>
+                        <select id="ic_dates" class="form-control ic_dates">
+                            <?php foreach ($ic_dates as $value): ?>
+                                <?php if (new DateTime($closest_icDate_from_today) == new DateTime($value['icDate'])): ?>
+                                    <option selected value="<?php echo $value['icDate']; ?>">
+                                        <?php echo $value['icDate']; ?></option>
+                                <?php else: ?>
+                                    <option value="<?php echo $value['icDate']; ?>">
+                                        <?php echo $value['icDate']; ?></option>
+                                <?php endif; ?>
 
-                    <?php endforeach; ?>
-                </select>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 pull-right">
+                    <?php if ($user['isAdmin']): ?>
+                        <div class="form-group">
+                            <label>Users</label>
+                            <select class="form-control admin_users">
+                                <?php foreach ($admin_users as $value): ?>
+                                    <option <?php if($selectedMemberNo == $value['memberNo']) {echo 'selected';}?> value="<?php echo $value['memberNo']; ?>">
+                                        <?php echo $value['memberName'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <!-- /.col-lg-6 -->
-    </div>
-    <div class="row">
-        <div class="coll col-sm-6">
-            <input type="button" class="btn btn-default" id="create-human-score" value="Create Human Score"/><br><br>
-            <input type="button" class="btn btn-default" id="finalize-all" value="Finalize all"/><br><br>
-        </div>
-        <div class="col-sm-3 pull-right">
-
-            <?php if ($user['isAdmin']): ?>
-                <div class="form-group">
-                    <label>Users</label>
-                    <select class="form-control admin_users">
-                        <?php foreach ($admin_users as $value): ?>
-                                <option <?php if($selectedMemberNo == $value['memberNo']) {echo 'selected';}?> value="<?php echo $value['memberNo']; ?>">
-                                    <?php echo $value['memberName'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
-
-        </div>
     </div>
     <div class="row">
         <div class="col com-sm-12">
