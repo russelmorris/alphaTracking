@@ -16,7 +16,7 @@
         <div class="col-sm-4">
             <div class="row">
                 <div class="col-sm-12">
-                <label id="finalised-label"></label>
+                <label id="finalised-label">0.00% Finalised</label>
                 <div class="progress">
                     <div id="finalised-value"
                          class="progress-bar"
@@ -54,23 +54,23 @@
                 <tr>
                     <td>
                         <div class="text-center">
-                            (0.5%)
+                            (<span id="mkt-value">0.0</span>%)
                         </div>
                         <div>
-                            <input type="range" min="1" max="100" value="50" class="slider">
+                            <input id="mkt-slider" type="range" min="-10" max="10" step="0.01" value="0" class="slider">
                         </div>
                     </td>
                     <td>
                         <div class="row">
                             <div class="col-sm-6 text-left">
-                                64% cash
+                                <span id="cash">0.00</span>% cash
                             </div>
                             <div class="col-sm-6 text-right">
-                                36% equities
+                                <span id="equities">100.00</span>% equities
                             </div>
                         </div>
                         <div>
-                            <input type="range" min="1" max="100" value="64" class="slider">
+                            <input id="conviction-slider" type="range" min="0" max="100" step="0.01" value="0" class="slider">
                         </div>
                     </td>
                 </tr>
@@ -100,7 +100,7 @@
                     <?php if ($user['isAdmin']): ?>
                         <div class="form-group">
                             <label>Users</label>
-                            <select class="form-control admin_users">
+                            <select class="form-control admin_users" id="ic-member">
                                 <?php foreach ($admin_users as $value): ?>
                                     <option <?php if($selectedMemberNo == $value['memberNo']) {echo 'selected';}?> value="<?php echo $value['memberNo']; ?>">
                                         <?php echo $value['memberName'] ?></option>

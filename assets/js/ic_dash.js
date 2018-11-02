@@ -1,6 +1,9 @@
 function final_value() {
     $('#prospectCount').html('');
     $('#portfolioCount').html('');
+    $('#mkt-value').html('0.0');
+    $('#mkt-slider').val(0);
+    $('#finalised-label').text("0.00% Finalised");
     $.post('/finalised-value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
@@ -12,6 +15,13 @@ function final_value() {
         $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
         $('#prospectCount').html(returnData.prospectCount);
         $('#portfolioCount').html(returnData.portfolioCount);
+        $('#mkt-value').html( (returnData.convictionData.mktReturn*100).toFixed(2) ) ;
+        $('#mkt-slider').val( returnData.convictionData.mktReturn*100);
+
+        $('#equities').html( (returnData.convictionData.conviction*100).toFixed(2) );
+        $('#cash').html( (100 - (returnData.convictionData.conviction*100)).toFixed(2) );
+        $('#conviction-slider').val( returnData.convictionData.conviction*100);
+
 
         if (parseInt(returnData.percent) == 100){
             $('#finalize-all').val(' Unfinalize all');
@@ -125,6 +135,18 @@ function reloadDashboard( orderBy = 0) {
     });
 }
 
+function updateConviction(){
+    "use strict";
+    $.post('/update-conviction', {
+        mktReturn:  $('#mkt-slider').val(),
+        conviction:  $('#conviction-slider').val(),
+        memberNo: $('#ic-member').val(),
+        icDate: $('.ic_dates').val(),
+        csnamerf: $.cookie('csrfcookiename')
+    }).done(function (data) {
+    }).fail(function (err) {
+    });
+}
 $(document).ready(function () {
     if ($('#dash_ajax').val() != undefined) {
         reloadDashboard();
@@ -207,6 +229,21 @@ $(document).ready(function () {
         });
     });
     $('#factorWeightIcUser').trigger('change');
+
+    $('#mkt-slider').change(function(){
+        "use strict";
+        let mkt = parseFloat($(this).val());
+        $('#mkt-value').html(mkt.toFixed(2));
+        updateConviction();
+    });
+    $('#conviction-slider').change(function(){
+        "use strict";
+        let conviction = parseFloat($(this).val());
+        $('#equities').html( conviction.toFixed(2));
+        $('#cash').html( ( 100 - conviction.toFixed(2)).toFixed(2) );
+        updateConviction();
+    });
+
 
 });
 

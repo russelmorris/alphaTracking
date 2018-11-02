@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property  M_master m_master
  * @property  M_voting m_voting
  * @property  M_prospects m_prospects
+ * @property  M_conviction m_conviction
  */
 class C_dashboard extends MY_Controller
 {
@@ -22,7 +23,8 @@ class C_dashboard extends MY_Controller
             'm_icdate',
             'm_master',
             'm_voting',
-            'm_prospects'
+            'm_prospects',
+            'm_conviction'
         ]);
     }
 
@@ -121,14 +123,19 @@ class C_dashboard extends MY_Controller
         if (!$selectedUser) {
             $return =  $this->m_master->finalised($sessionUser['memberNo'],
                 $selectedDate);
+            $user = $this->m_ic->getUserByID($sessionUser);
+            $convictionData = $this->m_conviction->getConviction($user, $selectedDate );
         } else {
             $return =  $this->m_master->finalised($selectedUser,
                 $selectedDate);
+            $user = $this->m_ic->getUserByID($selectedUser);
+            $convictionData = $this->m_conviction->getConviction($user, $selectedDate );
         }
         $returnArray['percent'] = number_format($return['percent'], 2,'.', '');
         $returnArray['prospectCount'] = $return['overall'];
 
         $returnArray['portfolioCount'] = $this->m_icdate->getPortfolioCount($selectedDate);
+        $returnArray['convictionData'] = $convictionData;
         echo json_encode($returnArray);
     }
 
@@ -231,6 +238,25 @@ class C_dashboard extends MY_Controller
             $finalized
         );
         return;
+    }
+
+    public function updateConviction(){
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+            die();
+        }
+        $userData = $this->session->userdata('user');
+
+        $data['mktReturn'] = $this->input->post('mktReturn');
+        $data['conviction'] = $this->input->post('conviction');
+        $data['memberNo'] = $this->input->post('memberNo');
+        $data['icDate'] = $this->input->post('icDate');
+
+        if ($userData['isAdmin'] == 0) {
+            $data['memberNo'] = $userData['memberNo'];
+        }
+        return $this->m_conviction->updateConviction($data);
+
     }
 
 }

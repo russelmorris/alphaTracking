@@ -66,6 +66,7 @@ $route['update-factor'] = 'c_dashboard/updateFactor';
 $route['update-veto'] = 'c_dashboard/updateVeto';
 $route['update-finalise'] = 'c_dashboard/updateFinalise';
 $route['update-finalise-all'] = 'c_dashboard/updateFinaliseAll';
+$route['update-conviction'] = 'c_dashboard/updateConviction';
 
 $route['dashboard-ajax']  = 'c_dashboard/dashboard_ajax';
 $route['finalised-value']  = 'c_dashboard/finalised_value';
