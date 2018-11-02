@@ -22,6 +22,13 @@ function final_value() {
         $('#cash').html( (100 - (returnData.convictionData.conviction*100)).toFixed(2) );
         $('#conviction-slider').val( returnData.convictionData.conviction*100);
 
+        if (returnData.editable == true){
+            $('#mkt-slider').prop('disabled', false);
+            $('#conviction-slider').prop('disabled', false);
+        } else {
+            $('#mkt-slider').prop('disabled', true);
+            $('#conviction-slider').prop('disabled', true);
+        }
 
         if (parseInt(returnData.percent) == 100){
             $('#finalize-all').val(' Unfinalize all');

@@ -136,6 +136,8 @@ class C_dashboard extends MY_Controller
 
         $returnArray['portfolioCount'] = $this->m_icdate->getPortfolioCount($selectedDate);
         $returnArray['convictionData'] = $convictionData;
+
+        $returnArray['editable'] =  (strtotime($selectedDate . ' 23:59:59') > strtotime('now'));
         echo json_encode($returnArray);
     }
 
@@ -245,6 +247,11 @@ class C_dashboard extends MY_Controller
             show_404();
             die();
         }
+        if (!(strtotime($this->input->post('icDate') . ' 23:59:59') > strtotime('now'))) {
+            show_404();
+            die();
+        }
+
         $userData = $this->session->userdata('user');
 
         $data['mktReturn'] = $this->input->post('mktReturn');
