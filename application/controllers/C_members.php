@@ -94,6 +94,7 @@ class C_members extends CI_Controller
                             'RIC' => $prospect['RIC'],
                             'name' => $prospect['name'],
                             'sector' => $prospect['sector'],
+                            'tag' => $prospect['tag'],
                             'machineScore' => $prospect['machineScore'],
                             'machineRank' => $prospect['machineRank'],
                             'machineScore2' => $prospect['machineScore2'],
