@@ -704,3 +704,10 @@ body.loading .modal-overload {
 .current-ic-date{
     background-color: lightskyblue !important;
 }
+
+#factor-chart-holder{
+    display: block;
+}
+.factor-chart{
+    width: 100%;
+}

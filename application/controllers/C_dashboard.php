@@ -137,7 +137,15 @@ class C_dashboard extends MY_Controller
         $returnArray['portfolioCount'] = $this->m_icdate->getPortfolioCount($selectedDate);
         $returnArray['convictionData'] = $convictionData;
 
+        $returnArray['factorChart']['factorChartURL'] = "/bottomUp/infoSheets/" . $selectedDate . "/factorCharts.jpg";
+        $returnArray['factorChart']['factorChartURLExist'] = file_exists(FCPATH.$returnArray['factorChart']['factorChartURL']) ? true : false;
+//        $returnArray['factorChart']['factorChartURL'] = base_url($returnArray['factorChart']['factorChartURL']);
+
+        // this editable variable we use in conviction sliders
         $returnArray['editable'] =  (strtotime($selectedDate . ' 23:59:59') > strtotime('now'));
+
+
+
         echo json_encode($returnArray);
     }
 

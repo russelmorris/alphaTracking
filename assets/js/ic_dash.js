@@ -4,6 +4,8 @@ function final_value() {
     $('#mkt-value').html('0.0');
     $('#mkt-slider').val(0);
     $('#finalised-label').text("0.00% Finalised");
+    $('#factor-chart').attr("src", '/');
+    $('#factor-chart-holder').addClass('hidden');
     $.post('/finalised-value', {
         user_id: $('#allow_edit_as_admin').val() ? $('.admin_users').val() : false,
         ic_date: $('.ic_dates').val(),
@@ -21,6 +23,13 @@ function final_value() {
         $('#equities').html( (returnData.convictionData.conviction*100).toFixed(2) );
         $('#cash').html( (100 - (returnData.convictionData.conviction*100)).toFixed(2) );
         $('#conviction-slider').val( returnData.convictionData.conviction*100);
+
+        if (returnData.factorChart.factorChartURLExist == true){
+            $('#factor-chart-holder').removeClass('hidden');
+            $('#factor-chart').attr("src", returnData.factorChart.factorChartURL);
+        }else {
+            $('#factor-chart-holder').addClass('hidden');
+        }
 
         if (returnData.editable == true){
             $('#mkt-slider').prop('disabled', false);

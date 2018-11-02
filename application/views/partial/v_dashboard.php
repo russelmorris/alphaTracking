@@ -13,7 +13,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-2">
             <div class="row">
                 <div class="col-sm-12">
                 <label id="finalised-label">0.00% Finalised</label>
@@ -76,8 +76,13 @@
                 </tr>
             </table>
         </div>
-        <!-- /.col-lg-6 -->
         <div class="col-sm-4">
+            <div id="factor-chart-holder">
+                <img id="factor-chart" class="factor-chart" src="/bottomUp/infoSheets/2018-11-05/factorCharts.jpg" />
+            </div>
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-sm-2">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
