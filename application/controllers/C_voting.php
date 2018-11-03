@@ -58,14 +58,14 @@ class C_voting extends MY_Controller
         $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ? true : false;
 
 
-        $data['alexaImageURL'] = "bottomUp/digiFootprint/alexa/" . $icDate . "/" . $icDate . "-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-alexa.jpg";
-        $data['alexaImageURL'] = base_url($data['alexaImageURL']);
-        $data['alexaImageURLExist'] = file_exists($data['alexaImageURL']) ? true : false;
+        $data['alexaImageURL'] = "/bottomUp/digiFootprint/alexa/" . $icDate . "/" . $icDate . "-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-alexa.jpg";
+//        $data['alexaImageURL'] = base_url($data['alexaImageURL']);
+        $data['alexaImageURLExist'] = file_exists(FCPATH.$data['alexaImageURL']) ? true : false;
 
 
-        $data['googleImageURL'] = "bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-googletrends.jpg";
-        $data['googleImageURL'] = base_url($data['googleImageURL']);
-        $data['googleImageURLExist'] = file_exists($data['googleImageURL']) ? true : false;
+        $data['googleImageURL'] = "/bottomUp/digiFootprint/googletrends/{$icDate}/$icDate-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-googletrends.jpg";
+//        $data['googleImageURL'] = base_url($data['googleImageURL']);
+        $data['googleImageURLExist'] = file_exists(FCPATH.$data['googleImageURL']) ? true : false;
 
         $data['prev'] = $this->m_prospects->getPreviousProspectByDateAndTicker(
             $data['sub_user'] ? $data['sub_user']['memberNo'] : $data['user']['memberNo'],
