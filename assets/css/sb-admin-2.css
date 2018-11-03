@@ -711,3 +711,7 @@ body.loading .modal-overload {
 .factor-chart{
     width: 100%;
 }
+
+.conviction-table{
+    font-size: 8px !important;
+}
