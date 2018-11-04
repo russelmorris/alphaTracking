@@ -53,9 +53,9 @@ class C_voting extends MY_Controller
         $data['dateModified'] = date('d M Y', strtotime($data['voting_values'][0]['DateModified']));
 
 
-        $data['infoSheetURL'] = "bottomUp/infoSheets/" . $icDate . "/" . strtolower(str_replace(" ", '', $data['voting_values'][0]['prospectTextID'])) . ".htm";
-        $data['infoSheetURL'] = base_url($data['infoSheetURL']);
-        $data['infoSheetURLExist'] = file_exists($data['infoSheetURL']) ? true : false;
+        $data['infoSheetURL'] = "/bottomUp/infoSheets/" . $icDate . "/" . strtolower(str_replace(" ", '', $data['voting_values'][0]['prospectTextID'])) . ".htm";
+//        $data['infoSheetURL'] = base_url($data['infoSheetURL']);
+        $data['infoSheetURLExist'] = file_exists(FCPATH.$data['infoSheetURL']) ? true : false;
 
 
         $data['alexaImageURL'] = "/bottomUp/digiFootprint/alexa/" . $icDate . "/" . $icDate . "-" . strtolower(str_replace(" ", "", $data['prospect']['ticker'] . "-" . $data['prospect']['country'])) . "-alexa.jpg";
