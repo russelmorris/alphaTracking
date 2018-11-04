@@ -123,7 +123,7 @@ class C_dashboard extends MY_Controller
         if (!$selectedUser) {
             $return =  $this->m_master->finalised($sessionUser['memberNo'],
                 $selectedDate);
-            $user = $this->m_ic->getUserByID($sessionUser);
+            $user = $this->m_ic->getUserByID($sessionUser['memberNo']);
             $convictionData = $this->m_conviction->getConviction($user, $selectedDate );
         } else {
             $return =  $this->m_master->finalised($selectedUser,
