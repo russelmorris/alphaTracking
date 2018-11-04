@@ -54,7 +54,7 @@
                 <tr>
                     <td>
                         <div class="text-center">
-                            (<span id="mkt-value">0.0</span>%)
+                            <span id="mkt-value"(0.00%)</span>
                         </div>
                         <div>
                             <input id="mkt-slider" type="range" min="-10" max="10" step="0.01" value="0" class="slider">

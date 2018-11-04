@@ -1,7 +1,7 @@
 function final_value() {
     $('#prospectCount').html('');
     $('#portfolioCount').html('');
-    $('#mkt-value').html('0.0');
+    $('#mkt-value').html('0.00');
     $('#mkt-slider').val(0);
     $('#finalised-label').text("0.00% Finalised");
     $('#factor-chart').attr("src", '/');
@@ -17,8 +17,16 @@ function final_value() {
         $('#finalised-value').prop('aria-valuenow', returnData.percent).css('width', returnData.percent + '%');
         $('#prospectCount').html(returnData.prospectCount);
         $('#portfolioCount').html(returnData.portfolioCount);
-        $('#mkt-value').html( (returnData.convictionData.mktReturn*100).toFixed(2) ) ;
-        $('#mkt-slider').val( returnData.convictionData.mktReturn*100);
+        let mktValue = (returnData.convictionData.mktReturn*100).toFixed(2);
+        if (mktValue < 0){
+            mktValue = (-1) * mktValue ;
+            $('#mkt-value').html( '(' + mktValue + '%)') ;
+        } else {
+
+            $('#mkt-value').html( mktValue + '%') ;
+        }
+
+         $('#mkt-slider').val( returnData.convictionData.mktReturn*100);
 
         $('#equities').html( (returnData.convictionData.conviction*100).toFixed(2) );
         $('#cash').html( (100 - (returnData.convictionData.conviction*100)).toFixed(2) );
@@ -248,8 +256,14 @@ $(document).ready(function () {
 
     $('#mkt-slider').change(function(){
         "use strict";
-        let mkt = parseFloat($(this).val());
-        $('#mkt-value').html(mkt.toFixed(2));
+        let mktValue = parseFloat($(this).val());
+        if (mktValue < 0){
+            mktValue = (-1) * mktValue ;
+            $('#mkt-value').html( '(' + mktValue + '%)') ;
+        } else {
+
+            $('#mkt-value').html( mktValue + '%') ;
+        }
         updateConviction();
     });
     $('#conviction-slider').change(function(){
