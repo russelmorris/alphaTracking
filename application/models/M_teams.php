@@ -3,7 +3,6 @@
 /**
  * @property  CI_Model model
  * @property  CI_db db
- * @property  M_icdate m_icdate
  */
 class M_teams extends CI_Model
 {
@@ -16,6 +15,19 @@ class M_teams extends CI_Model
     {
         $teams= $this->db
             ->select("*")
+            ->from('teams')
+            ->where('strategyNo', 1)
+            ->get()
+            ->result_array();
+        return $teams;
+    }
+
+    public function getTeamsForPortfolio()
+    {
+        $teams= $this->db
+            ->select("teamID as memberNo")
+            ->select("teamName as memberName")
+            ->where('strategyNo', 1)
             ->from('teams')
             ->get()
             ->result_array();

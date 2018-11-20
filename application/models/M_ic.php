@@ -38,6 +38,20 @@ class M_ic extends CI_Model
         return $query;
     }
 
+    public function getMembersForPortfolio()
+    {
+        $query = $this->db
+            ->select("memberNo")
+            ->select("memberName")
+            ->where('strategyNo', 1)
+            ->where('isActive', 1)
+            ->where('isComittee', 1)
+            ->from('ic')
+            ->get()
+            ->result_array();
+        return $query;
+    }
+
     public function getAllMembers()
     {
         $ic_dates                  = $this->m_icdate->getIcDates();
