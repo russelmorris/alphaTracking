@@ -26,8 +26,6 @@ class M_portfolio extends CI_Model
         $this->db->where('icDate', $icDate);
         $this->db->from('portfolio');
         $this->db->group_by('RIC');
-        $this->db->order_by(`name`);
-
         $query = $this->db->get();
 
         $result = $query->result_array();
