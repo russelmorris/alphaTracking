@@ -1,28 +1,43 @@
 <h1>Portfolio View</h1>
 <div class="dashboard">
     <div class="row">
-        <div class="col col-sm-6">
-            <select class="ic-member-multiple col col-sm-12" name="members[]" multiple="multiple">
-                {% for member in members %}
-                    <option value="{{ member.memberName }}">{{ member.memberName }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="col col-sm-6 pull-right form-horizontal" >
+        <div class="col col-sm-4 form-horizontal" >
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="ic_dates" class="col-sm-2 control-label">Ic Date</label>
                     <div class="col-sm-10">
                         <select class="form-control col-sm-8" id="ic_dates">
-                            <option valur="2018-12-25">2018-12-25</option>
-                            <option valur="2018-12-21">2018-12-21</option>
-                            <option valur="2018-12-22">2018-12-22</option>
+                            {%for icDate in icDates %}
+                            <option value="{{icDate.icDate}}"
+                                    {% if icDate.icDate is same as( selectedIcDate ) %}
+                                        selected
+                                    {% endif %}
+                            >{{icDate.icDate}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
             </form>
         </div>
+    </div>
+    <div class="row">
+        <div class="col col-sm-4 form-horizontal">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="ic_dates" class="col-sm-2 control-label">Ic Date</label>
+                    <div class="col-sm-10">
+                        <select class="ic-member-multiple col col-sm-12" name="members[]" multiple="multiple">
+                            {% for member in members %}
+                            <option value="{{ member.memberName }}">{{ member.memberName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+
     </div>
 
 </div>
@@ -30,22 +45,24 @@
 <table width="100%" class="table table-striped table-bordered table-hover" id="portfolio-pivot">
     <thead>
     <tr>
-        <th class="nikola">Static 1</th>
-        <th>Static 2</th>
-        <th>Static 3</th>
+        <th>Name</th>
+        <th>RIC</th>
+        <th>Sector</th>
+        <th>Country</th>
         {% for member in members %}
-            <th class="ic-member">{{ member.memberName }}</th>
+            <th class="ic-member">{{ member['memberName'] }}</th>
         {% endfor %}
     </tr>
     </thead>
     <tbody>
-    {% for i in range(0, 10) %}
+    {% for portfolio in portfolios %}
         <tr>
-            <td>Random String</td>
-            <td>Prospect 2</td>
-            <td>Prospet RIc</td>
+            <td>{{portfolio.name}}</td>
+            <td>{{portfolio.RIC}}</td>
+            <td>{{portfolio.sector}}</td>
+            <td>{{portfolio.country}}</td>
             {% for member in members %}
-                <td class="ic-member">123</td>
+                <td class="ic-member">{{ attribute(portfolio, 'member_'~member['memberNo'])|default}}</td>
             {% endfor %}
         </tr>
     {% endfor %}
@@ -61,13 +78,17 @@
             info: false,
             autoWidth: false,
             bAutoWidth: false,
-
         } );
         table.columns().visible(false);
         table.columns(0).visible(true);
         table.columns(1).visible(true);
         table.columns(2).visible(true);
+        table.columns(3).visible(true);
+//        table.columns(4).visible(true);
 
+        $('#ic_dates').on('change', function(){
+            window.location.replace("/portfolio-view/"+$(this).val());
+        });
 
         $('.ic-member-multiple')
             .select2(
