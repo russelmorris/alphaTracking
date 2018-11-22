@@ -1,11 +1,14 @@
-<h1>Portfolio View</h1>
+
 <div class="dashboard">
     <div class="row">
         <div class="col col-sm-4 form-horizontal" >
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="ic_dates" class="col-sm-2 control-label">Ic Date</label>
-                    <div class="col-sm-10">
+            <h2>Portfolio View</h2>
+        </div>
+        <div class="col col-sm-4 form-horizontal" >
+            <form class="form-horizontal mt-10">
+                <div class="form-group mt-10">
+                    <label for="ic_dates" class="col-sm-2 control-label mt-10">Ic Date</label>
+                    <div class="col-sm-10 mt-10">
                         <select class="form-control col-sm-8" id="ic_dates">
                             {%for icDate in icDates %}
                             <option value="{{icDate.icDate}}"
@@ -19,13 +22,11 @@
                 </div>
             </form>
         </div>
-    </div>
-    <div class="row">
         <div class="col col-sm-4 form-horizontal">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="ic_dates" class="col-sm-2 control-label">Ic Date</label>
-                    <div class="col-sm-10">
+            <form class="form-horizontal mt-10">
+                <div class="form-group mt-10">
+                    <label for="ic_dates" class="col-sm-2 control-label mt-10">Ic Member</label>
+                    <div class="col-sm-10 mt-10">
                         <select class="ic-member-multiple col col-sm-12" name="members[]" multiple="multiple">
                             {% for member in members %}
                             <option value="{{ member.memberName }}">{{ member.memberName }}</option>
@@ -42,7 +43,7 @@
 
 </div>
 
-<table width="100%" class="table table-striped table-bordered table-hover" id="portfolio-pivot">
+<table width="100%" class="table table-striped table-bordered table-hover" id="portfolio-pivot" style="font-size: 8px">
     <thead>
     <tr>
         <th>Name</th>
@@ -79,7 +80,7 @@
             autoWidth: false,
             bAutoWidth: false,
         } );
-        table.columns().visible(false);
+//        table.columns().visible(false);
         table.columns(0).visible(true);
         table.columns(1).visible(true);
         table.columns(2).visible(true);

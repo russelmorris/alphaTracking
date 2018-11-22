@@ -13,19 +13,17 @@ class M_portfolio extends CI_Model
 
 
     public function getPortfoliosByIcDate($icDate, $members){
-        $this->db->select('name');
-        $this->db->select('RIC');
-        $this->db->select('sector');
-        $this->db->select('country');
+        $this->db->select('p.name');
+        $this->db->select('p.RIC');
+        $this->db->select('p.sector');
+        $this->db->select('p.country');
 
         foreach($members as $member) {
-            $this->db->select('IF(`memberNo` = '.$member['memberNo'].', `finalRank`, NULL) AS member_'.$member['memberNo'], false);
+            $this->db->select("(select  p".$member['memberNo'].".humanRank   from portfolio as  p".$member['memberNo']." where p".$member['memberNo'].".RIC= p.RIC and p".$member['memberNo'].".`icDate` = '".$icDate."' and p".$member['memberNo'].".memberNo = ".$member['memberNo']."  ) AS member_".$member['memberNo'], false);
         }
-
-
-        $this->db->where('icDate', $icDate);
-        $this->db->from('portfolio');
-        $this->db->group_by('RIC');
+        $this->db->where('p.icDate', $icDate);
+        $this->db->from('portfolio as p');
+        $this->db->group_by('p.RIC');
         $query = $this->db->get();
 
         $result = $query->result_array();
